@@ -16,17 +16,29 @@ class GameManager {
 
     player: Player = new Player();
     terrain: Terrain = new Terrain();
-    constructor(center: vec3) {
-    }
+    constructor() {
 
+    }
+    
+    checkIntersection() {
+      var terrainHeight = this.terrain.getHeight(this.player.pos[0]);
+      // if (this.player.pos[1] - terrainHeight < 0.03) {
+      if (Math.abs(this.player.pos[1] - terrainHeight) < 0.03) {
+        this.player.falling = false;
+        this.player.vel = vec2.create();
+      } else {
+        this.player.falling = true;
+      }
+    }
     updateState(){
       //see if terrain and bird are intersecting
-      var terrainNormal = vec2.create();
+      this.checkIntersection();
       //update player force
+      var terrainNormal = this.terrain.getNormal(this.player.pos[0]);
       this.player.calculateForce(terrainNormal);
       //update player state
       this.player.updateState(0.1);
-      //update terrain state
+
       
     }
 }

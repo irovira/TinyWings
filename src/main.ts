@@ -6,6 +6,7 @@ import Square from './geometry/Square';
 import OpenGLRenderer from './rendering/gl/OpenGLRenderer';
 import {setGL} from './globals';
 import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
+import GameManager from './GameManager';
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
@@ -14,6 +15,7 @@ const controls = {
 
 let screenQuad: Square;
 let count: number;
+let gameManager: GameManager = new GameManager();
 
 function main() {
   // Initial display for framerate
@@ -56,12 +58,14 @@ function main() {
     count++;
     stats.begin();
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
-    gameShader.setBirdPosition(vec2.fromValues(count / 500.0, Math.sin(count / 100)));
+    gameShader.setBirdPosition(gameManager.player.pos);//vec2.fromValues(count / 500.0, Math.sin(count / 100)));
+    gameManager.updateState();
     renderer.clear();
     renderer.render(gameShader, [
       screenQuad,
     ]);
     stats.end();
+
 
     // Tell the browser to call `tick` again whenever it renders a new frame
     requestAnimationFrame(tick);

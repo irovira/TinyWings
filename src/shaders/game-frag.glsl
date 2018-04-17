@@ -36,7 +36,7 @@ void main()
     float sx = fs_Pos.x;
 	float sy = fs_Pos.y / aspect;
 
-    float height = getHeight(sx + u_BirdPos.x);
+    float height = getHeight(sx + u_BirdPos.x + 0.5);
 
     if (sy > height) {
         out_Col = vec4(0.3, 0.6, 0.9, 1.0);
