@@ -1,29 +1,19 @@
-import {vec3} from 'gl-matrix';
+import {vec2, vec3} from 'gl-matrix';
 import * as Stats from 'stats-js';
 import * as DAT from 'dat-gui';
 import Icosphere from './geometry/Icosphere';
 import Square from './geometry/Square';
 import OpenGLRenderer from './rendering/gl/OpenGLRenderer';
-import Camera from './Camera';
 import {setGL} from './globals';
 import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
 const controls = {
-  tesselations: 5,
-  'Load Scene': loadScene, // A function pointer, essentially
 };
 
-let icosphere: Icosphere;
-let square: Square;
-
-function loadScene() {
-  icosphere = new Icosphere(vec3.fromValues(0, 0, 0), 1, controls.tesselations);
-  icosphere.create();
-  square = new Square(vec3.fromValues(0, 0, 0));
-  square.create();
-}
+let screenQuad: Square;
+let count: number;
 
 function main() {
   // Initial display for framerate
@@ -33,14 +23,14 @@ function main() {
   stats.domElement.style.left = '0px';
   stats.domElement.style.top = '0px';
   document.body.appendChild(stats.domElement);
+  count = 0;
 
   // Add controls to the gui
   const gui = new DAT.GUI();
-  gui.add(controls, 'tesselations', 0, 8).step(1);
-  gui.add(controls, 'Load Scene');
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
+
   const gl = <WebGL2RenderingContext> canvas.getContext('webgl2');
   if (!gl) {
     alert('WebGL 2 not supported!');
@@ -49,29 +39,27 @@ function main() {
   // Later, we can import `gl` from `globals.ts` to access it
   setGL(gl);
 
-  // Initial call to load scene
-  loadScene();
-
-  const camera = new Camera(vec3.fromValues(0, 0, 5), vec3.fromValues(0, 0, 0));
+  screenQuad = new Square(vec3.fromValues(0, 0, 0));
+  screenQuad.create();
 
   const renderer = new OpenGLRenderer(canvas);
   renderer.setClearColor(0.2, 0.2, 0.2, 1);
-  gl.enable(gl.DEPTH_TEST);
+  gl.disable(gl.DEPTH_TEST);
 
-  const lambert = new ShaderProgram([
-    new Shader(gl.VERTEX_SHADER, require('./shaders/lambert-vert.glsl')),
-    new Shader(gl.FRAGMENT_SHADER, require('./shaders/lambert-frag.glsl')),
+  const gameShader = new ShaderProgram([
+    new Shader(gl.VERTEX_SHADER, require('./shaders/game-vert.glsl')),
+    new Shader(gl.FRAGMENT_SHADER, require('./shaders/game-frag.glsl')),
   ]);
 
   // This function will be called every frame
   function tick() {
-    camera.update();
+    count++;
     stats.begin();
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
+    gameShader.setBirdPosition(vec2.fromValues(count / 500.0,1));
     renderer.clear();
-    renderer.render(camera, lambert, [
-      // icosphere,
-      square,
+    renderer.render(gameShader, [
+      screenQuad,
     ]);
     stats.end();
 
@@ -81,13 +69,11 @@ function main() {
 
   window.addEventListener('resize', function() {
     renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.setAspectRatio(window.innerWidth / window.innerHeight);
-    camera.updateProjectionMatrix();
+    gameShader.setScreenDimensions(canvas.width, canvas.height);
   }, false);
 
   renderer.setSize(window.innerWidth, window.innerHeight);
-  camera.setAspectRatio(window.innerWidth / window.innerHeight);
-  camera.updateProjectionMatrix();
+  gameShader.setScreenDimensions(canvas.width, canvas.height);
 
   // Start the render loop
   tick();
