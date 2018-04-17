@@ -56,7 +56,7 @@ function main() {
     count++;
     stats.begin();
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
-    gameShader.setBirdPosition(vec2.fromValues(count / 500.0,1));
+    gameShader.setBirdPosition(vec2.fromValues(count / 500.0, Math.sin(count / 100)));
     renderer.clear();
     renderer.render(gameShader, [
       screenQuad,

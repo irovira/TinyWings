@@ -18,14 +18,23 @@ uniform vec2 u_BirdPos;
 in vec4 fs_Pos;
 out vec4 out_Col;
 
+float radius = 0.03;
+
 float getHeight(float dist) {
     return 0.2 * sin(10.0 * dist);
 }
 
+bool inBird(float x, float y){
+    float xdif = abs(-0.5 - x);
+    float ydif = abs(u_BirdPos.y - y);
+    return xdif * xdif + ydif * ydif < radius * radius;
+}
+
 void main()
 {
+    float aspect = u_Screen.x / u_Screen.y;
     float sx = fs_Pos.x;
-	float sy = fs_Pos.y;
+	float sy = fs_Pos.y / aspect;
 
     float height = getHeight(sx + u_BirdPos.x);
 
@@ -34,5 +43,11 @@ void main()
     } else {
         out_Col = vec4(1.0,0.5,0.0,1.0);
     }
+
+    if(inBird(sx,sy)){
+        out_Col = vec4(1.0,0.0,0.0,1.0);
+    }
+
+
 
 }

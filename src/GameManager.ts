@@ -2,7 +2,7 @@ import {vec2,vec3} from 'gl-matrix';
 import * as Stats from 'stats-js';
 import * as DAT from 'dat-gui';
 import Player from './Player';
-
+import Terrain from './terrain';
 //This class keeps track of the game state, including:
 //*Player
 //*Terrain
@@ -15,6 +15,7 @@ import Player from './Player';
 class GameManager {
 
     player: Player = new Player();
+    terrain: Terrain = new Terrain();
     constructor(center: vec3) {
     }
 
