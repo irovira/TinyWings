@@ -13,6 +13,8 @@ precision highp float;
 
 uniform vec2 u_Screen;
 
+uniform vec2 u_BirdPos;
+
 in vec4 fs_Pos;
 out vec4 out_Col;
 
@@ -25,7 +27,7 @@ void main()
     float sx = fs_Pos.x;
 	float sy = fs_Pos.y;
 
-    float height = getHeight(sx);
+    float height = getHeight(sx + u_BirdPos.x);
 
     if (sy > height) {
         out_Col = vec4(0.3, 0.6, 0.9, 1.0);

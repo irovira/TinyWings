@@ -1,4 +1,4 @@
-import {vec3, mat4} from 'gl-matrix';
+import {vec2, vec3, mat4} from 'gl-matrix';
 
 class Terrain {
 
@@ -7,11 +7,12 @@ class Terrain {
   }
 
   getHeight(distance: number) {
-      return Math.sin(distance);
+      return 0.2 * Math.sin(10.0 * distance);
+
   }
 
   getNormal(distance: number) {  
-    return - 1 / Math.cos(distance);
+    return vec2.fromValues(- 2.0 * Math.cos(10.0 * distance), 1 );
   }
 
 };

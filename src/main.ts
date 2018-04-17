@@ -1,4 +1,4 @@
-import {vec3} from 'gl-matrix';
+import {vec2, vec3} from 'gl-matrix';
 import * as Stats from 'stats-js';
 import * as DAT from 'dat-gui';
 import Icosphere from './geometry/Icosphere';
@@ -13,6 +13,7 @@ const controls = {
 };
 
 let screenQuad: Square;
+let count: number;
 
 function main() {
   // Initial display for framerate
@@ -22,6 +23,7 @@ function main() {
   stats.domElement.style.left = '0px';
   stats.domElement.style.top = '0px';
   document.body.appendChild(stats.domElement);
+  count = 0;
 
   // Add controls to the gui
   const gui = new DAT.GUI();
@@ -51,8 +53,10 @@ function main() {
 
   // This function will be called every frame
   function tick() {
+    count++;
     stats.begin();
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
+    gameShader.setBirdPosition(vec2.fromValues(count / 500.0,1));
     renderer.clear();
     renderer.render(gameShader, [
       screenQuad,
