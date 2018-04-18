@@ -34,7 +34,7 @@ class Player {
             this.force = gravity;
         } else {
             vec2.add(normal, normal, gravity);
-            this.force = vec2.fromValues(1.0* normal[0], -9.8*normal[1]);
+            this.force = vec2.fromValues(1.0* normal[0], normal[1]);
         }
 
     }
@@ -56,6 +56,9 @@ class Player {
         }
         if(this.vel[1] > this.maxVelocityY){
             this.vel[1] = this.maxVelocityY;
+        }
+        if(this.vel[1] < 0.0 && !this.falling){
+            this.vel[1] = 0.0;
         }
         //this.addedForce = vec3.fromValues(0,0,0);
         //update position

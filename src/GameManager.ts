@@ -35,10 +35,10 @@ class GameManager {
       vec2.add(newPos, this.player.pos, dir);
       var birdDirHeight = this.terrain.getHeight(this.player.pos[0] + 0.03);//newPos[0]);
       var birdDirHeight2 = this.terrain.getHeight(this.player.pos[0] - 0.03);
-      if (Math.abs(this.player.pos[1] - terrainHeight) < 0.035 || 
+      if (Math.abs(this.player.pos[1] - terrainHeight) < 0.045 || 
           Math.abs(this.player.pos[1] - birdDirHeight) < 0.025 ||
           Math.abs(this.player.pos[1] - birdDirHeight2) < 0.025) {
-        this.player.pos[1] = terrainHeight + 0.03;
+        this.player.pos[1] = terrainHeight + 0.05;
         this.player.falling = false;
       } else {
         this.player.falling = true;
