@@ -13,12 +13,19 @@ class Player {
     pos: vec2 = vec2.create();
     force: vec2 = vec2.create();
     mass:number;
+    minVelocityX:number;
+    maxVelocityX:number;
+    minVelocityY:number;
+    maxVelocityY:number;
     falling:boolean;
     constructor() {
         this.force = vec2.fromValues(0.0,-9.8);
         this.falling = true;
-        this.vel = vec2.fromValues(0.1, 0.0);
+        this.vel = vec2.fromValues(1.0, 0.0);
         this.pos = vec2.fromValues(-0.7, 0.5);
+        this.minVelocityX = 1.0;
+        this.maxVelocityX = 5.0;
+        this.maxVelocityY = 5.0;
     }
 
     calculateForce(normal:vec2) {
@@ -26,12 +33,10 @@ class Player {
         if (this.falling) {
             this.force = gravity;
         } else {
-            this.force = vec2.create();
+            vec2.add(normal, normal, gravity);
+            this.force = vec2.fromValues(1.0* normal[0], normal[1]);
         }
-        // } else {
-        //     vec2.add(normal, normal, gravity);
-        //     this.force = vec2.fromValues(normal[0],normal[1]);
-        // }
+
     }
 
     updateState(deltaT:number){
@@ -42,12 +47,23 @@ class Player {
         //update velocity
         this.vel[0] = this.vel[0] + (this.force[0]) * 0.01;
         this.vel[1] = this.vel[1] + (this.force[1]) * 0.01;
-        this.vel[2] = this.vel[2] + (this.force[2]) * 0.01;
+
+        if(this.vel[0] < this.minVelocityX){
+            this.vel[0] = this.minVelocityX;
+        }
+        if(this.vel[0] > this.maxVelocityX){
+            this.vel[0] = this.maxVelocityX;
+        }
+        if(this.vel[1] > this.maxVelocityY){
+            this.vel[1] = this.maxVelocityY;
+        }
+        if(this.vel[1] < 0.0 && !this.falling){
+            this.vel[1] = 0.0;
+        }
         //this.addedForce = vec3.fromValues(0,0,0);
         //update position
         this.pos[0] = this.pos[0] + this.vel[0] * 0.01;
         this.pos[1] = this.pos[1] + this.vel[1] * 0.01;
-        this.pos[2] = this.pos[2] + this.vel[2] * 0.01;
       }
 }
 

@@ -19,16 +19,44 @@ class GameManager {
     constructor() {
 
     }
+
+    intersectPlayer(a:number, b:number, c:number, x:number, y:number, radius:number) : boolean{
+      //based on perpendicular distance between line and point
+      var dist = (Math.abs(a * x + b * y + c)) / Math.sqrt(a * a + b * b);
+      return dist < radius;
+    }
     
     checkIntersection() {
       var terrainHeight = this.terrain.getHeight(this.player.pos[0]);
-      // if (this.player.pos[1] - terrainHeight < 0.03) {
-      if (Math.abs(this.player.pos[1] - terrainHeight) < 0.03) {
+      var dir = vec2.fromValues(this.player.vel[0], this.player.vel[1]);
+      vec2.normalize(dir, dir);
+      var newPos = vec2.create();
+      vec2.scale(dir, dir, 0.06);
+      vec2.add(newPos, this.player.pos, dir);
+      var birdDirHeight = this.terrain.getHeight(this.player.pos[0] + 0.03);//newPos[0]);
+      var birdDirHeight2 = this.terrain.getHeight(this.player.pos[0] - 0.03);
+      if (Math.abs(this.player.pos[1] - terrainHeight) < 0.045 || 
+          Math.abs(this.player.pos[1] - birdDirHeight) < 0.025 ||
+          Math.abs(this.player.pos[1] - birdDirHeight2) < 0.025) {
+        this.player.pos[1] = terrainHeight + 0.05;
         this.player.falling = false;
-        this.player.vel = vec2.create();
       } else {
         this.player.falling = true;
       }
+      // var slope = this.terrain.getSlope(this.player.pos[0]);
+      // var height = this.terrain.getHeight(this.player.pos[0]);
+      //ax + by + c = 0, standard form
+      //y - y1 = m(x - x1);
+      //y - height = slope(x - this.player.pos[0]);
+      //y - slope(x) = height - slope*this.player.pos[0];
+      //slope(x) - 1(y) =  slope*this.player.pos[0] - height;
+      //slope(x) - 1(y) + (slope*this.player.pos[0] - height) = 0;
+      //a = m, b = -1, c = (slope*this.player.pos[0] - height), x, y = bird position
+      // if (this.intersectPlayer(slope, -1.0, (-slope*this.player.pos[0] + height), this.player.pos[0], this.player.pos[1], 0.03)) {
+      //   this.player.falling = false;
+      // } else {
+      //   this.player.falling = true;
+      // }
     }
     updateState(){
       //see if terrain and bird are intersecting

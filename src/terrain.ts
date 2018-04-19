@@ -15,6 +15,10 @@ class Terrain {
     return vec2.fromValues(- 2.0 * Math.cos(10.0 * distance), 1 );
   }
 
+  getSlope(distance: number) {  
+    return 2.0 * Math.cos(10.0 * distance);
+  }
+
 };
 
 export default Terrain;
