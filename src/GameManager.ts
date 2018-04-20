@@ -44,10 +44,24 @@ class GameManager {
       vec2.add(newPos, this.player.pos, dir);
       var birdDirHeight = this.terrain.getHeight(this.player.pos[0] + 0.03);//newPos[0]);
       var birdDirHeight2 = this.terrain.getHeight(this.player.pos[0] - 0.03);
-      if (Math.abs(this.player.pos[1] - terrainHeight) < 0.045 || 
-          Math.abs(this.player.pos[1] - birdDirHeight) < 0.01 ||
-          Math.abs(this.player.pos[1] - birdDirHeight2) < 0.01) {
-        this.player.pos[1] = terrainHeight + 0.03;
+      if (Math.abs(this.player.pos[1] - terrainHeight) < 0.045) {
+        if(this.player.acc[0] > 0.0 && this.player.vel[0] > 0.0 && this.player.vel[1] > 0.0){
+          // this.player.pos[1] = terrainHeight + 0.1;
+          this.player.falling = false;
+          // this.player.falling = true;
+        } else {
+          this.player.pos[1] = terrainHeight + 0.03;
+          this.player.falling = false;
+        }
+        
+        
+        
+      } else if(Math.abs(this.player.pos[1] - birdDirHeight) < 0.02){
+        // this.player.pos[1] = birdDirHeight + 0.03;
+        this.player.falling = false;
+      } else if(Math.abs(this.player.pos[1] - birdDirHeight2) < 0.02)
+      { 
+        // this.player.pos[1] = birdDirHeight2 + 0.03;
         this.player.falling = false;
       } else {
         this.player.falling = true;
@@ -69,10 +83,12 @@ class GameManager {
     }
     updateState(){
       //see if terrain and bird are intersecting
-      this.checkIntersection();
+      // this.checkIntersection();
       //update player force
       var terrainNormal = this.terrain.getNormal(this.player.pos[0]);
       this.player.calculateForce(terrainNormal);
+      //see if terrain and bird are intersecting
+      this.checkIntersection();
       //update player state
       this.player.updateState(0.1);
 

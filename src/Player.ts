@@ -23,10 +23,10 @@ class Player {
     constructor() {
         this.force = vec2.fromValues(0.0,-9.8);
         this.falling = true;
-        this.vel = vec2.fromValues(1.0, 0.0);
+        this.vel = vec2.fromValues(2.0, 0.0);
         this.pos = vec2.fromValues(-0.7, 0.5);
         this.minVelocityX = 1.0;
-        this.maxVelocityX = 5.0;
+        this.maxVelocityX = 100.0;
         this.maxVelocityY = 50.0;
         this.mass = vec2.fromValues(1.0,1.0);
         this.buttonDown = false;
@@ -42,6 +42,8 @@ class Player {
 
     calculateForce(normal:vec2) {
         var gravity = vec2.fromValues(0.0,-9.8);
+        vec2.scale(normal, normal, 2.0);
+        normal[1] = normal[1] * 5.0;
         if (this.falling) {
             this.acc = gravity;
         } else {
@@ -51,7 +53,7 @@ class Player {
 
         if(this.buttonDown){
             console.log('button is DOWN');
-            vec2.add(this.acc, this.acc, vec2.fromValues(2.0,-9.8));
+            vec2.add(this.acc, this.acc, vec2.fromValues(1.0,-30.8));
         }
 
     }
@@ -72,9 +74,9 @@ class Player {
         if(this.vel[0] > this.maxVelocityX){
             this.vel[0] = this.maxVelocityX;
         }
-        if(this.vel[1] > this.maxVelocityY){
-            this.vel[1] = this.maxVelocityY;
-        }
+        // if(this.vel[1] > this.maxVelocityY){
+        //     this.vel[1] = this.maxVelocityY;
+        // }
         if(this.vel[1] < 0.0 && !this.falling){
             this.vel[1] = 0.0;
         }
