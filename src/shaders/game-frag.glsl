@@ -183,10 +183,6 @@ void main()
     
     float fancyHt = getGroundHeight(sx + u_BirdPos.x + 0.5) - 0.3; 
 
-    if(inBird(sx,sy)){
-        out_Col = vec4(1.0,0.0,0.0,1.0);
-    }
-
     ////////////////////////////////////////////////////////////////
 
 	vec2 uv = vec2(fs_Pos.x, fs_Pos.y);
@@ -208,7 +204,7 @@ void main()
     float pos2 = uv.x + iTime*0.1; // parallax
     
     // just the camera height?? 
-    float camHeight = (getGroundHeight(iTime*0.3 + 0.5) + getGroundHeight(iTime*0.3 + 0.1) + getGroundHeight(iTime*0.3 + 0.9)) / 3.0 + 0.5;
+    float camHeight = (getGroundHeight(iTime*0.3 + 0.5) + getGroundHeight(iTime*0.3 + 0.1) + getGroundHeight(iTime*0.3 + 0.9)) / 3.0;
         
     float height1 = uv.y + getGroundHeight(pos1) + 0.6 - camHeight;
     float height2 = uv.y + getGroundHeight(pos2) + 0.0 - camHeight*0.5;
@@ -223,10 +219,14 @@ void main()
 
     out_Col = vec4(mix(layer1, layer2, smoothstep(-pixelSize, 0.0, 1.0-height1)), 1.0);
 
-
     if (sy > fancyHt) {
         out_Col = vec4(0.3, 0.6, 0.9, 1.0);
     } 
+
+    if(inBird(sx,sy)){
+        out_Col = vec4(1.0,0.0,0.0,1.0);
+    }
+
     ////////////////////////////////////////////////////////////////
 
 }
