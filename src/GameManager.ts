@@ -25,6 +25,15 @@ class GameManager {
       var dist = (Math.abs(a * x + b * y + c)) / Math.sqrt(a * a + b * b);
       return dist < radius;
     }
+
+    keyUp(){
+      console.log('key up called');
+      this.player.buttonReleased();
+    }
+    keyDown(){
+      console.log('key down called');
+      this.player.buttonPressed();
+    }
     
     checkIntersection() {
       var terrainHeight = this.terrain.getHeight(this.player.pos[0]);
@@ -36,9 +45,9 @@ class GameManager {
       var birdDirHeight = this.terrain.getHeight(this.player.pos[0] + 0.03);//newPos[0]);
       var birdDirHeight2 = this.terrain.getHeight(this.player.pos[0] - 0.03);
       if (Math.abs(this.player.pos[1] - terrainHeight) < 0.045 || 
-          Math.abs(this.player.pos[1] - birdDirHeight) < 0.025 ||
-          Math.abs(this.player.pos[1] - birdDirHeight2) < 0.025) {
-        this.player.pos[1] = terrainHeight + 0.05;
+          Math.abs(this.player.pos[1] - birdDirHeight) < 0.01 ||
+          Math.abs(this.player.pos[1] - birdDirHeight2) < 0.01) {
+        this.player.pos[1] = terrainHeight + 0.03;
         this.player.falling = false;
       } else {
         this.player.falling = true;

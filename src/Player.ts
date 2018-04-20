@@ -12,12 +12,14 @@ class Player {
     vel: vec2 = vec2.create();
     pos: vec2 = vec2.create();
     force: vec2 = vec2.create();
-    mass:number;
+    acc: vec2 = vec2.create();
+    mass: vec2 = vec2.create();
     minVelocityX:number;
     maxVelocityX:number;
     minVelocityY:number;
     maxVelocityY:number;
     falling:boolean;
+    buttonDown:boolean;
     constructor() {
         this.force = vec2.fromValues(0.0,-9.8);
         this.falling = true;
@@ -25,16 +27,31 @@ class Player {
         this.pos = vec2.fromValues(-0.7, 0.5);
         this.minVelocityX = 1.0;
         this.maxVelocityX = 5.0;
-        this.maxVelocityY = 5.0;
+        this.maxVelocityY = 50.0;
+        this.mass = vec2.fromValues(1.0,1.0);
+        this.buttonDown = false;
+    }
+
+    buttonPressed(){
+        this.buttonDown = true;
+    }
+
+    buttonReleased(){
+        this.buttonDown = false;
     }
 
     calculateForce(normal:vec2) {
         var gravity = vec2.fromValues(0.0,-9.8);
         if (this.falling) {
-            this.force = gravity;
+            this.acc = gravity;
         } else {
             vec2.add(normal, normal, gravity);
-            this.force = vec2.fromValues(1.0* normal[0], normal[1]);
+            this.acc = vec2.fromValues(normal[0], normal[1]);
+        }
+
+        if(this.buttonDown){
+            console.log('button is DOWN');
+            vec2.add(this.acc, this.acc, vec2.fromValues(2.0,-9.8));
         }
 
     }
@@ -45,12 +62,13 @@ class Player {
         //euler integration
         //vec3.add(force, force, this.addedForce);
         //update velocity
-        this.vel[0] = this.vel[0] + (this.force[0]) * 0.01;
-        this.vel[1] = this.vel[1] + (this.force[1]) * 0.01;
+        
+        this.vel[0] = this.vel[0] + (this.acc[0]) * 0.01;
+        this.vel[1] = this.vel[1] + (this.acc[1]) * 0.01;
 
-        if(this.vel[0] < this.minVelocityX){
-            this.vel[0] = this.minVelocityX;
-        }
+        // if(this.vel[0] < this.minVelocityX){
+        //     this.vel[0] = this.minVelocityX;
+        // }
         if(this.vel[0] > this.maxVelocityX){
             this.vel[0] = this.maxVelocityX;
         }

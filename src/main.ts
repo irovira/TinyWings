@@ -17,6 +17,13 @@ let screenQuad: Square;
 let count: number;
 let gameManager: GameManager = new GameManager();
 
+function handleKeyDown(){
+
+}
+
+function handleKeyUp(){
+
+}
 function main() {
   // Initial display for framerate
   const stats = Stats();
@@ -76,8 +83,53 @@ function main() {
     gameShader.setScreenDimensions(canvas.width, canvas.height);
   }, false);
 
+  window.addEventListener("keydown", function (event) {
+    if (event.defaultPrevented) {
+      return; // Should do nothing if the default action has been cancelled
+    }
+  
+    var handled = false;
+    if (event.key !== undefined) {
+      if(event.key == " "){
+        gameManager.keyDown();
+      }
+      // Handle the event with KeyboardEvent.key and set handled true.
+      handled = true;
+    } else if (event.keyCode !== undefined) {
+      // Handle the event with KeyboardEvent.keyCode and set handled true.
+    }
+  
+    if (handled) {
+      // Suppress "double action" if event handled
+      event.preventDefault();
+    }
+  }, true);
+
+  window.addEventListener("keyup", function (event) {
+    if (event.defaultPrevented) {
+      return; // Should do nothing if the default action has been cancelled
+    }
+  
+    var handled = false;
+    if (event.key !== undefined) {
+      if(event.key == " "){
+        gameManager.keyUp();
+      }
+      // Handle the event with KeyboardEvent.key and set handled true.
+      handled = true;
+    } else if (event.keyCode !== undefined) {
+      // Handle the event with KeyboardEvent.keyCode and set handled true.
+    }
+  
+    if (handled) {
+      // Suppress "double action" if event handled
+      event.preventDefault();
+    }
+  }, true);
+
   renderer.setSize(window.innerWidth, window.innerHeight);
   gameShader.setScreenDimensions(canvas.width, canvas.height);
+
 
   // Start the render loop
   tick();
