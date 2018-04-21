@@ -25,6 +25,7 @@ class ShaderProgram {
 
   unifScreen: WebGLUniformLocation;
   unifBirdPos: WebGLUniformLocation;
+  unifColorScheme: WebGLUniformLocation;
 
   constructor(shaders: Array<Shader>) {
     this.prog = gl.createProgram();
@@ -40,6 +41,7 @@ class ShaderProgram {
     this.attrPos = gl.getAttribLocation(this.prog, "vs_Pos");
     this.unifScreen = gl.getUniformLocation(this.prog, "u_Screen");
     this.unifBirdPos = gl.getUniformLocation(this.prog, "u_BirdPos");
+    this.unifColorScheme = gl.getUniformLocation(this.prog, "u_ColorScheme");
 
   }
 
@@ -61,6 +63,13 @@ class ShaderProgram {
     this.use();
     if (this.unifBirdPos != -1) {
       gl.uniform2f(this.unifBirdPos, birdPos[0], birdPos[1]);
+    }
+  }
+
+  setColorScheme() {
+    this.use();
+    if (this.unifColorScheme != -1) {
+      gl.uniform2f(this.unifColorScheme, Math.random() - 0.5, Math.random() - 0.5);
     }
   }
 

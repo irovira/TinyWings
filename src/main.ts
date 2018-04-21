@@ -53,6 +53,8 @@ function main() {
     new Shader(gl.FRAGMENT_SHADER, require('./shaders/game-frag.glsl')),
   ]);
 
+  gameShader.setColorScheme();
+
   // This function will be called every frame
   function tick() {
     count++;
