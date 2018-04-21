@@ -183,60 +183,57 @@ void main()
     float aspect = u_Screen.x / u_Screen.y;
     float sx = fs_Pos.x;
 	float sy = fs_Pos.y / aspect;
-
-    float height = getHeight(sx + u_BirdPos.x + 0.5);
     
     float fancyHt = getGroundHeight(sx + u_BirdPos.x + 0.5) - 0.3; 
 
     ////////////////////////////////////////////////////////////////
-
-	// vec2 uv = vec2(fs_Pos.x, fs_Pos.y);
     vec2 uv = vec2(sx, sy);
     
-	vec2 hueSelection = vec2(6.0,4.0); // random 2D point RANDOMISE THIS
+	vec2 hueSelection = vec2(6.0,4.0); // random 2D point TODO: Randomize
     hueSelection = normalize(hueSelection); // normalized
 
-    //  rotates color?
-    // baseColor
+    // Rotates baseColor
     vec3 colSkyHSV = rgb2hsv(baseColor(rotate(hueSelection, degToRad(-gradientAngle*1.5))));
     vec3 colSky = hsv2rgb(vec3(colSkyHSV.r, 0.2, 0.65)); // scales down saturation and value of the sky
     
-    const float globalTimeFactor = 0.6;
-
     float iTime = u_BirdPos.x;
     
     // float pos1 = uv.x + iTime * 0.3; // parallax
-    float pos1 = uv.x + iTime + 1.0; // foreground, moves according to bird
-    float pos2 = uv.x + iTime * 0.1; // parallax
+    float pos1 = uv.x + iTime; // foreground, moves according to bird
+    float pos2 = uv.x + iTime * 0.3; // parallax
     
     // camHeight controls the up and down motion of the hills
     float camHeight = (getGroundHeight(iTime + 0.5) + getGroundHeight(iTime + 0.1) + getGroundHeight(iTime + 0.9)) / 3.0 - 0.5;
         
-    float height1 = uv.y + getGroundHeight(pos1) + 0.6;// - camHeight;
-    float height2 = uv.y + getGroundHeight(pos2) - camHeight * 0.5;
+    // float height1 = uv.y + getGroundHeight(pos1) + 0.6;// - camHeight;
+    float height1 = uv.y + getGroundHeight(pos1) + 0.6;
+    float height2 = uv.y + getGroundHeight(pos2); //- camHeight * 0.5;
     
     vec3 recomp1 = getWorldColor(vec2(pos1, height1), hueSelection); // foreground color 
     vec3 recomp2 = mix(colSky, getWorldColor(vec2(pos2, height2), hueSelection), 0.4); // background color
 
     float pixelSize =  2.0 / u_Screen.y;
 
-	vec3 layer1 = mix(colSky, mix(vec3(0.55), recomp2, smoothstep(0.0, pixelSize * 2.0, 1.0-height2)), smoothstep(-pixelSize, 0.0, 1.0-height2));
     // Smoothstep for the border of the hill
-	vec3 layer2 = mix(vec3(0.2), recomp1, smoothstep(0.0, pixelSize * 2.0, 1.0-height1));
+	vec3 layer1 = mix(colSky, 
+                    mix(vec3(0.55), recomp2, 
+                        smoothstep(0.0, pixelSize * 2.0, 1.0 - height2)), 
+                    smoothstep(-pixelSize, 0.0, 1.0-height2));
+	vec3 layer2 = mix(vec3(0.2), 
+                    recomp1, 
+                    smoothstep(0.0, pixelSize * 2.0, 1.0 - height1));
 
-    // out_Col = vec4(mix(layer1, layer2, smoothstep(-pixelSize, 0.0, 1.0-height1)), 1.0);
+    out_Col = vec4(mix(layer1, layer2, smoothstep(-pixelSize, 0.0, 1.0-height1)), 1.0);
 
-    out_Col = vec4(layer2, 1.0);
+    layer1 = getWorldColor(vec2(pos1, height1), hueSelection);
+    // out_Col = vec4(layer2, 1.0);
 
     if (sy > fancyHt) {
-        out_Col = vec4(layer1, 1.0);
+        // out_Col = vec4(layer1, 1.0);
     } 
 
     if(inBird(sx,sy)){
         out_Col = vec4(1.0,0.0,0.0,1.0);
     }
-
-    
-    ////////////////////////////////////////////////////////////////
 
 }
