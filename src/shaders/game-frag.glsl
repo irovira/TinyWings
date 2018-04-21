@@ -126,7 +126,14 @@ float getTex2(float u)
 // A funkier hill height
 float getGroundHeight(float x)
 {
+        // return 0.2 * sin(3.0 * x) +  0.1 * sin(6.0 * x);
+
     return sin(x*3.0) * 0.2 + sin(x * 6.17+4740.14) * 0.1 + sin(x * 10.987+19.19) * 0.05 + 0.3;
+}
+
+float getGroundHeight2(float x) 
+{
+    return 0.2 * cos(3.0 * x) +  0.1 * cos(6.0 * x);
 }
 
 // Gets color of uv coordinate
@@ -134,8 +141,10 @@ vec3 getWorldColor(vec2 uv)
 {
     vec2 hueSelection = normalize(u_ColorScheme);
     hueSelection = normalize(vec2(6.0,4.0));
+    // float c = getTex2(uv.x*4.0 + uv.y*StrideFactor)+0.2; 
     float c = getTex2(uv.x*4.0 + uv.y*StrideFactor)+0.2; 
     
+
     vec3 colPalette=vec3(0.0);
     
     float angles[4];
@@ -197,15 +206,15 @@ void main()
     float iTime = u_BirdPos.x;
     
     // float pos1 = uv.x + iTime * 0.3; // parallax
-    float pos1 = uv.x + iTime; // foreground, moves according to bird
+    float pos1 = uv.x + iTime + 0.5; // foreground, moves according to bird
     float pos2 = uv.x + iTime * 0.3; // background, moves slower for parallax
     
     // camHeight controls the up and down motion of the hills
-    float camHeight = (getGroundHeight(iTime + 0.5) + getGroundHeight(iTime + 0.1) + getGroundHeight(iTime + 0.9)) / 3.0 - 0.5;
+    // float camHeight = (getGroundHeight(iTime + 0.5) + getGroundHeight(iTime + 0.1) + getGroundHeight(iTime + 0.9)) / 3.0 - 0.5;
         
     // float height1 = uv.y + getGroundHeight(pos1) + 0.6;// - camHeight;
     float height1 = uv.y + getGroundHeight(pos1) + 0.8;
-    float height2 = uv.y + getGroundHeight(pos2); //- camHeight * 0.5;
+    float height2 = uv.y + getGroundHeight(pos2)  + 0.2; //- camHeight * 0.5;
     
     vec3 foregroundCol = getWorldColor(vec2(pos1, height1)); // foreground color 
     vec3 backgroundCol = mix(colSky, getWorldColor(vec2(pos2, height2)), 0.4); // background color
@@ -216,13 +225,20 @@ void main()
     // background
 	vec3 layer1 = mix(colSky, mix(vec3(0.55), backgroundCol, smoothstep(0.0, pixelSize * 2.0, 1.0 - height2)), smoothstep(-pixelSize, 0.0, 1.0-height2));
 	// foreground
-    vec3 layer2 = mix(vec3(0.2), foregroundCol, smoothstep(0.0, pixelSize * 2.0, 1.0 - height1));
+    vec3 layer2 = mix(vec3(0.2), foregroundCol, smoothstep(0.0, pixelSize * 3.0, 1.0 - height1));
+    // vec3 layer2 = mix(vec3(0.2), foregroundCol, smoothstep(0.0, pixelSize * 2.0, ));
 
-    layer1 = backgroundCol;
-    layer2 = foregroundCol;
 
-    // out_Col = vec4(mix(layer1, layer2, smoothstep(-pixelSize, 0.0, 1.0-height1)), 1.0);
-    out_Col = vec4(layer1, 1.0);
+
+    // layer1 = backgroundCol;
+    // layer2 = foregroundCol;
+
+    out_Col = vec4(mix(layer1, layer2, smoothstep(-pixelSize, 0.0, 1.0 - height1)), 1.0);
+    // out_Col = vec4(layer1, 1.0);
+
+    // fancyHt = fancyHt + 0.5;
+
+    fancyHt = (1.0 - height1) * u_Screen.y; 
 
     if (sy > fancyHt) {
         out_Col = mix(vec4(0.0,0.0,0.0,0.5), out_Col, 0.5 );
