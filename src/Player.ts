@@ -23,10 +23,10 @@ class Player {
     constructor() {
         this.force = vec2.fromValues(0.0,-9.8);
         this.falling = true;
-        this.vel = vec2.fromValues(2.0, 0.0);
+        this.vel = vec2.fromValues(1.0, 0.0);
         this.pos = vec2.fromValues(-0.7, 0.5);
-        this.minVelocityX = 1.0;
-        this.maxVelocityX = 100.0;
+        this.minVelocityX = 0.2;
+        this.maxVelocityX = 3.0;
         this.maxVelocityY = 50.0;
         this.mass = vec2.fromValues(1.0,1.0);
         this.buttonDown = false;
@@ -40,21 +40,55 @@ class Player {
         this.buttonDown = false;
     }
 
-    calculateForce(normal:vec2) {
-        var gravity = vec2.fromValues(0.0,-9.8);
-        vec2.scale(normal, normal, 2.0);
-        normal[1] = normal[1] * 5.0;
-        if (this.falling) {
-            this.acc = gravity;
-        } else {
-            vec2.add(normal, normal, gravity);
-            this.acc = vec2.fromValues(normal[0], normal[1]);
-        }
+    calculateForce(normal:vec2, friction:vec2) {
+        var gravity = vec2.fromValues(0.0,-9.8 * 0.15);
+        var force = vec2.create();
+        // vec2.scale(normal, normal, 3.0);
 
         if(this.buttonDown){
             console.log('button is DOWN');
-            vec2.add(this.acc, this.acc, vec2.fromValues(1.0,-30.8));
+            // vec2.add(this.acc, this.acc, vec2.fromValues(0.0,-20.8));
+            // vec2.scale(normal, normal, 12.0);
+            if(normal[0] > 0.0){
+                vec2.divide(normal,normal,normal);
+                vec2.divide(normal,normal,normal);
+                normal[1] = -normal[1] * 5.0;
+                normal[0] = normal[0] * 3.0;
+            } else {
+                vec2.scale(normal, normal, 4.0);
+            }
+            
+            // vec2.scale(normal, normal, -1.0);
+
+            if(friction[0] < 0.0){
+                vec2.scale(friction, friction,-2.5);
+                friction[0] = friction[0] * 2.0;
+            }
+            
+
+            vec2.add(force, force, vec2.fromValues(0.0, -40.0));
+        } else {
+            vec2.scale(normal, normal, 3.0);
         }
+        if (this.falling) {
+            vec2.add(force, force, gravity);
+            this.acc = vec2.fromValues(force[0], force[1]);
+        } else {
+            
+            vec2.add(force, normal, force);
+            vec2.add(force, force, gravity);
+            vec2.add(force, force, friction);
+
+            this.acc = vec2.fromValues(force[0], force[1]);
+        }
+
+        // if(this.buttonDown){
+        //     console.log('button is DOWN');
+        //     vec2.add(this.acc, this.acc, vec2.fromValues(0.0,-20.8));
+        //     // vec2.add(force, force, vec2.fromValues(0.0, -4000.0));
+        // }
+
+        
 
     }
 
