@@ -226,23 +226,15 @@ void main()
 	vec3 layer1 = mix(colSky, mix(vec3(0.55), backgroundCol, smoothstep(0.0, pixelSize * 2.0, 1.0 - height2)), smoothstep(-pixelSize, 0.0, 1.0-height2));
 	// foreground
     vec3 layer2 = mix(vec3(0.2), foregroundCol, smoothstep(0.0, pixelSize * 3.0, 1.0 - height1));
-    // vec3 layer2 = mix(vec3(0.2), foregroundCol, smoothstep(0.0, pixelSize * 2.0, ));
-
-
-
-    // layer1 = backgroundCol;
-    // layer2 = foregroundCol;
 
     out_Col = vec4(mix(layer1, layer2, smoothstep(-pixelSize, 0.0, 1.0 - height1)), 1.0);
-    // out_Col = vec4(layer1, 1.0);
 
-    // fancyHt = fancyHt + 0.5;
 
-    fancyHt = (1.0 - height1) * u_Screen.y; 
+    // fancyHt = (1.0 - height1) * u_Screen.y; 
 
-    if (sy > fancyHt) {
-        out_Col = mix(vec4(0.0,0.0,0.0,0.5), out_Col, 0.5 );
-    } 
+    // if (sy > fancyHt) {
+    //     out_Col = mix(vec4(0.0,0.0,0.0,0.5), out_Col, 0.5 );
+    // } 
 
     if(inBird(sx,sy)){
         out_Col = vec4(1.0,0.0,0.0,1.0);

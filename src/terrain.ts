@@ -8,10 +8,13 @@ class Terrain {
 
   getHeight(distance: number) {
       // return 0.2 * Math.sin(10.0 * distance);
-      return Math.sin(distance*3.0) * 0.2 + 
+      let sinPart = Math.sin(distance*3.0) * 0.2 + 
       Math.sin(distance * 6.17+4740.14) * 0.1 + 
       Math.sin(distance * 10.987+19.19) * 0.05;
+      // console.log("Sin: " + sinPart);
+      // console.log("1 - sin: " + (1.0 - sinPart));
 
+      return (1.0 - sinPart);
   }
 
   getNormal(distance: number) {  
@@ -19,14 +22,15 @@ class Terrain {
     let slope = 0.6 * Math.cos(3 * distance) + 
           0.617 * Math.cos(4740.14 + 6.17 * distance) +
           0.54935 * Math.cos(19.19 + 10.987 * distance);
-    return vec2.fromValues( - slope, 1);
+    return vec2.fromValues(slope, 1);
   }
 
   getSlope(distance: number) {  
     // return 2.0 * Math.cos(10.0 * distance);
-    return 0.6 * Math.cos(3 * distance) + 
+    let slope = - ( 0.6 * Math.cos(3 * distance) + 
     0.617 * Math.cos(4740.14 + 6.17 * distance) +
-    0.54935 * Math.cos(19.19 + 10.987 * distance);
+    0.54935 * Math.cos(19.19 + 10.987 * distance));
+    return slope;
   }
 
 };
