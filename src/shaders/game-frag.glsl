@@ -24,21 +24,24 @@ const float pi = 3.14159265358979;
 // parameters
 // Referencing 2D Procedural terrain texturing from shadertoy
 // https://www.shadertoy.com/view/lscGzB
-const float gradientAngle = 25.0; // degrees
-const vec2 lumSatOffset = vec2(0.1,0.0); // range [-1..1]
-const float lumSatAngle = 110.0; // degrees
-const float lumSatFactor = 0.4;// range [0..1]
-const float NoiseFactor = 0.20; // range [0..1]
-const float SmoothStepBase = 0.22; // range[0..0.25]
+
+// angle of the stripes, whether or not they overlap
+const float gradientAngle = 100.0; // degrees
+// intensity of noise texture on hills
+const float NoiseFactor = 0.18; // range [0..1]
+// width of the stripes
+const float SmoothStepBase = 0.25; // range[0..0.25]
+// number of stripes
 const float TextureSliceFactor = 0.4; // range [0..1]
+// controls the thickness and orientation of the stripes
 const float StrideFactor = -3.1; // range[-inf..+inf]
-const float GroundSaturation = 4.0; // range [0..1]
+const float GroundSaturation = 3.0; // range [0..1]
 
 // Converts HSV to RGB so we can properly shade the colors using their RGB values
 vec3 hsv2rgb (in vec3 hsv) 
 {
     // scaled up for value
-    return hsv.z * (1.0 + 0.5 * hsv.y * (cos (6.2832 * (hsv.x + vec3 (0.0, 0.6667, 0.3333))) - 1.0));
+    return hsv.z * 1.2 *  (1.0 + 0.5 * hsv.y * (cos (6.2832 * (hsv.x + vec3 (0.0, 0.6667, 0.3333))) - 1.0));
 }
 
 // Transforms RGB values to HSV so we can tune the texture by HSV
@@ -126,11 +129,10 @@ float getTex2(float u)
 // A funkier hill height
 float getGroundHeight(float x)
 {
-        // return 0.2 * sin(3.0 * x) +  0.1 * sin(6.0 * x);
-
     return sin(x*3.0) * 0.2 + sin(x * 6.17+4740.14) * 0.1 + sin(x * 10.987+19.19) * 0.05 + 0.3;
 }
 
+// A tamer hill height
 float getGroundHeight2(float x) 
 {
     return 0.2 * cos(3.0 * x) +  0.1 * cos(6.0 * x);
@@ -140,9 +142,9 @@ float getGroundHeight2(float x)
 vec3 getWorldColor(vec2 uv)
 {
     vec2 hueSelection = normalize(u_ColorScheme);
-    hueSelection = normalize(vec2(6.0,4.0));
-    // float c = getTex2(uv.x*4.0 + uv.y*StrideFactor)+0.2; 
-    float c = getTex2(uv.x*4.0 + uv.y*StrideFactor)+0.2; 
+        hueSelection = normalize(vec2(6.0,4.0));
+
+    float c = getTex2(uv.x * 4.0 + uv.y * StrideFactor) + 0.2; 
     
 
     vec3 colPalette=vec3(0.0);
@@ -195,6 +197,7 @@ void main()
     
     float fancyHt = getGroundHeight(sx + u_BirdPos.x + 0.5) - 0.3; 
     vec2 hueSelection = normalize(u_ColorScheme);
+    hueSelection = normalize(vec2(4.0,6.0));
 
     ////////////////////////////////////////////////////////////////
     vec2 uv = vec2(sx, sy);
