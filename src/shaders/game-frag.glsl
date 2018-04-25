@@ -229,13 +229,6 @@ void main()
 
     out_Col = vec4(mix(layer1, layer2, smoothstep(-pixelSize, 0.0, 1.0 - height1)), 1.0);
 
-
-    // fancyHt = (1.0 - height1) * u_Screen.y; 
-
-    // if (sy > fancyHt) {
-    //     out_Col = mix(vec4(0.0,0.0,0.0,0.5), out_Col, 0.5 );
-    // } 
-
     if(inBird(sx,sy)){
         out_Col = vec4(1.0,0.0,0.0,1.0);
     }
