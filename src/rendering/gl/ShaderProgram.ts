@@ -28,6 +28,8 @@ class ShaderProgram {
   unifBirdPos: WebGLUniformLocation;
   unifColorScheme: WebGLUniformLocation;
   unifTexture: WebGLUniformLocation;
+  unifStripes: WebGLUniformLocation;
+  unifSlice: WebGLUniformLocation;
 
   constructor(shaders: Array<Shader>) {
     this.prog = gl.createProgram();
@@ -43,7 +45,11 @@ class ShaderProgram {
     this.attrPos = gl.getAttribLocation(this.prog, "vs_Pos");
     this.unifScreen = gl.getUniformLocation(this.prog, "u_Screen");
     this.unifBirdPos = gl.getUniformLocation(this.prog, "u_BirdPos");
+
+    // Terrain uniforms
     this.unifColorScheme = gl.getUniformLocation(this.prog, "u_ColorScheme");
+    this.unifStripes = gl.getUniformLocation(this.prog, "u_StripeFactor");
+    this.unifSlice = gl.getUniformLocation(this.prog, "u_TextureSlice");
 
     //sprite
     this.unifTexture = gl.getUniformLocation(this.prog, "u_Texture");
@@ -72,10 +78,20 @@ class ShaderProgram {
     }
   }
 
-  setColorScheme() {
+  setTerrainParameters() {
     this.use();
     if (this.unifColorScheme != -1) {
       gl.uniform2f(this.unifColorScheme, Math.random() - 0.5, Math.random() - 0.5);
+    }
+    if (this.unifStripes != -1) {
+      gl.uniform1f(this.unifStripes, (Math.random() - 0.5) * 20);
+    }
+    if (this.unifSlice != -1) {
+      let i = Math.random();
+      if (i > 0.95) {
+        i = 1;
+      }
+      gl.uniform1f(this.unifSlice, i);
     }
   }
 

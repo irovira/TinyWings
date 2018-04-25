@@ -22,6 +22,11 @@ uniform vec2 u_Screen;
 uniform vec2 u_BirdPos;
 uniform vec2 u_ColorScheme;
 
+// controls the thickness and orientation of the stripes
+uniform float u_StripeFactor; // range[-10, 10]
+// controls number of stripes
+uniform float u_TextureSlice; // range [0..1]
+
 in vec4 fs_Pos;
 out vec4 out_Col;
 
@@ -35,19 +40,14 @@ const float pi = 3.14159265358979;
 // angle of the stripes, whether or not they overlap
 const float gradientAngle = 100.0; // degrees
 // intensity of noise texture on hills
-const float NoiseFactor = 0.18; // range [0..1]
-// width of the stripes
-const float SmoothStepBase = 0.25; // range[0..0.25]
-// number of stripes
-const float TextureSliceFactor = 0.4; // range [0..1]
-// controls the thickness and orientation of the stripes
-const float StrideFactor = -3.1; // range[-inf..+inf]
+const float NoiseFactor = 0.14; // range [0..1]
+// fading of the stripes
+const float SmoothStepBase = 0.2; // range[0..0.25]
 const float GroundSaturation = 3.0; // range [0..1]
 
 // Converts HSV to RGB so we can properly shade the colors using their RGB values
 vec3 hsv2rgb (in vec3 hsv) 
 {
-    // scaled up for value
     return hsv.z *  (1.0 + 0.5 * hsv.y * (cos (6.2832 * (hsv.x + vec3 (0.0, 0.6667, 0.3333))) - 1.0));
 }
 
@@ -120,7 +120,7 @@ float perlinNoise(vec2 p)
 float getTex(float u)
 {
     u = mod(u,1.0);
-    float v = u - mod(u, (TextureSliceFactor+abs(sin(u*6.15159))*0.01));
+    float v = u - mod(u, (u_TextureSlice + abs(sin(u * 6.15159)) * 0.01));
     return v-mod(v, 0.1);
 }
 
@@ -151,7 +151,7 @@ vec3 getWorldColor(vec2 uv)
     vec2 hueSelection = normalize(u_ColorScheme);
     // hueSelection = normalize(vec2(6.0,4.0));
 
-    float c = getTex2(uv.x * 4.0 + uv.y * StrideFactor) + 0.2; 
+    float c = getTex2(uv.x * 4.0 + uv.y * u_StripeFactor) + 0.2; 
     
 
     vec3 colPalette=vec3(0.0);
@@ -170,10 +170,8 @@ vec3 getWorldColor(vec2 uv)
         colPalette = mix(colPalette, hsv2rgb(vec3(baseColorHSV.r, 0.3,0.6)), smoothstep(SmoothStepBase*ifl, 0.25*ifl, c));
         
     }
-    // colPalette = vec3(1.0,0.0,0.0);
     // Adds a bit of saturation
     colPalette = mix(colPalette, vec3(dot(colPalette, vec3(0.299, 0.587, 0.114))), 1.0-GroundSaturation);
-        // colPalette = vec3(1.0,0.0,0.0);
 
     uv.y = 1.0 - uv.y;
     vec2 noisePos = uv;
@@ -188,11 +186,10 @@ vec3 getWorldColor(vec2 uv)
     float unoise = noise * NoiseFactor + (1.0 - NoiseFactor);
     
     vec3 recompBase = colPalette * intens * unoise;
-    // 
+    
+    // darkness of noise contribution
     vec3 recomp = mix(recompBase, vec3(1.0), max(intens * 0.9 - 1.0, 0.00));
 
-    vec3 editRecomp = rgb2hsv(recomp);
-    vec3 editEdit = hsv2rgb(vec3(editRecomp.x * 0.9, editRecomp.y, editRecomp.z * 0.7));
     return recomp;
 }
 
@@ -295,16 +292,12 @@ void main()
         
     }
 
-<<<<<<< HEAD
-=======
     if (inWing(sx,sy)){
          out_Col = vec4(1.0,0.3,0.0,1.0);
     }
-
     
 
     
     ////////////////////////////////////////////////////////////////
 
->>>>>>> isabela
 }

@@ -62,7 +62,8 @@ function main() {
     new Shader(gl.FRAGMENT_SHADER, require('./shaders/game-frag.glsl')),
   ]);
 
-  gameShader.setColorScheme();
+  // set uniforms for the game
+  gameShader.setTerrainParameters();
 
   // This function will be called every frame
   function tick() {
