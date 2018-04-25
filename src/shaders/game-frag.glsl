@@ -9,6 +9,13 @@
 // data passed into the fragment shader by the vertex shader, the fragment shader
 // can compute what color to apply to its pixel based on things like vertex
 // position, light position, and vertex color.
+
+//*SPRITE STUFF*//
+// in vec2 fs_TexCoord;
+ 
+// uniform sampler2D u_Texture;
+
+//*TERRAIN STUFF*//
 precision highp float;
 
 uniform vec2 u_Screen;
@@ -200,8 +207,33 @@ bool inBird(float x, float y){
     return xdif * xdif + ydif * ydif < radius * radius;
 }
 
+bool inEye(float x, float y){
+    float xdif = abs(-0.5 + 0.01 - x); // Screen position of bird is always -0.5 in the x-direction
+    float ydif = abs(u_BirdPos.y + 0.01  - y);
+    return xdif * xdif + ydif * ydif < 0.01 * 0.01;
+}
+
+bool inPupil(float x, float y){
+    float xdif = abs(-0.5 + 0.01 - x); // Screen position of bird is always -0.5 in the x-direction
+    float ydif = abs(u_BirdPos.y + 0.01  - y);
+    return xdif * xdif + ydif * ydif < 0.005 * 0.005;
+}
+
+bool inWing(float x, float y){
+    float xdif = abs(-0.5 - 0.01 - x); // Screen position of bird is always -0.5 in the x-direction
+    float ydif = abs(u_BirdPos.y - 0.01  - y);
+    return xdif * xdif + ydif * ydif < 0.02 * 0.02;
+}
+
+bool inBeak(float x, float y){
+    float xdif = abs(-0.5 + 0.03 - x); // Screen position of bird is always -0.5 in the x-direction
+    float ydif = abs(u_BirdPos.y  - y);
+    return xdif * xdif + ydif * ydif < 0.01 * 0.01;
+}
+
 void main()
 {
+    //*TERRAIN CODE*//
     float aspect = u_Screen.x / u_Screen.y;
     float sx = fs_Pos.x;
 	float sy = fs_Pos.y / aspect;
@@ -243,8 +275,36 @@ void main()
 
     out_Col = vec4(mix(layer1, layer2, smoothstep(-pixelSize, 0.0, 1.0 - height1)), 1.0);
 
-    if(inBird(sx,sy)){
-        out_Col = vec4(1.0,0.0,0.0,1.0);
+    if(inBeak(sx,sy)){
+        out_Col = vec4(1.0,0.5,0.0,1.0);
     }
 
+    if(inBird(sx,sy)){
+        //*SPRITE CODE*// 
+        if(inEye(sx,sy)){
+            if(inPupil(sx,sy)){
+                out_Col = vec4(0.0,0.0,0.0,1.0);
+            } else {
+                out_Col = vec4(1.0,1.0,1.0,1.0);
+            }
+                
+        } else {
+            out_Col = vec4(1.0,0.0,0.0,1.0);
+        }
+        // out_Col = texture(texture, fs_TexCoord);
+        
+    }
+
+<<<<<<< HEAD
+=======
+    if (inWing(sx,sy)){
+         out_Col = vec4(1.0,0.3,0.0,1.0);
+    }
+
+    
+
+    
+    ////////////////////////////////////////////////////////////////
+
+>>>>>>> isabela
 }
