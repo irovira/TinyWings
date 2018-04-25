@@ -2,6 +2,7 @@ import {mat4, vec4} from 'gl-matrix';
 import Drawable from './Drawable';
 import {gl} from '../../globals';
 import ShaderProgram from './ShaderProgram';
+import Sprite from '../../geometry/Sprite';
 
 // In this file, `gl` is accessible because it is imported above
 class OpenGLRenderer {
@@ -26,6 +27,10 @@ class OpenGLRenderer {
     for (let drawable of drawables) {
       prog.draw(drawable);
     }
+
+    // for (let sprite of sprites){
+    //   prog.drawSprite(sprite);
+    // }
   }
 };
 

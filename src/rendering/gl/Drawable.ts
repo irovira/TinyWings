@@ -2,6 +2,7 @@ import {gl} from '../../globals';
 
 abstract class Drawable {
   count: number = 0;
+  name: string;
 
   bufIdx: WebGLBuffer;
   bufPos: WebGLBuffer;
@@ -10,10 +11,11 @@ abstract class Drawable {
   idxBound: boolean = false;
   posBound: boolean = false;
   norBound: boolean = false;
+  isSprite: boolean = false;
 
   abstract create() : void;
 
-  destory() {
+  destroy() {
     gl.deleteBuffer(this.bufIdx);
     gl.deleteBuffer(this.bufPos);
     gl.deleteBuffer(this.bufNor);

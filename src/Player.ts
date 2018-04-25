@@ -53,9 +53,10 @@ class Player {
                 vec2.divide(normal,normal,normal);
                 vec2.divide(normal,normal,normal);
                 normal[1] = -normal[1] * 5.0;
-                normal[0] = normal[0] * 3.0;
+                normal[0] = normal[0] * 5.0;
             } else {
                 vec2.scale(normal, normal, 4.0);
+                normal[0] = 2.0 * normal[0];
             }
             
             // vec2.scale(normal, normal, -1.0);
