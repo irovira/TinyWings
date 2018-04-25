@@ -41,7 +41,7 @@ const float GroundSaturation = 3.0; // range [0..1]
 vec3 hsv2rgb (in vec3 hsv) 
 {
     // scaled up for value
-    return hsv.z * 1.2 *  (1.0 + 0.5 * hsv.y * (cos (6.2832 * (hsv.x + vec3 (0.0, 0.6667, 0.3333))) - 1.0));
+    return hsv.z *  (1.0 + 0.5 * hsv.y * (cos (6.2832 * (hsv.x + vec3 (0.0, 0.6667, 0.3333))) - 1.0));
 }
 
 // Transforms RGB values to HSV so we can tune the texture by HSV
@@ -142,7 +142,7 @@ float getGroundHeight2(float x)
 vec3 getWorldColor(vec2 uv)
 {
     vec2 hueSelection = normalize(u_ColorScheme);
-        hueSelection = normalize(vec2(6.0,4.0));
+    // hueSelection = normalize(vec2(6.0,4.0));
 
     float c = getTex2(uv.x * 4.0 + uv.y * StrideFactor) + 0.2; 
     
@@ -161,8 +161,13 @@ vec3 getWorldColor(vec2 uv)
 		float ifl = float(i);
         vec3 baseColorHSV = rgb2hsv(baseColor(dir));
         colPalette = mix(colPalette, hsv2rgb(vec3(baseColorHSV.r, 0.3,0.6)), smoothstep(SmoothStepBase*ifl, 0.25*ifl, c));
+        
     }
+    // colPalette = vec3(1.0,0.0,0.0);
+    // Adds a bit of saturation
     colPalette = mix(colPalette, vec3(dot(colPalette, vec3(0.299, 0.587, 0.114))), 1.0-GroundSaturation);
+        // colPalette = vec3(1.0,0.0,0.0);
+
     uv.y = 1.0 - uv.y;
     vec2 noisePos = uv;
     float noise = perlinNoise(noisePos * 10.0) + 
@@ -170,11 +175,17 @@ vec3 getWorldColor(vec2 uv)
                     perlinNoise(noisePos * 40.0) * 0.6 + 
                     perlinNoise(noisePos * 80.0) * 0.4;
     
-    float intens = max(pow(0.5, (uv.y-0.10) * 9.0), 0.20);
+    // intensity of noise contribution 
+    float intens = max(pow(0.5, (uv.y-0.10) * 9.0), 0.4);
+    
     float unoise = noise * NoiseFactor + (1.0 - NoiseFactor);
     
     vec3 recompBase = colPalette * intens * unoise;
-    vec3 recomp = mix(recompBase, vec3(1.0), max(intens * 0.9 - 1.0, 0.0));
+    // 
+    vec3 recomp = mix(recompBase, vec3(1.0), max(intens * 0.9 - 1.0, 0.00));
+
+    vec3 editRecomp = rgb2hsv(recomp);
+    vec3 editEdit = hsv2rgb(vec3(editRecomp.x * 0.9, editRecomp.y, editRecomp.z * 0.7));
     return recomp;
 }
 
@@ -197,7 +208,7 @@ void main()
     
     float fancyHt = getGroundHeight(sx + u_BirdPos.x + 0.5) - 0.3; 
     vec2 hueSelection = normalize(u_ColorScheme);
-    hueSelection = normalize(vec2(4.0,6.0));
+    // hueSelection = normalize(vec2(4.0,6.0));
 
     ////////////////////////////////////////////////////////////////
     vec2 uv = vec2(sx, sy);
