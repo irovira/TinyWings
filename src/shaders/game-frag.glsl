@@ -1,20 +1,5 @@
 #version 300 es
 
-// This is a fragment shader. If you've opened this file first, please
-// open and read lambert.vert.glsl before reading on.
-// Unlike the vertex shader, the fragment shader actually does compute
-// the shading of geometry. For every pixel in your program's output
-// screen, the fragment shader is run for every bit of geometry that
-// particular pixel overlaps. By implicitly interpolating the position
-// data passed into the fragment shader by the vertex shader, the fragment shader
-// can compute what color to apply to its pixel based on things like vertex
-// position, light position, and vertex color.
-
-//*SPRITE STUFF*//
-// in vec2 fs_TexCoord;
- 
-// uniform sampler2D u_Texture;
-
 //*TERRAIN STUFF*//
 precision highp float;
 
@@ -237,9 +222,7 @@ void main()
     
     float fancyHt = getGroundHeight(sx + u_BirdPos.x + 0.5) - 0.3; 
     vec2 hueSelection = normalize(u_ColorScheme);
-    // hueSelection = normalize(vec2(4.0,6.0));
 
-    ////////////////////////////////////////////////////////////////
     vec2 uv = vec2(sx, sy);
 
     // Rotates baseColor
@@ -248,17 +231,14 @@ void main()
     
     float iTime = u_BirdPos.x;
     
-    // float pos1 = uv.x + iTime * 0.3; // parallax
     float pos1 = uv.x + iTime + 0.5; // foreground, moves according to bird
     float pos2 = uv.x + iTime * 0.3; // background, moves slower for parallax
     
     // camHeight controls the up and down motion of the hills
-    // float camHeight = (getGroundHeight(iTime + 0.5) + getGroundHeight(iTime + 0.1) + getGroundHeight(iTime + 0.9)) / 3.0 - 0.5;
     float camHeight = u_BirdPos.y;
 
-    // float height1 = uv.y + getGroundHeight(pos1) + 0.8 - camHeight;
-    float height1 = uv.y + getGroundHeight(pos1) + 0.8;
-    float height2 = uv.y + getGroundHeight(pos2)  + 0.2 + camHeight * 0.03; //- camHeight * 0.5;
+    float height1 = uv.y + getGroundHeight(pos1) + 0.8; // Height for foreground
+    float height2 = uv.y + getGroundHeight(pos2)  + 0.2 + camHeight * 0.03; // Height for background
     
     vec3 foregroundCol = getWorldColor(vec2(pos1, height1)); // foreground color 
     vec3 backgroundCol = mix(colSky, getWorldColor(vec2(pos2, height2)), 0.4); // background color
@@ -277,8 +257,8 @@ void main()
         out_Col = vec4(1.0,0.8,0.0,1.0);
     }
 
+    //*SPRITE CODE*// 
     if(inBird(sx,sy)){
-        //*SPRITE CODE*// 
         if(inEye(sx,sy)){
             if(inPupil(sx,sy)){
                 out_Col = vec4(0.0,0.0,0.0,1.0);
@@ -289,15 +269,10 @@ void main()
         } else {
             out_Col = vec4(1.0,0.3,0.0,1.0);
         }
-        // out_Col = texture(texture, fs_TexCoord);
-        
     }
-
 
     if (inWing(sx,sy)){
          out_Col = vec4(0.0,0.5,0.5,1.0);
     }
     
-    ////////////////////////////////////////////////////////////////
-
 }

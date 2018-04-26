@@ -22,16 +22,8 @@ const controls = {
   distance: 0.0,
   'Restart': restart,
 };
-function handleKeyDown(){
 
-}
-
-function handleKeyUp(){
-
-}
-
-
-
+let gameShaderInstance: ShaderProgram;
 
 function main() {
   // Initial display for framerate
@@ -72,6 +64,8 @@ function main() {
     new Shader(gl.FRAGMENT_SHADER, require('./shaders/game-frag.glsl')),
   ]);
 
+  gameShaderInstance = gameShader;
+
   // set uniforms for the game
   gameShader.setTerrainParameters();
 
@@ -81,13 +75,12 @@ function main() {
     controls.distance = gameManager.player.pos[0];
     controls.timer -= 0.01;
     if(controls.timer <= 0.0){
-      //debugger;
       gameManager.quit();
       controls.timer = 0.0;
     }
     stats.begin();
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
-    gameShader.setBirdPosition(gameManager.player.pos);//vec2.fromValues(count / 500.0, Math.sin(count / 100)));
+    gameShader.setBirdPosition(gameManager.player.pos);
     gameManager.updateState();
     renderer.clear();
     renderer.render(gameShader, [
@@ -149,7 +142,6 @@ function main() {
     }
   }, true);
 
- 
 
   renderer.setSize(window.innerWidth, window.innerHeight);
   gameShader.setScreenDimensions(canvas.width, canvas.height);
@@ -160,10 +152,9 @@ function main() {
 }
 
 function restart(){
-  debugger;
   controls.timer = 30.0;
+  gameShaderInstance.setTerrainParameters();
   gameManager.restart();
-  
 }
 
 main();

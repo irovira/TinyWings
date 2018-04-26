@@ -17,9 +17,7 @@ class GameManager {
 
     player: Player = new Player();
     terrain: Terrain = new Terrain();
-    constructor() {
-
-    }
+    constructor() {}
 
     intersectPlayer(a:number, b:number, c:number, x:number, y:number, radius:number) : boolean{
       //based on perpendicular distance between line and point
@@ -28,11 +26,9 @@ class GameManager {
     }
 
     keyUp(){
-      console.log('key up called');
       this.player.buttonReleased();
     }
     keyDown(){
-      console.log('key down called');
       this.player.buttonPressed();
     }
 
@@ -73,8 +69,7 @@ class GameManager {
       } else if(Math.abs(this.player.pos[1] - birdDirHeight) < 0.02){
         this.player.pos[1] = birdDirHeight + 0.04;
         this.player.falling = true;
-      } else if(Math.abs(this.player.pos[1] - birdDirHeight2) < 0.02)
-      { 
+      } else if(Math.abs(this.player.pos[1] - birdDirHeight2) < 0.02) { 
         this.player.pos[1] = birdDirHeight2 + 0.04;
         this.player.falling = true;
         // this.player.pos[1] = birdDirHeight2 + 0.03;
