@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -146,21 +146,21 @@ function equals(a, b) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__gl_matrix_common__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__gl_matrix_mat2__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__gl_matrix_mat2d__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__gl_matrix_mat3__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__gl_matrix_mat4__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__gl_matrix_quat__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__gl_matrix_vec2__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__gl_matrix_vec3__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__gl_matrix_vec4__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__gl_matrix_mat2__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__gl_matrix_mat2d__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__gl_matrix_mat3__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__gl_matrix_mat4__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__gl_matrix_quat__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__gl_matrix_vec2__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__gl_matrix_vec3__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__gl_matrix_vec4__ = __webpack_require__(5);
 /* unused harmony reexport glMatrix */
 /* unused harmony reexport mat2 */
 /* unused harmony reexport mat2d */
 /* unused harmony reexport mat3 */
-/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_4__gl_matrix_mat4__; });
+/* unused harmony reexport mat4 */
 /* unused harmony reexport quat */
-/* unused harmony reexport vec2 */
+/* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_6__gl_matrix_vec2__; });
 /* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_7__gl_matrix_vec3__; });
 /* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_8__gl_matrix_vec4__; });
 /**
@@ -218,94 +218,6 @@ function setGL(_gl) {
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports) {
-
-module.exports = invert;
-
-/**
- * Inverts a mat4
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the source matrix
- * @returns {mat4} out
- */
-function invert(out, a) {
-    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
-        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
-        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
-        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15],
-
-        b00 = a00 * a11 - a01 * a10,
-        b01 = a00 * a12 - a02 * a10,
-        b02 = a00 * a13 - a03 * a10,
-        b03 = a01 * a12 - a02 * a11,
-        b04 = a01 * a13 - a03 * a11,
-        b05 = a02 * a13 - a03 * a12,
-        b06 = a20 * a31 - a21 * a30,
-        b07 = a20 * a32 - a22 * a30,
-        b08 = a20 * a33 - a23 * a30,
-        b09 = a21 * a32 - a22 * a31,
-        b10 = a21 * a33 - a23 * a31,
-        b11 = a22 * a33 - a23 * a32,
-
-        // Calculate the determinant
-        det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-
-    if (!det) { 
-        return null; 
-    }
-    det = 1.0 / det;
-
-    out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
-    out[1] = (a02 * b10 - a01 * b11 - a03 * b09) * det;
-    out[2] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
-    out[3] = (a22 * b04 - a21 * b05 - a23 * b03) * det;
-    out[4] = (a12 * b08 - a10 * b11 - a13 * b07) * det;
-    out[5] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
-    out[6] = (a32 * b02 - a30 * b05 - a33 * b01) * det;
-    out[7] = (a20 * b05 - a22 * b02 + a23 * b01) * det;
-    out[8] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
-    out[9] = (a01 * b08 - a00 * b10 - a03 * b06) * det;
-    out[10] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
-    out[11] = (a21 * b02 - a20 * b04 - a23 * b00) * det;
-    out[12] = (a11 * b07 - a10 * b09 - a12 * b06) * det;
-    out[13] = (a00 * b09 - a01 * b07 + a02 * b06) * det;
-    out[14] = (a31 * b01 - a30 * b03 - a32 * b00) * det;
-    out[15] = (a20 * b03 - a21 * b01 + a22 * b00) * det;
-
-    return out;
-};
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = normalize;
-
-/**
- * Normalize a vec3
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a vector to normalize
- * @returns {vec3} out
- */
-function normalize(out, a) {
-    var x = a[0],
-        y = a[1],
-        z = a[2]
-    var len = x*x + y*y + z*z
-    if (len > 0) {
-        //TODO: evaluate use of glm_invsqrt here?
-        len = 1 / Math.sqrt(len)
-        out[0] = a[0] * len
-        out[1] = a[1] * len
-        out[2] = a[2] * len
-    }
-    return out
-}
-
-/***/ }),
-/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1112,7 +1024,7 @@ const sub = subtract;
 
 
 /***/ }),
-/* 6 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1952,7 +1864,7 @@ const forEach = (function() {
 
 
 /***/ }),
-/* 7 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2614,700 +2526,21 @@ const forEach = (function() {
 
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = createFilteredVector
-
-var cubicHermite = __webpack_require__(37)
-var bsearch = __webpack_require__(9)
-
-function clamp(lo, hi, x) {
-  return Math.min(hi, Math.max(lo, x))
-}
-
-function FilteredVector(state0, velocity0, t0) {
-  this.dimension  = state0.length
-  this.bounds     = [ new Array(this.dimension), new Array(this.dimension) ]
-  for(var i=0; i<this.dimension; ++i) {
-    this.bounds[0][i] = -Infinity
-    this.bounds[1][i] = Infinity
-  }
-  this._state     = state0.slice().reverse()
-  this._velocity  = velocity0.slice().reverse()
-  this._time      = [ t0 ]
-  this._scratch   = [ state0.slice(), state0.slice(), state0.slice(), state0.slice(), state0.slice() ]
-}
-
-var proto = FilteredVector.prototype
-
-proto.flush = function(t) {
-  var idx = bsearch.gt(this._time, t) - 1
-  if(idx <= 0) {
-    return
-  }
-  this._time.splice(0, idx)
-  this._state.splice(0, idx * this.dimension)
-  this._velocity.splice(0, idx * this.dimension)
-}
-
-proto.curve = function(t) {
-  var time      = this._time
-  var n         = time.length
-  var idx       = bsearch.le(time, t)
-  var result    = this._scratch[0]
-  var state     = this._state
-  var velocity  = this._velocity
-  var d         = this.dimension
-  var bounds    = this.bounds
-  if(idx < 0) {
-    var ptr = d-1
-    for(var i=0; i<d; ++i, --ptr) {
-      result[i] = state[ptr]
-    }
-  } else if(idx >= n-1) {
-    var ptr = state.length-1
-    var tf = t - time[n-1]
-    for(var i=0; i<d; ++i, --ptr) {
-      result[i] = state[ptr] + tf * velocity[ptr]
-    }
-  } else {
-    var ptr = d * (idx+1) - 1
-    var t0  = time[idx]
-    var t1  = time[idx+1]
-    var dt  = (t1 - t0) || 1.0
-    var x0  = this._scratch[1]
-    var x1  = this._scratch[2]
-    var v0  = this._scratch[3]
-    var v1  = this._scratch[4]
-    var steady = true
-    for(var i=0; i<d; ++i, --ptr) {
-      x0[i] = state[ptr]
-      v0[i] = velocity[ptr] * dt
-      x1[i] = state[ptr+d]
-      v1[i] = velocity[ptr+d] * dt
-      steady = steady && (x0[i] === x1[i] && v0[i] === v1[i] && v0[i] === 0.0)
-    }
-    if(steady) {
-      for(var i=0; i<d; ++i) {
-        result[i] = x0[i]
-      }
-    } else {
-      cubicHermite(x0, v0, x1, v1, (t-t0)/dt, result)
-    }
-  }
-  var lo = bounds[0]
-  var hi = bounds[1]
-  for(var i=0; i<d; ++i) {
-    result[i] = clamp(lo[i], hi[i], result[i])
-  }
-  return result
-}
-
-proto.dcurve = function(t) {
-  var time     = this._time
-  var n        = time.length
-  var idx      = bsearch.le(time, t)
-  var result   = this._scratch[0]
-  var state    = this._state
-  var velocity = this._velocity
-  var d        = this.dimension
-  if(idx >= n-1) {
-    var ptr = state.length-1
-    var tf = t - time[n-1]
-    for(var i=0; i<d; ++i, --ptr) {
-      result[i] = velocity[ptr]
-    }
-  } else {
-    var ptr = d * (idx+1) - 1
-    var t0 = time[idx]
-    var t1 = time[idx+1]
-    var dt = (t1 - t0) || 1.0
-    var x0 = this._scratch[1]
-    var x1 = this._scratch[2]
-    var v0 = this._scratch[3]
-    var v1 = this._scratch[4]
-    var steady = true
-    for(var i=0; i<d; ++i, --ptr) {
-      x0[i] = state[ptr]
-      v0[i] = velocity[ptr] * dt
-      x1[i] = state[ptr+d]
-      v1[i] = velocity[ptr+d] * dt
-      steady = steady && (x0[i] === x1[i] && v0[i] === v1[i] && v0[i] === 0.0)
-    }
-    if(steady) {
-      for(var i=0; i<d; ++i) {
-        result[i] = 0.0
-      }
-    } else {
-      cubicHermite.derivative(x0, v0, x1, v1, (t-t0)/dt, result)
-      for(var i=0; i<d; ++i) {
-        result[i] /= dt
-      }
-    }
-  }
-  return result
-}
-
-proto.lastT = function() {
-  var time = this._time
-  return time[time.length-1]
-}
-
-proto.stable = function() {
-  var velocity = this._velocity
-  var ptr = velocity.length
-  for(var i=this.dimension-1; i>=0; --i) {
-    if(velocity[--ptr]) {
-      return false
-    }
-  }
-  return true
-}
-
-proto.jump = function(t) {
-  var t0 = this.lastT()
-  var d  = this.dimension
-  if(t < t0 || arguments.length !== d+1) {
-    return
-  }
-  var state     = this._state
-  var velocity  = this._velocity
-  var ptr       = state.length-this.dimension
-  var bounds    = this.bounds
-  var lo        = bounds[0]
-  var hi        = bounds[1]
-  this._time.push(t0, t)
-  for(var j=0; j<2; ++j) {
-    for(var i=0; i<d; ++i) {
-      state.push(state[ptr++])
-      velocity.push(0)
-    }
-  }
-  this._time.push(t)
-  for(var i=d; i>0; --i) {
-    state.push(clamp(lo[i-1], hi[i-1], arguments[i]))
-    velocity.push(0)
-  }
-}
-
-proto.push = function(t) {
-  var t0 = this.lastT()
-  var d  = this.dimension
-  if(t < t0 || arguments.length !== d+1) {
-    return
-  }
-  var state     = this._state
-  var velocity  = this._velocity
-  var ptr       = state.length-this.dimension
-  var dt        = t - t0
-  var bounds    = this.bounds
-  var lo        = bounds[0]
-  var hi        = bounds[1]
-  var sf        = (dt > 1e-6) ? 1/dt : 0
-  this._time.push(t)
-  for(var i=d; i>0; --i) {
-    var xc = clamp(lo[i-1], hi[i-1], arguments[i])
-    state.push(xc)
-    velocity.push((xc - state[ptr++]) * sf)
-  }
-}
-
-proto.set = function(t) {
-  var d = this.dimension
-  if(t < this.lastT() || arguments.length !== d+1) {
-    return
-  }
-  var state     = this._state
-  var velocity  = this._velocity
-  var bounds    = this.bounds
-  var lo        = bounds[0]
-  var hi        = bounds[1]
-  this._time.push(t)
-  for(var i=d; i>0; --i) {
-    state.push(clamp(lo[i-1], hi[i-1], arguments[i]))
-    velocity.push(0)
-  }
-}
-
-proto.move = function(t) {
-  var t0 = this.lastT()
-  var d  = this.dimension
-  if(t <= t0 || arguments.length !== d+1) {
-    return
-  }
-  var state    = this._state
-  var velocity = this._velocity
-  var statePtr = state.length - this.dimension
-  var bounds   = this.bounds
-  var lo       = bounds[0]
-  var hi       = bounds[1]
-  var dt       = t - t0
-  var sf       = (dt > 1e-6) ? 1/dt : 0.0
-  this._time.push(t)
-  for(var i=d; i>0; --i) {
-    var dx = arguments[i]
-    state.push(clamp(lo[i-1], hi[i-1], state[statePtr++] + dx))
-    velocity.push(dx * sf)
-  }
-}
-
-proto.idle = function(t) {
-  var t0 = this.lastT()
-  if(t < t0) {
-    return
-  }
-  var d        = this.dimension
-  var state    = this._state
-  var velocity = this._velocity
-  var statePtr = state.length-d
-  var bounds   = this.bounds
-  var lo       = bounds[0]
-  var hi       = bounds[1]
-  var dt       = t - t0
-  this._time.push(t)
-  for(var i=d-1; i>=0; --i) {
-    state.push(clamp(lo[i], hi[i], state[statePtr] + dt * velocity[statePtr]))
-    velocity.push(0)
-    statePtr += 1
-  }
-}
-
-function getZero(d) {
-  var result = new Array(d)
-  for(var i=0; i<d; ++i) {
-    result[i] = 0.0
-  }
-  return result
-}
-
-function createFilteredVector(initState, initVelocity, initTime) {
-  switch(arguments.length) {
-    case 0:
-      return new FilteredVector([0], [0], 0)
-    case 1:
-      if(typeof initState === 'number') {
-        var zero = getZero(initState)
-        return new FilteredVector(zero, zero, 0)
-      } else {
-        return new FilteredVector(initState, getZero(initState.length), 0)
-      }
-    case 2:
-      if(typeof initVelocity === 'number') {
-        var zero = getZero(initState.length)
-        return new FilteredVector(initState, zero, +initVelocity)
-      } else {
-        initTime = 0
-      }
-    case 3:
-      if(initState.length !== initVelocity.length) {
-        throw new Error('state and velocity lengths must match')
-      }
-      return new FilteredVector(initState, initVelocity, initTime)
-  }
-}
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function compileSearch(funcName, predicate, reversed, extraArgs, useNdarray, earlyOut) {
-  var code = [
-    "function ", funcName, "(a,l,h,", extraArgs.join(","),  "){",
-earlyOut ? "" : "var i=", (reversed ? "l-1" : "h+1"),
-";while(l<=h){\
-var m=(l+h)>>>1,x=a", useNdarray ? ".get(m)" : "[m]"]
-  if(earlyOut) {
-    if(predicate.indexOf("c") < 0) {
-      code.push(";if(x===y){return m}else if(x<=y){")
-    } else {
-      code.push(";var p=c(x,y);if(p===0){return m}else if(p<=0){")
-    }
-  } else {
-    code.push(";if(", predicate, "){i=m;")
-  }
-  if(reversed) {
-    code.push("l=m+1}else{h=m-1}")
-  } else {
-    code.push("h=m-1}else{l=m+1}")
-  }
-  code.push("}")
-  if(earlyOut) {
-    code.push("return -1};")
-  } else {
-    code.push("return i};")
-  }
-  return code.join("")
-}
-
-function compileBoundsSearch(predicate, reversed, suffix, earlyOut) {
-  var result = new Function([
-  compileSearch("A", "x" + predicate + "y", reversed, ["y"], false, earlyOut),
-  compileSearch("B", "x" + predicate + "y", reversed, ["y"], true, earlyOut),
-  compileSearch("P", "c(x,y)" + predicate + "0", reversed, ["y", "c"], false, earlyOut),
-  compileSearch("Q", "c(x,y)" + predicate + "0", reversed, ["y", "c"], true, earlyOut),
-"function dispatchBsearch", suffix, "(a,y,c,l,h){\
-if(a.shape){\
-if(typeof(c)==='function'){\
-return Q(a,(l===undefined)?0:l|0,(h===undefined)?a.shape[0]-1:h|0,y,c)\
-}else{\
-return B(a,(c===undefined)?0:c|0,(l===undefined)?a.shape[0]-1:l|0,y)\
-}}else{\
-if(typeof(c)==='function'){\
-return P(a,(l===undefined)?0:l|0,(h===undefined)?a.length-1:h|0,y,c)\
-}else{\
-return A(a,(c===undefined)?0:c|0,(l===undefined)?a.length-1:l|0,y)\
-}}}\
-return dispatchBsearch", suffix].join(""))
-  return result()
-}
-
-module.exports = {
-  ge: compileBoundsSearch(">=", false, "GE"),
-  gt: compileBoundsSearch(">", false, "GT"),
-  lt: compileBoundsSearch("<", true, "LT"),
-  le: compileBoundsSearch("<=", true, "LE"),
-  eq: compileBoundsSearch("-", true, "EQ", true)
-}
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-module.exports = cross;
-
-/**
- * Computes the cross product of two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-function cross(out, a, b) {
-    var ax = a[0], ay = a[1], az = a[2],
-        bx = b[0], by = b[1], bz = b[2]
-
-    out[0] = ay * bz - az * by
-    out[1] = az * bx - ax * bz
-    out[2] = ax * by - ay * bx
-    return out
-}
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports = dot;
-
-/**
- * Calculates the dot product of two vec3's
- *
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {Number} dot product of a and b
- */
-function dot(a, b) {
-    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
-}
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var identity = __webpack_require__(13);
-
-module.exports = lookAt;
-
-/**
- * Generates a look-at matrix with the given eye position, focal point, and up axis
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {vec3} eye Position of the viewer
- * @param {vec3} center Point the viewer is looking at
- * @param {vec3} up vec3 pointing up
- * @returns {mat4} out
- */
-function lookAt(out, eye, center, up) {
-    var x0, x1, x2, y0, y1, y2, z0, z1, z2, len,
-        eyex = eye[0],
-        eyey = eye[1],
-        eyez = eye[2],
-        upx = up[0],
-        upy = up[1],
-        upz = up[2],
-        centerx = center[0],
-        centery = center[1],
-        centerz = center[2];
-
-    if (Math.abs(eyex - centerx) < 0.000001 &&
-        Math.abs(eyey - centery) < 0.000001 &&
-        Math.abs(eyez - centerz) < 0.000001) {
-        return identity(out);
-    }
-
-    z0 = eyex - centerx;
-    z1 = eyey - centery;
-    z2 = eyez - centerz;
-
-    len = 1 / Math.sqrt(z0 * z0 + z1 * z1 + z2 * z2);
-    z0 *= len;
-    z1 *= len;
-    z2 *= len;
-
-    x0 = upy * z2 - upz * z1;
-    x1 = upz * z0 - upx * z2;
-    x2 = upx * z1 - upy * z0;
-    len = Math.sqrt(x0 * x0 + x1 * x1 + x2 * x2);
-    if (!len) {
-        x0 = 0;
-        x1 = 0;
-        x2 = 0;
-    } else {
-        len = 1 / len;
-        x0 *= len;
-        x1 *= len;
-        x2 *= len;
-    }
-
-    y0 = z1 * x2 - z2 * x1;
-    y1 = z2 * x0 - z0 * x2;
-    y2 = z0 * x1 - z1 * x0;
-
-    len = Math.sqrt(y0 * y0 + y1 * y1 + y2 * y2);
-    if (!len) {
-        y0 = 0;
-        y1 = 0;
-        y2 = 0;
-    } else {
-        len = 1 / len;
-        y0 *= len;
-        y1 *= len;
-        y2 *= len;
-    }
-
-    out[0] = x0;
-    out[1] = y0;
-    out[2] = z0;
-    out[3] = 0;
-    out[4] = x1;
-    out[5] = y1;
-    out[6] = z1;
-    out[7] = 0;
-    out[8] = x2;
-    out[9] = y2;
-    out[10] = z2;
-    out[11] = 0;
-    out[12] = -(x0 * eyex + x1 * eyey + x2 * eyez);
-    out[13] = -(y0 * eyex + y1 * eyey + y2 * eyez);
-    out[14] = -(z0 * eyex + z1 * eyey + z2 * eyez);
-    out[15] = 1;
-
-    return out;
-};
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = identity;
-
-/**
- * Set a mat4 to the identity matrix
- *
- * @param {mat4} out the receiving matrix
- * @returns {mat4} out
- */
-function identity(out) {
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = 1;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[10] = 1;
-    out[11] = 0;
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = 0;
-    out[15] = 1;
-    return out;
-};
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports) {
-
-module.exports = translate;
-
-/**
- * Translate a mat4 by the given vector
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to translate
- * @param {vec3} v vector to translate by
- * @returns {mat4} out
- */
-function translate(out, a, v) {
-    var x = v[0], y = v[1], z = v[2],
-        a00, a01, a02, a03,
-        a10, a11, a12, a13,
-        a20, a21, a22, a23;
-
-    if (a === out) {
-        out[12] = a[0] * x + a[4] * y + a[8] * z + a[12];
-        out[13] = a[1] * x + a[5] * y + a[9] * z + a[13];
-        out[14] = a[2] * x + a[6] * y + a[10] * z + a[14];
-        out[15] = a[3] * x + a[7] * y + a[11] * z + a[15];
-    } else {
-        a00 = a[0]; a01 = a[1]; a02 = a[2]; a03 = a[3];
-        a10 = a[4]; a11 = a[5]; a12 = a[6]; a13 = a[7];
-        a20 = a[8]; a21 = a[9]; a22 = a[10]; a23 = a[11];
-
-        out[0] = a00; out[1] = a01; out[2] = a02; out[3] = a03;
-        out[4] = a10; out[5] = a11; out[6] = a12; out[7] = a13;
-        out[8] = a20; out[9] = a21; out[10] = a22; out[11] = a23;
-
-        out[12] = a00 * x + a10 * y + a20 * z + a[12];
-        out[13] = a01 * x + a11 * y + a21 * z + a[13];
-        out[14] = a02 * x + a12 * y + a22 * z + a[14];
-        out[15] = a03 * x + a13 * y + a23 * z + a[15];
-    }
-
-    return out;
-};
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports) {
-
-module.exports = create;
-
-/**
- * Creates a new identity mat4
- *
- * @returns {mat4} a new 4x4 matrix
- */
-function create() {
-    var out = new Float32Array(16);
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = 1;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[10] = 1;
-    out[11] = 0;
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = 0;
-    out[15] = 1;
-    return out;
-};
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-module.exports = scale;
-
-/**
- * Scales the mat4 by the dimensions in the given vec3
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to scale
- * @param {vec3} v the vec3 to scale the matrix by
- * @returns {mat4} out
- **/
-function scale(out, a, v) {
-    var x = v[0], y = v[1], z = v[2];
-
-    out[0] = a[0] * x;
-    out[1] = a[1] * x;
-    out[2] = a[2] * x;
-    out[3] = a[3] * x;
-    out[4] = a[4] * y;
-    out[5] = a[5] * y;
-    out[6] = a[6] * y;
-    out[7] = a[7] * y;
-    out[8] = a[8] * z;
-    out[9] = a[9] * z;
-    out[10] = a[10] * z;
-    out[11] = a[11] * z;
-    out[12] = a[12];
-    out[13] = a[13];
-    out[14] = a[14];
-    out[15] = a[15];
-    return out;
-};
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports) {
-
-module.exports = determinant;
-
-/**
- * Calculates the determinant of a mat4
- *
- * @param {mat4} a the source matrix
- * @returns {Number} determinant of a
- */
-function determinant(a) {
-    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
-        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
-        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
-        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15],
-
-        b00 = a00 * a11 - a01 * a10,
-        b01 = a00 * a12 - a02 * a10,
-        b02 = a00 * a13 - a03 * a10,
-        b03 = a01 * a12 - a02 * a11,
-        b04 = a01 * a13 - a03 * a11,
-        b05 = a02 * a13 - a03 * a12,
-        b06 = a20 * a31 - a21 * a30,
-        b07 = a20 * a32 - a22 * a30,
-        b08 = a20 * a33 - a23 * a30,
-        b09 = a21 * a32 - a22 * a31,
-        b10 = a21 * a33 - a23 * a31,
-        b11 = a22 * a33 - a23 * a32;
-
-    // Calculate the determinant
-    return b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-};
-
-/***/ }),
-/* 18 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stats_js__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stats_js__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_stats_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_stats_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_dat_gui__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_dat_gui__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_dat_gui___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_dat_gui__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__geometry_Icosphere__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__rendering_gl_OpenGLRenderer__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Camera__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__globals__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__rendering_gl_ShaderProgram__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__geometry_Square__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__rendering_gl_OpenGLRenderer__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__globals__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__GameManager__ = __webpack_require__(20);
 
 
 
@@ -3317,15 +2550,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 // Define an object with application parameters and button callbacks
+// This will be referred to by dat.GUI's functions that add GUI elements.
+let screenQuad;
+let bird;
+let count;
+let gameManager = new __WEBPACK_IMPORTED_MODULE_7__GameManager__["a" /* default */]();
 const controls = {
-    tesselations: 5,
-    'Load Scene': loadScene,
+    timer: 45.0,
+    distance: 0.0,
+    'Restart': restart,
 };
-let icosphere;
-function loadScene() {
-    icosphere = new __WEBPACK_IMPORTED_MODULE_3__geometry_Icosphere__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0_gl_matrix__["b" /* vec3 */].fromValues(0, 0, 0), 1, controls.tesselations);
-    icosphere.create();
-}
+let gameShaderInstance;
 function main() {
     // Initial display for framerate
     const stats = __WEBPACK_IMPORTED_MODULE_1_stats_js__();
@@ -3334,10 +2569,12 @@ function main() {
     stats.domElement.style.left = '0px';
     stats.domElement.style.top = '0px';
     document.body.appendChild(stats.domElement);
+    count = 0;
     // Add controls to the gui
     const gui = new __WEBPACK_IMPORTED_MODULE_2_dat_gui__["GUI"]();
-    gui.add(controls, 'tesselations', 0, 8).step(1);
-    gui.add(controls, 'Load Scene');
+    gui.add(controls, 'timer').listen();
+    gui.add(controls, 'distance').listen();
+    gui.add(controls, 'Restart');
     // get canvas and webgl context
     const canvas = document.getElementById('canvas');
     const gl = canvas.getContext('webgl2');
@@ -3346,25 +2583,35 @@ function main() {
     }
     // `setGL` is a function imported above which sets the value of `gl` in the `globals.ts` module.
     // Later, we can import `gl` from `globals.ts` to access it
-    Object(__WEBPACK_IMPORTED_MODULE_6__globals__["b" /* setGL */])(gl);
-    // Initial call to load scene
-    loadScene();
-    const camera = new __WEBPACK_IMPORTED_MODULE_5__Camera__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0_gl_matrix__["b" /* vec3 */].fromValues(0, 0, 5), __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["b" /* vec3 */].fromValues(0, 0, 0));
+    Object(__WEBPACK_IMPORTED_MODULE_5__globals__["b" /* setGL */])(gl);
+    screenQuad = new __WEBPACK_IMPORTED_MODULE_3__geometry_Square__["a" /* default */](__WEBPACK_IMPORTED_MODULE_0_gl_matrix__["b" /* vec3 */].fromValues(0, 0, 0));
+    screenQuad.create();
     const renderer = new __WEBPACK_IMPORTED_MODULE_4__rendering_gl_OpenGLRenderer__["a" /* default */](canvas);
     renderer.setClearColor(0.2, 0.2, 0.2, 1);
-    gl.enable(gl.DEPTH_TEST);
-    const lambert = new __WEBPACK_IMPORTED_MODULE_7__rendering_gl_ShaderProgram__["b" /* default */]([
-        new __WEBPACK_IMPORTED_MODULE_7__rendering_gl_ShaderProgram__["a" /* Shader */](gl.VERTEX_SHADER, __webpack_require__(65)),
-        new __WEBPACK_IMPORTED_MODULE_7__rendering_gl_ShaderProgram__["a" /* Shader */](gl.FRAGMENT_SHADER, __webpack_require__(66)),
+    gl.disable(gl.DEPTH_TEST);
+    const gameShader = new __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__["b" /* default */]([
+        new __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__["a" /* Shader */](gl.VERTEX_SHADER, __webpack_require__(23)),
+        new __WEBPACK_IMPORTED_MODULE_6__rendering_gl_ShaderProgram__["a" /* Shader */](gl.FRAGMENT_SHADER, __webpack_require__(24)),
     ]);
+    gameShaderInstance = gameShader;
+    // set uniforms for the game
+    gameShader.setTerrainParameters();
     // This function will be called every frame
     function tick() {
-        camera.update();
+        count++;
+        controls.distance = gameManager.player.pos[0];
+        controls.timer -= 0.01;
+        if (controls.timer <= 0.0) {
+            gameManager.quit();
+            controls.timer = 0.0;
+        }
         stats.begin();
         gl.viewport(0, 0, window.innerWidth, window.innerHeight);
+        gameShader.setBirdPosition(gameManager.player.pos);
+        gameManager.updateState();
         renderer.clear();
-        renderer.render(camera, lambert, [
-            icosphere,
+        renderer.render(gameShader, [
+            screenQuad,
         ]);
         stats.end();
         // Tell the browser to call `tick` again whenever it renders a new frame
@@ -3372,20 +2619,63 @@ function main() {
     }
     window.addEventListener('resize', function () {
         renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.setAspectRatio(window.innerWidth / window.innerHeight);
-        camera.updateProjectionMatrix();
+        gameShader.setScreenDimensions(canvas.width, canvas.height);
     }, false);
+    window.addEventListener("keydown", function (event) {
+        if (event.defaultPrevented) {
+            return; // Should do nothing if the default action has been cancelled
+        }
+        var handled = false;
+        if (event.key !== undefined) {
+            if (event.key == " ") {
+                gameManager.keyDown();
+            }
+            // Handle the event with KeyboardEvent.key and set handled true.
+            handled = true;
+        }
+        else if (event.keyCode !== undefined) {
+            // Handle the event with KeyboardEvent.keyCode and set handled true.
+        }
+        if (handled) {
+            // Suppress "double action" if event handled
+            event.preventDefault();
+        }
+    }, true);
+    window.addEventListener("keyup", function (event) {
+        if (event.defaultPrevented) {
+            return; // Should do nothing if the default action has been cancelled
+        }
+        var handled = false;
+        if (event.key !== undefined) {
+            if (event.key == " ") {
+                gameManager.keyUp();
+            }
+            // Handle the event with KeyboardEvent.key and set handled true.
+            handled = true;
+        }
+        else if (event.keyCode !== undefined) {
+            // Handle the event with KeyboardEvent.keyCode and set handled true.
+        }
+        if (handled) {
+            // Suppress "double action" if event handled
+            event.preventDefault();
+        }
+    }, true);
     renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.setAspectRatio(window.innerWidth / window.innerHeight);
-    camera.updateProjectionMatrix();
+    gameShader.setScreenDimensions(canvas.width, canvas.height);
     // Start the render loop
     tick();
+}
+function restart() {
+    controls.timer = 30.0;
+    gameShaderInstance.setTerrainParameters();
+    gameManager.restart();
 }
 main();
 
 
 /***/ }),
-/* 19 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3854,7 +3144,7 @@ const sub = subtract;
 
 
 /***/ }),
-/* 20 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4355,55 +3645,54 @@ const sub = subtract;
 
 
 /***/ }),
-/* 21 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (immutable) */ __webpack_exports__["create"] = create;
-/* harmony export (immutable) */ __webpack_exports__["clone"] = clone;
-/* harmony export (immutable) */ __webpack_exports__["copy"] = copy;
-/* harmony export (immutable) */ __webpack_exports__["fromValues"] = fromValues;
-/* harmony export (immutable) */ __webpack_exports__["set"] = set;
-/* harmony export (immutable) */ __webpack_exports__["identity"] = identity;
-/* harmony export (immutable) */ __webpack_exports__["transpose"] = transpose;
-/* harmony export (immutable) */ __webpack_exports__["invert"] = invert;
-/* harmony export (immutable) */ __webpack_exports__["adjoint"] = adjoint;
-/* harmony export (immutable) */ __webpack_exports__["determinant"] = determinant;
-/* harmony export (immutable) */ __webpack_exports__["multiply"] = multiply;
-/* harmony export (immutable) */ __webpack_exports__["translate"] = translate;
-/* harmony export (immutable) */ __webpack_exports__["scale"] = scale;
-/* harmony export (immutable) */ __webpack_exports__["rotate"] = rotate;
-/* harmony export (immutable) */ __webpack_exports__["rotateX"] = rotateX;
-/* harmony export (immutable) */ __webpack_exports__["rotateY"] = rotateY;
-/* harmony export (immutable) */ __webpack_exports__["rotateZ"] = rotateZ;
-/* harmony export (immutable) */ __webpack_exports__["fromTranslation"] = fromTranslation;
-/* harmony export (immutable) */ __webpack_exports__["fromScaling"] = fromScaling;
-/* harmony export (immutable) */ __webpack_exports__["fromRotation"] = fromRotation;
-/* harmony export (immutable) */ __webpack_exports__["fromXRotation"] = fromXRotation;
-/* harmony export (immutable) */ __webpack_exports__["fromYRotation"] = fromYRotation;
-/* harmony export (immutable) */ __webpack_exports__["fromZRotation"] = fromZRotation;
-/* harmony export (immutable) */ __webpack_exports__["fromRotationTranslation"] = fromRotationTranslation;
-/* harmony export (immutable) */ __webpack_exports__["getTranslation"] = getTranslation;
-/* harmony export (immutable) */ __webpack_exports__["getScaling"] = getScaling;
-/* harmony export (immutable) */ __webpack_exports__["getRotation"] = getRotation;
-/* harmony export (immutable) */ __webpack_exports__["fromRotationTranslationScale"] = fromRotationTranslationScale;
-/* harmony export (immutable) */ __webpack_exports__["fromRotationTranslationScaleOrigin"] = fromRotationTranslationScaleOrigin;
-/* harmony export (immutable) */ __webpack_exports__["fromQuat"] = fromQuat;
-/* harmony export (immutable) */ __webpack_exports__["frustum"] = frustum;
-/* harmony export (immutable) */ __webpack_exports__["perspective"] = perspective;
-/* harmony export (immutable) */ __webpack_exports__["perspectiveFromFieldOfView"] = perspectiveFromFieldOfView;
-/* harmony export (immutable) */ __webpack_exports__["ortho"] = ortho;
-/* harmony export (immutable) */ __webpack_exports__["lookAt"] = lookAt;
-/* harmony export (immutable) */ __webpack_exports__["targetTo"] = targetTo;
-/* harmony export (immutable) */ __webpack_exports__["str"] = str;
-/* harmony export (immutable) */ __webpack_exports__["frob"] = frob;
-/* harmony export (immutable) */ __webpack_exports__["add"] = add;
-/* harmony export (immutable) */ __webpack_exports__["subtract"] = subtract;
-/* harmony export (immutable) */ __webpack_exports__["multiplyScalar"] = multiplyScalar;
-/* harmony export (immutable) */ __webpack_exports__["multiplyScalarAndAdd"] = multiplyScalarAndAdd;
-/* harmony export (immutable) */ __webpack_exports__["exactEquals"] = exactEquals;
-/* harmony export (immutable) */ __webpack_exports__["equals"] = equals;
+/* unused harmony export create */
+/* unused harmony export clone */
+/* unused harmony export copy */
+/* unused harmony export fromValues */
+/* unused harmony export set */
+/* unused harmony export identity */
+/* unused harmony export transpose */
+/* unused harmony export invert */
+/* unused harmony export adjoint */
+/* unused harmony export determinant */
+/* unused harmony export multiply */
+/* unused harmony export translate */
+/* unused harmony export scale */
+/* unused harmony export rotate */
+/* unused harmony export rotateX */
+/* unused harmony export rotateY */
+/* unused harmony export rotateZ */
+/* unused harmony export fromTranslation */
+/* unused harmony export fromScaling */
+/* unused harmony export fromRotation */
+/* unused harmony export fromXRotation */
+/* unused harmony export fromYRotation */
+/* unused harmony export fromZRotation */
+/* unused harmony export fromRotationTranslation */
+/* unused harmony export getTranslation */
+/* unused harmony export getScaling */
+/* unused harmony export getRotation */
+/* unused harmony export fromRotationTranslationScale */
+/* unused harmony export fromRotationTranslationScaleOrigin */
+/* unused harmony export fromQuat */
+/* unused harmony export frustum */
+/* unused harmony export perspective */
+/* unused harmony export perspectiveFromFieldOfView */
+/* unused harmony export ortho */
+/* unused harmony export lookAt */
+/* unused harmony export targetTo */
+/* unused harmony export str */
+/* unused harmony export frob */
+/* unused harmony export add */
+/* unused harmony export subtract */
+/* unused harmony export multiplyScalar */
+/* unused harmony export multiplyScalarAndAdd */
+/* unused harmony export exactEquals */
+/* unused harmony export equals */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common__ = __webpack_require__(0);
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
@@ -6080,7 +5369,7 @@ function equals(a, b) {
  * @function
  */
 const mul = multiply;
-/* harmony export (immutable) */ __webpack_exports__["mul"] = mul;
+/* unused harmony export mul */
 
 
 /**
@@ -6088,12 +5377,12 @@ const mul = multiply;
  * @function
  */
 const sub = subtract;
-/* harmony export (immutable) */ __webpack_exports__["sub"] = sub;
+/* unused harmony export sub */
 
 
 
 /***/ }),
-/* 22 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6113,9 +5402,9 @@ const sub = subtract;
 /* unused harmony export fromEuler */
 /* unused harmony export str */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mat3__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__vec3__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vec4__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mat3__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__vec3__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vec4__ = __webpack_require__(5);
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -6783,44 +6072,45 @@ const setAxes = (function() {
 
 
 /***/ }),
-/* 23 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export create */
-/* unused harmony export clone */
-/* unused harmony export fromValues */
-/* unused harmony export copy */
-/* unused harmony export set */
-/* unused harmony export add */
-/* unused harmony export subtract */
-/* unused harmony export multiply */
-/* unused harmony export divide */
-/* unused harmony export ceil */
-/* unused harmony export floor */
-/* unused harmony export min */
-/* unused harmony export max */
-/* unused harmony export round */
-/* unused harmony export scale */
-/* unused harmony export scaleAndAdd */
-/* unused harmony export distance */
-/* unused harmony export squaredDistance */
-/* unused harmony export length */
-/* unused harmony export squaredLength */
-/* unused harmony export negate */
-/* unused harmony export inverse */
-/* unused harmony export normalize */
-/* unused harmony export dot */
-/* unused harmony export cross */
-/* unused harmony export lerp */
-/* unused harmony export random */
-/* unused harmony export transformMat2 */
-/* unused harmony export transformMat2d */
-/* unused harmony export transformMat3 */
-/* unused harmony export transformMat4 */
-/* unused harmony export str */
-/* unused harmony export exactEquals */
-/* unused harmony export equals */
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (immutable) */ __webpack_exports__["create"] = create;
+/* harmony export (immutable) */ __webpack_exports__["clone"] = clone;
+/* harmony export (immutable) */ __webpack_exports__["fromValues"] = fromValues;
+/* harmony export (immutable) */ __webpack_exports__["copy"] = copy;
+/* harmony export (immutable) */ __webpack_exports__["set"] = set;
+/* harmony export (immutable) */ __webpack_exports__["add"] = add;
+/* harmony export (immutable) */ __webpack_exports__["subtract"] = subtract;
+/* harmony export (immutable) */ __webpack_exports__["multiply"] = multiply;
+/* harmony export (immutable) */ __webpack_exports__["divide"] = divide;
+/* harmony export (immutable) */ __webpack_exports__["ceil"] = ceil;
+/* harmony export (immutable) */ __webpack_exports__["floor"] = floor;
+/* harmony export (immutable) */ __webpack_exports__["min"] = min;
+/* harmony export (immutable) */ __webpack_exports__["max"] = max;
+/* harmony export (immutable) */ __webpack_exports__["round"] = round;
+/* harmony export (immutable) */ __webpack_exports__["scale"] = scale;
+/* harmony export (immutable) */ __webpack_exports__["scaleAndAdd"] = scaleAndAdd;
+/* harmony export (immutable) */ __webpack_exports__["distance"] = distance;
+/* harmony export (immutable) */ __webpack_exports__["squaredDistance"] = squaredDistance;
+/* harmony export (immutable) */ __webpack_exports__["length"] = length;
+/* harmony export (immutable) */ __webpack_exports__["squaredLength"] = squaredLength;
+/* harmony export (immutable) */ __webpack_exports__["negate"] = negate;
+/* harmony export (immutable) */ __webpack_exports__["inverse"] = inverse;
+/* harmony export (immutable) */ __webpack_exports__["normalize"] = normalize;
+/* harmony export (immutable) */ __webpack_exports__["dot"] = dot;
+/* harmony export (immutable) */ __webpack_exports__["cross"] = cross;
+/* harmony export (immutable) */ __webpack_exports__["lerp"] = lerp;
+/* harmony export (immutable) */ __webpack_exports__["random"] = random;
+/* harmony export (immutable) */ __webpack_exports__["transformMat2"] = transformMat2;
+/* harmony export (immutable) */ __webpack_exports__["transformMat2d"] = transformMat2d;
+/* harmony export (immutable) */ __webpack_exports__["transformMat3"] = transformMat3;
+/* harmony export (immutable) */ __webpack_exports__["transformMat4"] = transformMat4;
+/* harmony export (immutable) */ __webpack_exports__["str"] = str;
+/* harmony export (immutable) */ __webpack_exports__["exactEquals"] = exactEquals;
+/* harmony export (immutable) */ __webpack_exports__["equals"] = equals;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common__ = __webpack_require__(0);
 /* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
@@ -7329,7 +6619,7 @@ function equals(a, b) {
  * @function
  */
 const len = length;
-/* unused harmony export len */
+/* harmony export (immutable) */ __webpack_exports__["len"] = len;
 
 
 /**
@@ -7337,7 +6627,7 @@ const len = length;
  * @function
  */
 const sub = subtract;
-/* unused harmony export sub */
+/* harmony export (immutable) */ __webpack_exports__["sub"] = sub;
 
 
 /**
@@ -7345,7 +6635,7 @@ const sub = subtract;
  * @function
  */
 const mul = multiply;
-/* unused harmony export mul */
+/* harmony export (immutable) */ __webpack_exports__["mul"] = mul;
 
 
 /**
@@ -7353,7 +6643,7 @@ const mul = multiply;
  * @function
  */
 const div = divide;
-/* unused harmony export div */
+/* harmony export (immutable) */ __webpack_exports__["div"] = div;
 
 
 /**
@@ -7361,7 +6651,7 @@ const div = divide;
  * @function
  */
 const dist = distance;
-/* unused harmony export dist */
+/* harmony export (immutable) */ __webpack_exports__["dist"] = dist;
 
 
 /**
@@ -7369,7 +6659,7 @@ const dist = distance;
  * @function
  */
 const sqrDist = squaredDistance;
-/* unused harmony export sqrDist */
+/* harmony export (immutable) */ __webpack_exports__["sqrDist"] = sqrDist;
 
 
 /**
@@ -7377,7 +6667,7 @@ const sqrDist = squaredDistance;
  * @function
  */
 const sqrLen = squaredLength;
-/* unused harmony export sqrLen */
+/* harmony export (immutable) */ __webpack_exports__["sqrLen"] = sqrLen;
 
 
 /**
@@ -7420,12 +6710,12 @@ const forEach = (function() {
     return a;
   };
 })();
-/* unused harmony export forEach */
+/* harmony export (immutable) */ __webpack_exports__["forEach"] = forEach;
 
 
 
 /***/ }),
-/* 24 */
+/* 12 */
 /***/ (function(module, exports) {
 
 // stats.js - http://github.com/mrdoob/stats.js
@@ -7437,14 +6727,14 @@ a+"px",m=b,r=0);return b},update:function(){l=this.end()}}};"object"===typeof mo
 
 
 /***/ }),
-/* 25 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(26)
-module.exports.color = __webpack_require__(27)
+module.exports = __webpack_require__(14)
+module.exports.color = __webpack_require__(15)
 
 /***/ }),
-/* 26 */
+/* 14 */
 /***/ (function(module, exports) {
 
 /**
@@ -11109,7 +10399,7 @@ dat.dom.dom,
 dat.utils.common);
 
 /***/ }),
-/* 27 */
+/* 15 */
 /***/ (function(module, exports) {
 
 /**
@@ -11869,146 +11159,32 @@ dat.color.toString,
 dat.utils.common);
 
 /***/ }),
-/* 28 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rendering_gl_Drawable__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__rendering_gl_Drawable__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__globals__ = __webpack_require__(2);
 
 
 
-class Icosphere extends __WEBPACK_IMPORTED_MODULE_1__rendering_gl_Drawable__["a" /* default */] {
-    constructor(center, radius, subdivisions) {
+class Square extends __WEBPACK_IMPORTED_MODULE_1__rendering_gl_Drawable__["a" /* default */] {
+    constructor(center) {
         super(); // Call the constructor of the super class. This is required.
-        this.radius = radius;
-        this.subdivisions = subdivisions;
         this.center = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec4 */].fromValues(center[0], center[1], center[2], 1);
     }
     create() {
-        const X = 0.525731112119133606;
-        const Z = 0.850650808352039932;
-        const N = 0;
-        let maxIndexCount = 20 * Math.pow(4, this.subdivisions);
-        let maxVertexCount = 10 * Math.pow(4, this.subdivisions) + 2;
-        // Create buffers to back geometry data
-        // Index data will ping pong back and forth between buffer0 and buffer1 during creation
-        // All data will be in buffer0 at the end
-        const buffer0 = new ArrayBuffer(maxIndexCount * 3 * Uint32Array.BYTES_PER_ELEMENT +
-            maxVertexCount * 4 * Float32Array.BYTES_PER_ELEMENT +
-            maxVertexCount * 4 * Float32Array.BYTES_PER_ELEMENT);
-        const buffer1 = new ArrayBuffer(maxIndexCount * 3 * Uint32Array.BYTES_PER_ELEMENT);
-        const buffers = [buffer0, buffer1];
-        let b = 0;
-        const indexByteOffset = 0;
-        const vertexByteOffset = maxIndexCount * 3 * Uint32Array.BYTES_PER_ELEMENT;
-        const normalByteOffset = vertexByteOffset;
-        const positionByteOffset = vertexByteOffset + maxVertexCount * 4 * Float32Array.BYTES_PER_ELEMENT;
-        // Create 3-uint buffer views into the backing buffer to represent triangles
-        // The C++ analogy to this would be something like:
-        // triangles[i] = reinterpret_cast<std::array<unsigned int, 3>*>(&buffer[offset]);
-        let triangles = new Array(20);
-        let nextTriangles = new Array();
-        for (let i = 0; i < 20; ++i) {
-            triangles[i] = new Uint32Array(buffers[b], indexByteOffset + i * 3 * Uint32Array.BYTES_PER_ELEMENT, 3);
-        }
-        // Create 3-float buffer views into the backing buffer to represent positions
-        let vertices = new Array(12);
-        for (let i = 0; i < 12; ++i) {
-            vertices[i] = new Float32Array(buffer0, vertexByteOffset + i * 4 * Float32Array.BYTES_PER_ELEMENT, 4);
-        }
-        // Initialize normals for a 20-sided icosahedron
-        vertices[0].set([-X, N, Z, 0]);
-        vertices[1].set([X, N, Z, 0]);
-        vertices[2].set([-X, N, -Z, 0]);
-        vertices[3].set([X, N, -Z, 0]);
-        vertices[4].set([N, Z, X, 0]);
-        vertices[5].set([N, Z, -X, 0]);
-        vertices[6].set([N, -Z, X, 0]);
-        vertices[7].set([N, -Z, -X, 0]);
-        vertices[8].set([Z, X, N, 0]);
-        vertices[9].set([-Z, X, N, 0]);
-        vertices[10].set([Z, -X, N, 0]);
-        vertices[11].set([-Z, -X, N, 0]);
-        // Initialize indices for a 20-sided icosahedron
-        triangles[0].set([0, 4, 1]);
-        triangles[1].set([0, 9, 4]);
-        triangles[2].set([9, 5, 4]);
-        triangles[3].set([4, 5, 8]);
-        triangles[4].set([4, 8, 1]);
-        triangles[5].set([8, 10, 1]);
-        triangles[6].set([8, 3, 10]);
-        triangles[7].set([5, 3, 8]);
-        triangles[8].set([5, 2, 3]);
-        triangles[9].set([2, 7, 3]);
-        triangles[10].set([7, 10, 3]);
-        triangles[11].set([7, 6, 10]);
-        triangles[12].set([7, 11, 6]);
-        triangles[13].set([11, 0, 6]);
-        triangles[14].set([0, 1, 6]);
-        triangles[15].set([6, 1, 10]);
-        triangles[16].set([9, 0, 11]);
-        triangles[17].set([9, 11, 2]);
-        triangles[18].set([9, 2, 5]);
-        triangles[19].set([7, 2, 11]);
-        // This loop subdivides the icosahedron
-        for (let s = 0; s < this.subdivisions; ++s) {
-            b = 1 - b;
-            nextTriangles.length = triangles.length * 4;
-            let triangleIdx = 0;
-            // edgeMap maps a pair of vertex indices to a vertex index at their midpoint
-            // The function `mid` will get that midpoint vertex if it has already been created
-            // or it will create the vertex and add it to the map
-            let edgeMap = new Map();
-            function mid(v0, v1) {
-                let key = [v0, v1].sort().join('_');
-                if (!edgeMap.has(key)) {
-                    let midpoint = new Float32Array(buffer0, vertexByteOffset + vertices.length * 4 * Float32Array.BYTES_PER_ELEMENT, 4);
-                    __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec4 */].add(midpoint, vertices[v0], vertices[v1]);
-                    __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec4 */].normalize(midpoint, midpoint);
-                    edgeMap.set(key, vertices.length);
-                    vertices.push(midpoint);
-                }
-                return edgeMap.get(key);
-            }
-            for (let t = 0; t < triangles.length; ++t) {
-                let v0 = triangles[t][0];
-                let v1 = triangles[t][1];
-                let v2 = triangles[t][2];
-                let v3 = mid(v0, v1); // Get or create a vertex between these two vertices
-                let v4 = mid(v1, v2);
-                let v5 = mid(v2, v0);
-                let t0 = nextTriangles[triangleIdx] = new Uint32Array(buffers[b], indexByteOffset + (triangleIdx++) * 3 * Uint32Array.BYTES_PER_ELEMENT, 3);
-                let t1 = nextTriangles[triangleIdx] = new Uint32Array(buffers[b], indexByteOffset + (triangleIdx++) * 3 * Uint32Array.BYTES_PER_ELEMENT, 3);
-                let t2 = nextTriangles[triangleIdx] = new Uint32Array(buffers[b], indexByteOffset + (triangleIdx++) * 3 * Uint32Array.BYTES_PER_ELEMENT, 3);
-                let t3 = nextTriangles[triangleIdx] = new Uint32Array(buffers[b], indexByteOffset + (triangleIdx++) * 3 * Uint32Array.BYTES_PER_ELEMENT, 3);
-                let triangleOffset = nextTriangles.length;
-                t0.set([v0, v3, v5]);
-                t1.set([v3, v4, v5]);
-                t2.set([v3, v1, v4]);
-                t3.set([v5, v4, v2]);
-            }
-            // swap buffers
-            let temp = triangles;
-            triangles = nextTriangles;
-            nextTriangles = temp;
-        }
-        if (b === 1) {
-            // if indices did not end up in buffer0, copy them there now
-            let temp0 = new Uint32Array(buffer0, 0, 3 * triangles.length);
-            let temp1 = new Uint32Array(buffer1, 0, 3 * triangles.length);
-            temp0.set(temp1);
-        }
-        // Populate one position for each normal
-        for (let i = 0; i < vertices.length; ++i) {
-            let pos = new Float32Array(buffer0, positionByteOffset + i * 4 * Float32Array.BYTES_PER_ELEMENT, 4);
-            __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec4 */].scaleAndAdd(pos, this.center, vertices[i], this.radius);
-        }
-        this.buffer = buffer0;
-        this.indices = new Uint32Array(this.buffer, indexByteOffset, triangles.length * 3);
-        this.normals = new Float32Array(this.buffer, normalByteOffset, vertices.length * 4);
-        this.positions = new Float32Array(this.buffer, positionByteOffset, vertices.length * 4);
+        this.indices = new Uint32Array([0, 1, 2,
+            0, 2, 3]);
+        this.normals = new Float32Array([0, 0, 1, 0,
+            0, 0, 1, 0,
+            0, 0, 1, 0,
+            0, 0, 1, 0]);
+        this.positions = new Float32Array([-1, -1, 0, 1,
+            1, -1, 0, 1,
+            1, 1, 0, 1,
+            -1, 1, 0, 1]);
         this.generateIdx();
         this.generatePos();
         this.generateNor();
@@ -12019,15 +11195,15 @@ class Icosphere extends __WEBPACK_IMPORTED_MODULE_1__rendering_gl_Drawable__["a"
         __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].bufferData(__WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].ARRAY_BUFFER, this.normals, __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].STATIC_DRAW);
         __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].bindBuffer(__WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].ARRAY_BUFFER, this.bufPos);
         __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].bufferData(__WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].ARRAY_BUFFER, this.positions, __WEBPACK_IMPORTED_MODULE_2__globals__["a" /* gl */].STATIC_DRAW);
-        console.log(`Created icosphere with ${vertices.length} vertices`);
+        console.log(`Created square`);
     }
 }
 ;
-/* harmony default export */ __webpack_exports__["a"] = (Icosphere);
+/* harmony default export */ __webpack_exports__["a"] = (Square);
 
 
 /***/ }),
-/* 29 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12039,8 +11215,9 @@ class Drawable {
         this.idxBound = false;
         this.posBound = false;
         this.norBound = false;
+        this.isSprite = false;
     }
-    destory() {
+    destroy() {
         __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].deleteBuffer(this.bufIdx);
         __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].deleteBuffer(this.bufPos);
         __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].deleteBuffer(this.bufNor);
@@ -12087,13 +11264,11 @@ class Drawable {
 
 
 /***/ }),
-/* 30 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__globals__ = __webpack_require__(2);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__globals__ = __webpack_require__(2);
 
 // In this file, `gl` is accessible because it is imported above
 class OpenGLRenderer {
@@ -12101,27 +11276,22 @@ class OpenGLRenderer {
         this.canvas = canvas;
     }
     setClearColor(r, g, b, a) {
-        __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].clearColor(r, g, b, a);
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].clearColor(r, g, b, a);
     }
     setSize(width, height) {
         this.canvas.width = width;
         this.canvas.height = height;
     }
     clear() {
-        __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].clear(__WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].COLOR_BUFFER_BIT | __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].DEPTH_BUFFER_BIT);
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].clear(__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].COLOR_BUFFER_BIT | __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].DEPTH_BUFFER_BIT);
     }
-    render(camera, prog, drawables) {
-        let model = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].create();
-        let viewProj = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].create();
-        let color = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["c" /* vec4 */].fromValues(1, 0, 0, 1);
-        __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].identity(model);
-        __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].multiply(viewProj, camera.projectionMatrix, camera.viewMatrix);
-        prog.setModelMatrix(model);
-        prog.setViewProjMatrix(viewProj);
-        prog.setGeometryColor(color);
+    render(prog, drawables) {
         for (let drawable of drawables) {
             prog.draw(drawable);
         }
+        // for (let sprite of sprites){
+        //   prog.drawSprite(sprite);
+        // }
     }
 }
 ;
@@ -12129,3070 +11299,20 @@ class OpenGLRenderer {
 
 
 /***/ }),
-/* 31 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_3d_view_controls__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_3d_view_controls___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_3d_view_controls__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_gl_matrix__ = __webpack_require__(1);
-
-
-class Camera {
-    constructor(position, target) {
-        this.projectionMatrix = __WEBPACK_IMPORTED_MODULE_1_gl_matrix__["a" /* mat4 */].create();
-        this.viewMatrix = __WEBPACK_IMPORTED_MODULE_1_gl_matrix__["a" /* mat4 */].create();
-        this.fovy = 45;
-        this.aspectRatio = 1;
-        this.near = 0.1;
-        this.far = 1000;
-        this.position = __WEBPACK_IMPORTED_MODULE_1_gl_matrix__["b" /* vec3 */].create();
-        this.direction = __WEBPACK_IMPORTED_MODULE_1_gl_matrix__["b" /* vec3 */].create();
-        this.target = __WEBPACK_IMPORTED_MODULE_1_gl_matrix__["b" /* vec3 */].create();
-        this.up = __WEBPACK_IMPORTED_MODULE_1_gl_matrix__["b" /* vec3 */].create();
-        this.controls = __WEBPACK_IMPORTED_MODULE_0_3d_view_controls__(document.getElementById('canvas'), {
-            eye: position,
-            center: target,
-        });
-        __WEBPACK_IMPORTED_MODULE_1_gl_matrix__["b" /* vec3 */].add(this.target, this.position, this.direction);
-        __WEBPACK_IMPORTED_MODULE_1_gl_matrix__["a" /* mat4 */].lookAt(this.viewMatrix, this.controls.eye, this.controls.center, this.controls.up);
-    }
-    setAspectRatio(aspectRatio) {
-        this.aspectRatio = aspectRatio;
-    }
-    updateProjectionMatrix() {
-        __WEBPACK_IMPORTED_MODULE_1_gl_matrix__["a" /* mat4 */].perspective(this.projectionMatrix, this.fovy, this.aspectRatio, this.near, this.far);
-    }
-    update() {
-        this.controls.tick();
-        __WEBPACK_IMPORTED_MODULE_1_gl_matrix__["b" /* vec3 */].add(this.target, this.position, this.direction);
-        __WEBPACK_IMPORTED_MODULE_1_gl_matrix__["a" /* mat4 */].lookAt(this.viewMatrix, this.controls.eye, this.controls.center, this.controls.up);
-    }
-}
-;
-/* harmony default export */ __webpack_exports__["a"] = (Camera);
-
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = createCamera
-
-var now         = __webpack_require__(33)
-var createView  = __webpack_require__(35)
-var mouseChange = __webpack_require__(58)
-var mouseWheel  = __webpack_require__(60)
-var mouseOffset = __webpack_require__(63)
-
-function createCamera(element, options) {
-  element = element || document.body
-  options = options || {}
-
-  var limits  = [ 0.01, Infinity ]
-  if('distanceLimits' in options) {
-    limits[0] = options.distanceLimits[0]
-    limits[1] = options.distanceLimits[1]
-  }
-  if('zoomMin' in options) {
-    limits[0] = options.zoomMin
-  }
-  if('zoomMax' in options) {
-    limits[1] = options.zoomMax
-  }
-
-  var view = createView({
-    center: options.center || [0,0,0],
-    up:     options.up     || [0,1,0],
-    eye:    options.eye    || [0,0,10],
-    mode:   options.mode   || 'orbit',
-    distanceLimits: limits
-  })
-
-  var pmatrix = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-  var distance = 0.0
-  var width   = element.clientWidth
-  var height  = element.clientHeight
-
-  var camera = {
-    view:               view,
-    element:            element,
-    delay:              options.delay          || 16,
-    rotateSpeed:        options.rotateSpeed    || 1,
-    zoomSpeed:          options.zoomSpeed      || 1,
-    translateSpeed:     options.translateSpeed || 1,
-    flipX:              !!options.flipX,
-    flipY:              !!options.flipY,
-    modes:              view.modes,
-    tick: function() {
-      var t = now()
-      var delay = this.delay
-      view.idle(t-delay)
-      view.flush(t-(100+delay*2))
-      var ctime = t - 2 * delay
-      view.recalcMatrix(ctime)
-      var allEqual = true
-      var matrix = view.computedMatrix
-      for(var i=0; i<16; ++i) {
-        allEqual = allEqual && (pmatrix[i] === matrix[i])
-        pmatrix[i] = matrix[i]
-      }
-      var sizeChanged =
-          element.clientWidth === width &&
-          element.clientHeight === height
-      width  = element.clientWidth
-      height = element.clientHeight
-      if(allEqual) {
-        return !sizeChanged
-      }
-      distance = Math.exp(view.computedRadius[0])
-      return true
-    },
-    lookAt: function(center, eye, up) {
-      view.lookAt(view.lastT(), center, eye, up)
-    },
-    rotate: function(pitch, yaw, roll) {
-      view.rotate(view.lastT(), pitch, yaw, roll)
-    },
-    pan: function(dx, dy, dz) {
-      view.pan(view.lastT(), dx, dy, dz)
-    },
-    translate: function(dx, dy, dz) {
-      view.translate(view.lastT(), dx, dy, dz)
-    }
-  }
-
-  Object.defineProperties(camera, {
-    matrix: {
-      get: function() {
-        return view.computedMatrix
-      },
-      set: function(mat) {
-        view.setMatrix(view.lastT(), mat)
-        return view.computedMatrix
-      },
-      enumerable: true
-    },
-    mode: {
-      get: function() {
-        return view.getMode()
-      },
-      set: function(mode) {
-        view.setMode(mode)
-        return view.getMode()
-      },
-      enumerable: true
-    },
-    center: {
-      get: function() {
-        return view.computedCenter
-      },
-      set: function(ncenter) {
-        view.lookAt(view.lastT(), ncenter)
-        return view.computedCenter
-      },
-      enumerable: true
-    },
-    eye: {
-      get: function() {
-        return view.computedEye
-      },
-      set: function(neye) {
-        view.lookAt(view.lastT(), null, neye)
-        return view.computedEye
-      },
-      enumerable: true
-    },
-    up: {
-      get: function() {
-        return view.computedUp
-      },
-      set: function(nup) {
-        view.lookAt(view.lastT(), null, null, nup)
-        return view.computedUp
-      },
-      enumerable: true
-    },
-    distance: {
-      get: function() {
-        return distance
-      },
-      set: function(d) {
-        view.setDistance(view.lastT(), d)
-        return d
-      },
-      enumerable: true
-    },
-    distanceLimits: {
-      get: function() {
-        return view.getDistanceLimits(limits)
-      },
-      set: function(v) {
-        view.setDistanceLimits(v)
-        return v
-      },
-      enumerable: true
-    }
-  })
-
-  element.addEventListener('contextmenu', function(ev) {
-    ev.preventDefault()
-    return false
-  })
-
-  var lastX = 0, lastY = 0, lastMods = {shift: false, control: false, alt: false, meta: false}
-  mouseChange(element, handleInteraction)
-
-  //enable simple touch interactions
-  element.addEventListener('touchstart', function (ev) {
-    var xy = mouseOffset(ev.changedTouches[0], element)
-    handleInteraction(0, xy[0], xy[1], lastMods)
-    handleInteraction(1, xy[0], xy[1], lastMods)
-  })
-  element.addEventListener('touchmove', function (ev) {
-    var xy = mouseOffset(ev.changedTouches[0], element)
-    handleInteraction(1, xy[0], xy[1], lastMods)
-  })
-  element.addEventListener('touchend', function (ev) {
-    var xy = mouseOffset(ev.changedTouches[0], element)
-    handleInteraction(0, lastX, lastY, lastMods)
-  })
-
-  function handleInteraction (buttons, x, y, mods) {
-    var scale = 1.0 / element.clientHeight
-    var dx    = scale * (x - lastX)
-    var dy    = scale * (y - lastY)
-
-    var flipX = camera.flipX ? 1 : -1
-    var flipY = camera.flipY ? 1 : -1
-
-    var drot  = Math.PI * camera.rotateSpeed
-
-    var t = now()
-
-    if(buttons & 1) {
-      if(mods.shift) {
-        view.rotate(t, 0, 0, -dx * drot)
-      } else {
-        view.rotate(t, flipX * drot * dx, -flipY * drot * dy, 0)
-      }
-    } else if(buttons & 2) {
-      view.pan(t, -camera.translateSpeed * dx * distance, camera.translateSpeed * dy * distance, 0)
-    } else if(buttons & 4) {
-      var kzoom = camera.zoomSpeed * dy / window.innerHeight * (t - view.lastT()) * 50.0
-      view.pan(t, 0, 0, distance * (Math.exp(kzoom) - 1))
-    }
-
-    lastX = x
-    lastY = y
-    lastMods = mods
-  }
-
-  mouseWheel(element, function(dx, dy, dz) {
-    var flipX = camera.flipX ? 1 : -1
-    var flipY = camera.flipY ? 1 : -1
-    var t = now()
-    if(Math.abs(dx) > Math.abs(dy)) {
-      view.rotate(t, 0, 0, -dx * flipX * Math.PI * camera.rotateSpeed / window.innerWidth)
-    } else {
-      var kzoom = camera.zoomSpeed * flipY * dy / window.innerHeight * (t - view.lastT()) / 100.0
-      view.pan(t, 0, 0, distance * (Math.exp(kzoom) - 1))
-    }
-  }, true)
-
-  return camera
-}
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {module.exports =
-  global.performance &&
-  global.performance.now ? function now() {
-    return performance.now()
-  } : Date.now || function now() {
-    return +new Date
-  }
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)))
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = createViewController
-
-var createTurntable = __webpack_require__(36)
-var createOrbit     = __webpack_require__(39)
-var createMatrix    = __webpack_require__(42)
-
-function ViewController(controllers, mode) {
-  this._controllerNames = Object.keys(controllers)
-  this._controllerList = this._controllerNames.map(function(n) {
-    return controllers[n]
-  })
-  this._mode   = mode
-  this._active = controllers[mode]
-  if(!this._active) {
-    this._mode   = 'turntable'
-    this._active = controllers.turntable
-  }
-  this.modes = this._controllerNames
-  this.computedMatrix = this._active.computedMatrix
-  this.computedEye    = this._active.computedEye
-  this.computedUp     = this._active.computedUp
-  this.computedCenter = this._active.computedCenter
-  this.computedRadius = this._active.computedRadius
-}
-
-var proto = ViewController.prototype
-
-var COMMON_METHODS = [
-  ['flush', 1],
-  ['idle', 1],
-  ['lookAt', 4],
-  ['rotate', 4],
-  ['pan', 4],
-  ['translate', 4],
-  ['setMatrix', 2],
-  ['setDistanceLimits', 2],
-  ['setDistance', 2]
-]
-
-COMMON_METHODS.forEach(function(method) {
-  var name = method[0]
-  var argNames = []
-  for(var i=0; i<method[1]; ++i) {
-    argNames.push('a'+i)
-  }
-  var code = 'var cc=this._controllerList;for(var i=0;i<cc.length;++i){cc[i].'+method[0]+'('+argNames.join()+')}'
-  proto[name] = Function.apply(null, argNames.concat(code))
-})
-
-proto.recalcMatrix = function(t) {
-  this._active.recalcMatrix(t)
-}
-
-proto.getDistance = function(t) {
-  return this._active.getDistance(t)
-}
-proto.getDistanceLimits = function(out) {
-  return this._active.getDistanceLimits(out)
-}
-
-proto.lastT = function() {
-  return this._active.lastT()
-}
-
-proto.setMode = function(mode) {
-  if(mode === this._mode) {
-    return
-  }
-  var idx = this._controllerNames.indexOf(mode)
-  if(idx < 0) {
-    return
-  }
-  var prev  = this._active
-  var next  = this._controllerList[idx]
-  var lastT = Math.max(prev.lastT(), next.lastT())
-
-  prev.recalcMatrix(lastT)
-  next.setMatrix(lastT, prev.computedMatrix)
-  
-  this._active = next
-  this._mode   = mode
-
-  //Update matrix properties
-  this.computedMatrix = this._active.computedMatrix
-  this.computedEye    = this._active.computedEye
-  this.computedUp     = this._active.computedUp
-  this.computedCenter = this._active.computedCenter
-  this.computedRadius = this._active.computedRadius
-}
-
-proto.getMode = function() {
-  return this._mode
-}
-
-function createViewController(options) {
-  options = options || {}
-
-  var eye       = options.eye    || [0,0,1]
-  var center    = options.center || [0,0,0]
-  var up        = options.up     || [0,1,0]
-  var limits    = options.distanceLimits || [0, Infinity]
-  var mode      = options.mode   || 'turntable'
-
-  var turntable = createTurntable()
-  var orbit     = createOrbit()
-  var matrix    = createMatrix()
-
-  turntable.setDistanceLimits(limits[0], limits[1])
-  turntable.lookAt(0, eye, center, up)
-  orbit.setDistanceLimits(limits[0], limits[1])
-  orbit.lookAt(0, eye, center, up)
-  matrix.setDistanceLimits(limits[0], limits[1])
-  matrix.lookAt(0, eye, center, up)
-
-  return new ViewController({
-    turntable: turntable,
-    orbit: orbit,
-    matrix: matrix
-  }, mode)
-}
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = createTurntableController
-
-var filterVector = __webpack_require__(8)
-var invert44     = __webpack_require__(3)
-var rotateM      = __webpack_require__(38)
-var cross        = __webpack_require__(10)
-var normalize3   = __webpack_require__(4)
-var dot3         = __webpack_require__(11)
-
-function len3(x, y, z) {
-  return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2))
-}
-
-function clamp1(x) {
-  return Math.min(1.0, Math.max(-1.0, x))
-}
-
-function findOrthoPair(v) {
-  var vx = Math.abs(v[0])
-  var vy = Math.abs(v[1])
-  var vz = Math.abs(v[2])
-
-  var u = [0,0,0]
-  if(vx > Math.max(vy, vz)) {
-    u[2] = 1
-  } else if(vy > Math.max(vx, vz)) {
-    u[0] = 1
-  } else {
-    u[1] = 1
-  }
-
-  var vv = 0
-  var uv = 0
-  for(var i=0; i<3; ++i ) {
-    vv += v[i] * v[i]
-    uv += u[i] * v[i]
-  }
-  for(var i=0; i<3; ++i) {
-    u[i] -= (uv / vv) *  v[i]
-  }
-  normalize3(u, u)
-  return u
-}
-
-function TurntableController(zoomMin, zoomMax, center, up, right, radius, theta, phi) {
-  this.center = filterVector(center)
-  this.up     = filterVector(up)
-  this.right  = filterVector(right)
-  this.radius = filterVector([radius])
-  this.angle  = filterVector([theta, phi])
-  this.angle.bounds = [[-Infinity,-Math.PI/2], [Infinity,Math.PI/2]]
-  this.setDistanceLimits(zoomMin, zoomMax)
-
-  this.computedCenter = this.center.curve(0)
-  this.computedUp     = this.up.curve(0)
-  this.computedRight  = this.right.curve(0)
-  this.computedRadius = this.radius.curve(0)
-  this.computedAngle  = this.angle.curve(0)
-  this.computedToward = [0,0,0]
-  this.computedEye    = [0,0,0]
-  this.computedMatrix = new Array(16)
-  for(var i=0; i<16; ++i) {
-    this.computedMatrix[i] = 0.5
-  }
-
-  this.recalcMatrix(0)
-}
-
-var proto = TurntableController.prototype
-
-proto.setDistanceLimits = function(minDist, maxDist) {
-  if(minDist > 0) {
-    minDist = Math.log(minDist)
-  } else {
-    minDist = -Infinity
-  }
-  if(maxDist > 0) {
-    maxDist = Math.log(maxDist)
-  } else {
-    maxDist = Infinity
-  }
-  maxDist = Math.max(maxDist, minDist)
-  this.radius.bounds[0][0] = minDist
-  this.radius.bounds[1][0] = maxDist
-}
-
-proto.getDistanceLimits = function(out) {
-  var bounds = this.radius.bounds[0]
-  if(out) {
-    out[0] = Math.exp(bounds[0][0])
-    out[1] = Math.exp(bounds[1][0])
-    return out
-  }
-  return [ Math.exp(bounds[0][0]), Math.exp(bounds[1][0]) ]
-}
-
-proto.recalcMatrix = function(t) {
-  //Recompute curves
-  this.center.curve(t)
-  this.up.curve(t)
-  this.right.curve(t)
-  this.radius.curve(t)
-  this.angle.curve(t)
-
-  //Compute frame for camera matrix
-  var up     = this.computedUp
-  var right  = this.computedRight
-  var uu = 0.0
-  var ur = 0.0
-  for(var i=0; i<3; ++i) {
-    ur += up[i] * right[i]
-    uu += up[i] * up[i]
-  }
-  var ul = Math.sqrt(uu)
-  var rr = 0.0
-  for(var i=0; i<3; ++i) {
-    right[i] -= up[i] * ur / uu
-    rr       += right[i] * right[i]
-    up[i]    /= ul
-  }
-  var rl = Math.sqrt(rr)
-  for(var i=0; i<3; ++i) {
-    right[i] /= rl
-  }
-
-  //Compute toward vector
-  var toward = this.computedToward
-  cross(toward, up, right)
-  normalize3(toward, toward)
-
-  //Compute angular parameters
-  var radius = Math.exp(this.computedRadius[0])
-  var theta  = this.computedAngle[0]
-  var phi    = this.computedAngle[1]
-
-  var ctheta = Math.cos(theta)
-  var stheta = Math.sin(theta)
-  var cphi   = Math.cos(phi)
-  var sphi   = Math.sin(phi)
-
-  var center = this.computedCenter
-
-  var wx = ctheta * cphi 
-  var wy = stheta * cphi
-  var wz = sphi
-
-  var sx = -ctheta * sphi
-  var sy = -stheta * sphi
-  var sz = cphi
-
-  var eye = this.computedEye
-  var mat = this.computedMatrix
-  for(var i=0; i<3; ++i) {
-    var x      = wx * right[i] + wy * toward[i] + wz * up[i]
-    mat[4*i+1] = sx * right[i] + sy * toward[i] + sz * up[i]
-    mat[4*i+2] = x
-    mat[4*i+3] = 0.0
-  }
-
-  var ax = mat[1]
-  var ay = mat[5]
-  var az = mat[9]
-  var bx = mat[2]
-  var by = mat[6]
-  var bz = mat[10]
-  var cx = ay * bz - az * by
-  var cy = az * bx - ax * bz
-  var cz = ax * by - ay * bx
-  var cl = len3(cx, cy, cz)
-  cx /= cl
-  cy /= cl
-  cz /= cl
-  mat[0] = cx
-  mat[4] = cy
-  mat[8] = cz
-
-  for(var i=0; i<3; ++i) {
-    eye[i] = center[i] + mat[2+4*i]*radius
-  }
-
-  for(var i=0; i<3; ++i) {
-    var rr = 0.0
-    for(var j=0; j<3; ++j) {
-      rr += mat[i+4*j] * eye[j]
-    }
-    mat[12+i] = -rr
-  }
-  mat[15] = 1.0
-}
-
-proto.getMatrix = function(t, result) {
-  this.recalcMatrix(t)
-  var mat = this.computedMatrix
-  if(result) {
-    for(var i=0; i<16; ++i) {
-      result[i] = mat[i]
-    }
-    return result
-  }
-  return mat
-}
-
-var zAxis = [0,0,0]
-proto.rotate = function(t, dtheta, dphi, droll) {
-  this.angle.move(t, dtheta, dphi)
-  if(droll) {
-    this.recalcMatrix(t)
-
-    var mat = this.computedMatrix
-    zAxis[0] = mat[2]
-    zAxis[1] = mat[6]
-    zAxis[2] = mat[10]
-
-    var up     = this.computedUp
-    var right  = this.computedRight
-    var toward = this.computedToward
-
-    for(var i=0; i<3; ++i) {
-      mat[4*i]   = up[i]
-      mat[4*i+1] = right[i]
-      mat[4*i+2] = toward[i]
-    }
-    rotateM(mat, mat, droll, zAxis)
-    for(var i=0; i<3; ++i) {
-      up[i] =    mat[4*i]
-      right[i] = mat[4*i+1]
-    }
-
-    this.up.set(t, up[0], up[1], up[2])
-    this.right.set(t, right[0], right[1], right[2])
-  }
-}
-
-proto.pan = function(t, dx, dy, dz) {
-  dx = dx || 0.0
-  dy = dy || 0.0
-  dz = dz || 0.0
-
-  this.recalcMatrix(t)
-  var mat = this.computedMatrix
-
-  var dist = Math.exp(this.computedRadius[0])
-
-  var ux = mat[1]
-  var uy = mat[5]
-  var uz = mat[9]
-  var ul = len3(ux, uy, uz)
-  ux /= ul
-  uy /= ul
-  uz /= ul
-
-  var rx = mat[0]
-  var ry = mat[4]
-  var rz = mat[8]
-  var ru = rx * ux + ry * uy + rz * uz
-  rx -= ux * ru
-  ry -= uy * ru
-  rz -= uz * ru
-  var rl = len3(rx, ry, rz)
-  rx /= rl
-  ry /= rl
-  rz /= rl
-
-  var vx = rx * dx + ux * dy
-  var vy = ry * dx + uy * dy
-  var vz = rz * dx + uz * dy
-  this.center.move(t, vx, vy, vz)
-
-  //Update z-component of radius
-  var radius = Math.exp(this.computedRadius[0])
-  radius = Math.max(1e-4, radius + dz)
-  this.radius.set(t, Math.log(radius))
-}
-
-proto.translate = function(t, dx, dy, dz) {
-  this.center.move(t,
-    dx||0.0,
-    dy||0.0,
-    dz||0.0)
-}
-
-//Recenters the coordinate axes
-proto.setMatrix = function(t, mat, axes, noSnap) {
-  
-  //Get the axes for tare
-  var ushift = 1
-  if(typeof axes === 'number') {
-    ushift = (axes)|0
-  } 
-  if(ushift < 0 || ushift > 3) {
-    ushift = 1
-  }
-  var vshift = (ushift + 2) % 3
-  var fshift = (ushift + 1) % 3
-
-  //Recompute state for new t value
-  if(!mat) { 
-    this.recalcMatrix(t)
-    mat = this.computedMatrix
-  }
-
-  //Get right and up vectors
-  var ux = mat[ushift]
-  var uy = mat[ushift+4]
-  var uz = mat[ushift+8]
-  if(!noSnap) {
-    var ul = len3(ux, uy, uz)
-    ux /= ul
-    uy /= ul
-    uz /= ul
-  } else {
-    var ax = Math.abs(ux)
-    var ay = Math.abs(uy)
-    var az = Math.abs(uz)
-    var am = Math.max(ax,ay,az)
-    if(ax === am) {
-      ux = (ux < 0) ? -1 : 1
-      uy = uz = 0
-    } else if(az === am) {
-      uz = (uz < 0) ? -1 : 1
-      ux = uy = 0
-    } else {
-      uy = (uy < 0) ? -1 : 1
-      ux = uz = 0
-    }
-  }
-
-  var rx = mat[vshift]
-  var ry = mat[vshift+4]
-  var rz = mat[vshift+8]
-  var ru = rx * ux + ry * uy + rz * uz
-  rx -= ux * ru
-  ry -= uy * ru
-  rz -= uz * ru
-  var rl = len3(rx, ry, rz)
-  rx /= rl
-  ry /= rl
-  rz /= rl
-  
-  var fx = uy * rz - uz * ry
-  var fy = uz * rx - ux * rz
-  var fz = ux * ry - uy * rx
-  var fl = len3(fx, fy, fz)
-  fx /= fl
-  fy /= fl
-  fz /= fl
-
-  this.center.jump(t, ex, ey, ez)
-  this.radius.idle(t)
-  this.up.jump(t, ux, uy, uz)
-  this.right.jump(t, rx, ry, rz)
-
-  var phi, theta
-  if(ushift === 2) {
-    var cx = mat[1]
-    var cy = mat[5]
-    var cz = mat[9]
-    var cr = cx * rx + cy * ry + cz * rz
-    var cf = cx * fx + cy * fy + cz * fz
-    if(tu < 0) {
-      phi = -Math.PI/2
-    } else {
-      phi = Math.PI/2
-    }
-    theta = Math.atan2(cf, cr)
-  } else {
-    var tx = mat[2]
-    var ty = mat[6]
-    var tz = mat[10]
-    var tu = tx * ux + ty * uy + tz * uz
-    var tr = tx * rx + ty * ry + tz * rz
-    var tf = tx * fx + ty * fy + tz * fz
-
-    phi = Math.asin(clamp1(tu))
-    theta = Math.atan2(tf, tr)
-  }
-
-  this.angle.jump(t, theta, phi)
-
-  this.recalcMatrix(t)
-  var dx = mat[2]
-  var dy = mat[6]
-  var dz = mat[10]
-
-  var imat = this.computedMatrix
-  invert44(imat, mat)
-  var w  = imat[15]
-  var ex = imat[12] / w
-  var ey = imat[13] / w
-  var ez = imat[14] / w
-
-  var gs = Math.exp(this.computedRadius[0])
-  this.center.jump(t, ex-dx*gs, ey-dy*gs, ez-dz*gs)
-}
-
-proto.lastT = function() {
-  return Math.max(
-    this.center.lastT(),
-    this.up.lastT(),
-    this.right.lastT(),
-    this.radius.lastT(),
-    this.angle.lastT())
-}
-
-proto.idle = function(t) {
-  this.center.idle(t)
-  this.up.idle(t)
-  this.right.idle(t)
-  this.radius.idle(t)
-  this.angle.idle(t)
-}
-
-proto.flush = function(t) {
-  this.center.flush(t)
-  this.up.flush(t)
-  this.right.flush(t)
-  this.radius.flush(t)
-  this.angle.flush(t)
-}
-
-proto.setDistance = function(t, d) {
-  if(d > 0) {
-    this.radius.set(t, Math.log(d))
-  }
-}
-
-proto.lookAt = function(t, eye, center, up) {
-  this.recalcMatrix(t)
-
-  eye    = eye    || this.computedEye
-  center = center || this.computedCenter
-  up     = up     || this.computedUp
-
-  var ux = up[0]
-  var uy = up[1]
-  var uz = up[2]
-  var ul = len3(ux, uy, uz)
-  if(ul < 1e-6) {
-    return
-  }
-  ux /= ul
-  uy /= ul
-  uz /= ul
-
-  var tx = eye[0] - center[0]
-  var ty = eye[1] - center[1]
-  var tz = eye[2] - center[2]
-  var tl = len3(tx, ty, tz)
-  if(tl < 1e-6) {
-    return
-  }
-  tx /= tl
-  ty /= tl
-  tz /= tl
-
-  var right = this.computedRight
-  var rx = right[0]
-  var ry = right[1]
-  var rz = right[2]
-  var ru = ux*rx + uy*ry + uz*rz
-  rx -= ru * ux
-  ry -= ru * uy
-  rz -= ru * uz
-  var rl = len3(rx, ry, rz)
-
-  if(rl < 0.01) {
-    rx = uy * tz - uz * ty
-    ry = uz * tx - ux * tz
-    rz = ux * ty - uy * tx
-    rl = len3(rx, ry, rz)
-    if(rl < 1e-6) {
-      return
-    }
-  }
-  rx /= rl
-  ry /= rl
-  rz /= rl
-
-  this.up.set(t, ux, uy, uz)
-  this.right.set(t, rx, ry, rz)
-  this.center.set(t, center[0], center[1], center[2])
-  this.radius.set(t, Math.log(tl))
-
-  var fx = uy * rz - uz * ry
-  var fy = uz * rx - ux * rz
-  var fz = ux * ry - uy * rx
-  var fl = len3(fx, fy, fz)
-  fx /= fl
-  fy /= fl
-  fz /= fl
-
-  var tu = ux*tx + uy*ty + uz*tz
-  var tr = rx*tx + ry*ty + rz*tz
-  var tf = fx*tx + fy*ty + fz*tz
-
-  var phi   = Math.asin(clamp1(tu))
-  var theta = Math.atan2(tf, tr)
-
-  var angleState = this.angle._state
-  var lastTheta  = angleState[angleState.length-1]
-  var lastPhi    = angleState[angleState.length-2]
-  lastTheta      = lastTheta % (2.0 * Math.PI)
-  var dp = Math.abs(lastTheta + 2.0 * Math.PI - theta)
-  var d0 = Math.abs(lastTheta - theta)
-  var dn = Math.abs(lastTheta - 2.0 * Math.PI - theta)
-  if(dp < d0) {
-    lastTheta += 2.0 * Math.PI
-  }
-  if(dn < d0) {
-    lastTheta -= 2.0 * Math.PI
-  }
-
-  this.angle.jump(this.angle.lastT(), lastTheta, lastPhi)
-  this.angle.set(t, theta, phi)
-}
-
-function createTurntableController(options) {
-  options = options || {}
-
-  var center = options.center || [0,0,0]
-  var up     = options.up     || [0,1,0]
-  var right  = options.right  || findOrthoPair(up)
-  var radius = options.radius || 1.0
-  var theta  = options.theta  || 0.0
-  var phi    = options.phi    || 0.0
-
-  center = [].slice.call(center, 0, 3)
-
-  up = [].slice.call(up, 0, 3)
-  normalize3(up, up)
-
-  right = [].slice.call(right, 0, 3)
-  normalize3(right, right)
-
-  if('eye' in options) {
-    var eye = options.eye
-    var toward = [
-      eye[0]-center[0],
-      eye[1]-center[1],
-      eye[2]-center[2]
-    ]
-    cross(right, toward, up)
-    if(len3(right[0], right[1], right[2]) < 1e-6) {
-      right = findOrthoPair(up)
-    } else {
-      normalize3(right, right)
-    }
-
-    radius = len3(toward[0], toward[1], toward[2])
-
-    var ut = dot3(up, toward) / radius
-    var rt = dot3(right, toward) / radius
-    phi    = Math.acos(ut)
-    theta  = Math.acos(rt)
-  }
-
-  //Use logarithmic coordinates for radius
-  radius = Math.log(radius)
-
-  //Return the controller
-  return new TurntableController(
-    options.zoomMin,
-    options.zoomMax,
-    center,
-    up,
-    right,
-    radius,
-    theta,
-    phi)
-}
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function dcubicHermite(p0, v0, p1, v1, t, f) {
-  var dh00 = 6*t*t-6*t,
-      dh10 = 3*t*t-4*t + 1,
-      dh01 = -6*t*t+6*t,
-      dh11 = 3*t*t-2*t
-  if(p0.length) {
-    if(!f) {
-      f = new Array(p0.length)
-    }
-    for(var i=p0.length-1; i>=0; --i) {
-      f[i] = dh00*p0[i] + dh10*v0[i] + dh01*p1[i] + dh11*v1[i]
-    }
-    return f
-  }
-  return dh00*p0 + dh10*v0 + dh01*p1[i] + dh11*v1
-}
-
-function cubicHermite(p0, v0, p1, v1, t, f) {
-  var ti  = (t-1), t2 = t*t, ti2 = ti*ti,
-      h00 = (1+2*t)*ti2,
-      h10 = t*ti2,
-      h01 = t2*(3-2*t),
-      h11 = t2*ti
-  if(p0.length) {
-    if(!f) {
-      f = new Array(p0.length)
-    }
-    for(var i=p0.length-1; i>=0; --i) {
-      f[i] = h00*p0[i] + h10*v0[i] + h01*p1[i] + h11*v1[i]
-    }
-    return f
-  }
-  return h00*p0 + h10*v0 + h01*p1 + h11*v1
-}
-
-module.exports = cubicHermite
-module.exports.derivative = dcubicHermite
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports) {
-
-module.exports = rotate;
-
-/**
- * Rotates a mat4 by the given angle
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @param {vec3} axis the axis to rotate around
- * @returns {mat4} out
- */
-function rotate(out, a, rad, axis) {
-    var x = axis[0], y = axis[1], z = axis[2],
-        len = Math.sqrt(x * x + y * y + z * z),
-        s, c, t,
-        a00, a01, a02, a03,
-        a10, a11, a12, a13,
-        a20, a21, a22, a23,
-        b00, b01, b02,
-        b10, b11, b12,
-        b20, b21, b22;
-
-    if (Math.abs(len) < 0.000001) { return null; }
-    
-    len = 1 / len;
-    x *= len;
-    y *= len;
-    z *= len;
-
-    s = Math.sin(rad);
-    c = Math.cos(rad);
-    t = 1 - c;
-
-    a00 = a[0]; a01 = a[1]; a02 = a[2]; a03 = a[3];
-    a10 = a[4]; a11 = a[5]; a12 = a[6]; a13 = a[7];
-    a20 = a[8]; a21 = a[9]; a22 = a[10]; a23 = a[11];
-
-    // Construct the elements of the rotation matrix
-    b00 = x * x * t + c; b01 = y * x * t + z * s; b02 = z * x * t - y * s;
-    b10 = x * y * t - z * s; b11 = y * y * t + c; b12 = z * y * t + x * s;
-    b20 = x * z * t + y * s; b21 = y * z * t - x * s; b22 = z * z * t + c;
-
-    // Perform rotation-specific matrix multiplication
-    out[0] = a00 * b00 + a10 * b01 + a20 * b02;
-    out[1] = a01 * b00 + a11 * b01 + a21 * b02;
-    out[2] = a02 * b00 + a12 * b01 + a22 * b02;
-    out[3] = a03 * b00 + a13 * b01 + a23 * b02;
-    out[4] = a00 * b10 + a10 * b11 + a20 * b12;
-    out[5] = a01 * b10 + a11 * b11 + a21 * b12;
-    out[6] = a02 * b10 + a12 * b11 + a22 * b12;
-    out[7] = a03 * b10 + a13 * b11 + a23 * b12;
-    out[8] = a00 * b20 + a10 * b21 + a20 * b22;
-    out[9] = a01 * b20 + a11 * b21 + a21 * b22;
-    out[10] = a02 * b20 + a12 * b21 + a22 * b22;
-    out[11] = a03 * b20 + a13 * b21 + a23 * b22;
-
-    if (a !== out) { // If the source and destination differ, copy the unchanged last row
-        out[12] = a[12];
-        out[13] = a[13];
-        out[14] = a[14];
-        out[15] = a[15];
-    }
-    return out;
-};
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = createOrbitController
-
-var filterVector  = __webpack_require__(8)
-var lookAt        = __webpack_require__(12)
-var mat4FromQuat  = __webpack_require__(40)
-var invert44      = __webpack_require__(3)
-var quatFromFrame = __webpack_require__(41)
-
-function len3(x,y,z) {
-  return Math.sqrt(Math.pow(x,2) + Math.pow(y,2) + Math.pow(z,2))
-}
-
-function len4(w,x,y,z) {
-  return Math.sqrt(Math.pow(w,2) + Math.pow(x,2) + Math.pow(y,2) + Math.pow(z,2))
-}
-
-function normalize4(out, a) {
-  var ax = a[0]
-  var ay = a[1]
-  var az = a[2]
-  var aw = a[3]
-  var al = len4(ax, ay, az, aw)
-  if(al > 1e-6) {
-    out[0] = ax/al
-    out[1] = ay/al
-    out[2] = az/al
-    out[3] = aw/al
-  } else {
-    out[0] = out[1] = out[2] = 0.0
-    out[3] = 1.0
-  }
-}
-
-function OrbitCameraController(initQuat, initCenter, initRadius) {
-  this.radius    = filterVector([initRadius])
-  this.center    = filterVector(initCenter)
-  this.rotation  = filterVector(initQuat)
-
-  this.computedRadius   = this.radius.curve(0)
-  this.computedCenter   = this.center.curve(0)
-  this.computedRotation = this.rotation.curve(0)
-  this.computedUp       = [0.1,0,0]
-  this.computedEye      = [0.1,0,0]
-  this.computedMatrix   = [0.1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-
-  this.recalcMatrix(0)
-}
-
-var proto = OrbitCameraController.prototype
-
-proto.lastT = function() {
-  return Math.max(
-    this.radius.lastT(),
-    this.center.lastT(),
-    this.rotation.lastT())
-}
-
-proto.recalcMatrix = function(t) {
-  this.radius.curve(t)
-  this.center.curve(t)
-  this.rotation.curve(t)
-
-  var quat = this.computedRotation
-  normalize4(quat, quat)
-
-  var mat = this.computedMatrix
-  mat4FromQuat(mat, quat)
-
-  var center = this.computedCenter
-  var eye    = this.computedEye
-  var up     = this.computedUp
-  var radius = Math.exp(this.computedRadius[0])
-
-  eye[0] = center[0] + radius * mat[2]
-  eye[1] = center[1] + radius * mat[6]
-  eye[2] = center[2] + radius * mat[10]
-  up[0] = mat[1]
-  up[1] = mat[5]
-  up[2] = mat[9]
-
-  for(var i=0; i<3; ++i) {
-    var rr = 0.0
-    for(var j=0; j<3; ++j) {
-      rr += mat[i+4*j] * eye[j]
-    }
-    mat[12+i] = -rr
-  }
-}
-
-proto.getMatrix = function(t, result) {
-  this.recalcMatrix(t)
-  var m = this.computedMatrix
-  if(result) {
-    for(var i=0; i<16; ++i) {
-      result[i] = m[i]
-    }
-    return result
-  }
-  return m
-}
-
-proto.idle = function(t) {
-  this.center.idle(t)
-  this.radius.idle(t)
-  this.rotation.idle(t)
-}
-
-proto.flush = function(t) {
-  this.center.flush(t)
-  this.radius.flush(t)
-  this.rotation.flush(t)
-}
-
-proto.pan = function(t, dx, dy, dz) {
-  dx = dx || 0.0
-  dy = dy || 0.0
-  dz = dz || 0.0
-
-  this.recalcMatrix(t)
-  var mat = this.computedMatrix
-
-  var ux = mat[1]
-  var uy = mat[5]
-  var uz = mat[9]
-  var ul = len3(ux, uy, uz)
-  ux /= ul
-  uy /= ul
-  uz /= ul
-
-  var rx = mat[0]
-  var ry = mat[4]
-  var rz = mat[8]
-  var ru = rx * ux + ry * uy + rz * uz
-  rx -= ux * ru
-  ry -= uy * ru
-  rz -= uz * ru
-  var rl = len3(rx, ry, rz)
-  rx /= rl
-  ry /= rl
-  rz /= rl
-
-  var fx = mat[2]
-  var fy = mat[6]
-  var fz = mat[10]
-  var fu = fx * ux + fy * uy + fz * uz
-  var fr = fx * rx + fy * ry + fz * rz
-  fx -= fu * ux + fr * rx
-  fy -= fu * uy + fr * ry
-  fz -= fu * uz + fr * rz
-  var fl = len3(fx, fy, fz)
-  fx /= fl
-  fy /= fl
-  fz /= fl
-
-  var vx = rx * dx + ux * dy
-  var vy = ry * dx + uy * dy
-  var vz = rz * dx + uz * dy
-
-  this.center.move(t, vx, vy, vz)
-
-  //Update z-component of radius
-  var radius = Math.exp(this.computedRadius[0])
-  radius = Math.max(1e-4, radius + dz)
-  this.radius.set(t, Math.log(radius))
-}
-
-proto.rotate = function(t, dx, dy, dz) {
-  this.recalcMatrix(t)
-
-  dx = dx||0.0
-  dy = dy||0.0
-
-  var mat = this.computedMatrix
-
-  var rx = mat[0]
-  var ry = mat[4]
-  var rz = mat[8]
-
-  var ux = mat[1]
-  var uy = mat[5]
-  var uz = mat[9]
-
-  var fx = mat[2]
-  var fy = mat[6]
-  var fz = mat[10]
-
-  var qx = dx * rx + dy * ux
-  var qy = dx * ry + dy * uy
-  var qz = dx * rz + dy * uz
-
-  var bx = -(fy * qz - fz * qy)
-  var by = -(fz * qx - fx * qz)
-  var bz = -(fx * qy - fy * qx)  
-  var bw = Math.sqrt(Math.max(0.0, 1.0 - Math.pow(bx,2) - Math.pow(by,2) - Math.pow(bz,2)))
-  var bl = len4(bx, by, bz, bw)
-  if(bl > 1e-6) {
-    bx /= bl
-    by /= bl
-    bz /= bl
-    bw /= bl
-  } else {
-    bx = by = bz = 0.0
-    bw = 1.0
-  }
-
-  var rotation = this.computedRotation
-  var ax = rotation[0]
-  var ay = rotation[1]
-  var az = rotation[2]
-  var aw = rotation[3]
-
-  var cx = ax*bw + aw*bx + ay*bz - az*by
-  var cy = ay*bw + aw*by + az*bx - ax*bz
-  var cz = az*bw + aw*bz + ax*by - ay*bx
-  var cw = aw*bw - ax*bx - ay*by - az*bz
-  
-  //Apply roll
-  if(dz) {
-    bx = fx
-    by = fy
-    bz = fz
-    var s = Math.sin(dz) / len3(bx, by, bz)
-    bx *= s
-    by *= s
-    bz *= s
-    bw = Math.cos(dx)
-    cx = cx*bw + cw*bx + cy*bz - cz*by
-    cy = cy*bw + cw*by + cz*bx - cx*bz
-    cz = cz*bw + cw*bz + cx*by - cy*bx
-    cw = cw*bw - cx*bx - cy*by - cz*bz
-  }
-
-  var cl = len4(cx, cy, cz, cw)
-  if(cl > 1e-6) {
-    cx /= cl
-    cy /= cl
-    cz /= cl
-    cw /= cl
-  } else {
-    cx = cy = cz = 0.0
-    cw = 1.0
-  }
-
-  this.rotation.set(t, cx, cy, cz, cw)
-}
-
-proto.lookAt = function(t, eye, center, up) {
-  this.recalcMatrix(t)
-
-  center = center || this.computedCenter
-  eye    = eye    || this.computedEye
-  up     = up     || this.computedUp
-
-  var mat = this.computedMatrix
-  lookAt(mat, eye, center, up)
-
-  var rotation = this.computedRotation
-  quatFromFrame(rotation,
-    mat[0], mat[1], mat[2],
-    mat[4], mat[5], mat[6],
-    mat[8], mat[9], mat[10])
-  normalize4(rotation, rotation)
-  this.rotation.set(t, rotation[0], rotation[1], rotation[2], rotation[3])
-
-  var fl = 0.0
-  for(var i=0; i<3; ++i) {
-    fl += Math.pow(center[i] - eye[i], 2)
-  }
-  this.radius.set(t, 0.5 * Math.log(Math.max(fl, 1e-6)))
-
-  this.center.set(t, center[0], center[1], center[2])
-}
-
-proto.translate = function(t, dx, dy, dz) {
-  this.center.move(t,
-    dx||0.0,
-    dy||0.0,
-    dz||0.0)
-}
-
-proto.setMatrix = function(t, matrix) {
-
-  var rotation = this.computedRotation
-  quatFromFrame(rotation,
-    matrix[0], matrix[1], matrix[2],
-    matrix[4], matrix[5], matrix[6],
-    matrix[8], matrix[9], matrix[10])
-  normalize4(rotation, rotation)
-  this.rotation.set(t, rotation[0], rotation[1], rotation[2], rotation[3])
-
-  var mat = this.computedMatrix
-  invert44(mat, matrix)
-  var w = mat[15]
-  if(Math.abs(w) > 1e-6) {
-    var cx = mat[12]/w
-    var cy = mat[13]/w
-    var cz = mat[14]/w
-
-    this.recalcMatrix(t)  
-    var r = Math.exp(this.computedRadius[0])
-    this.center.set(t, cx-mat[2]*r, cy-mat[6]*r, cz-mat[10]*r)
-    this.radius.idle(t)
-  } else {
-    this.center.idle(t)
-    this.radius.idle(t)
-  }
-}
-
-proto.setDistance = function(t, d) {
-  if(d > 0) {
-    this.radius.set(t, Math.log(d))
-  }
-}
-
-proto.setDistanceLimits = function(lo, hi) {
-  if(lo > 0) {
-    lo = Math.log(lo)
-  } else {
-    lo = -Infinity    
-  }
-  if(hi > 0) {
-    hi = Math.log(hi)
-  } else {
-    hi = Infinity
-  }
-  hi = Math.max(hi, lo)
-  this.radius.bounds[0][0] = lo
-  this.radius.bounds[1][0] = hi
-}
-
-proto.getDistanceLimits = function(out) {
-  var bounds = this.radius.bounds
-  if(out) {
-    out[0] = Math.exp(bounds[0][0])
-    out[1] = Math.exp(bounds[1][0])
-    return out
-  }
-  return [ Math.exp(bounds[0][0]), Math.exp(bounds[1][0]) ]
-}
-
-proto.toJSON = function() {
-  this.recalcMatrix(this.lastT())
-  return {
-    center:   this.computedCenter.slice(),
-    rotation: this.computedRotation.slice(),
-    distance: Math.log(this.computedRadius[0]),
-    zoomMin:  this.radius.bounds[0][0],
-    zoomMax:  this.radius.bounds[1][0]
-  }
-}
-
-proto.fromJSON = function(options) {
-  var t = this.lastT()
-  var c = options.center
-  if(c) {
-    this.center.set(t, c[0], c[1], c[2])
-  }
-  var r = options.rotation
-  if(r) {
-    this.rotation.set(t, r[0], r[1], r[2], r[3])
-  }
-  var d = options.distance
-  if(d && d > 0) {
-    this.radius.set(t, Math.log(d))
-  }
-  this.setDistanceLimits(options.zoomMin, options.zoomMax)
-}
-
-function createOrbitController(options) {
-  options = options || {}
-  var center   = options.center   || [0,0,0]
-  var rotation = options.rotation || [0,0,0,1]
-  var radius   = options.radius   || 1.0
-
-  center = [].slice.call(center, 0, 3)
-  rotation = [].slice.call(rotation, 0, 4)
-  normalize4(rotation, rotation)
-
-  var result = new OrbitCameraController(
-    rotation,
-    center,
-    Math.log(radius))
-
-  result.setDistanceLimits(options.zoomMin, options.zoomMax)
-
-  if('eye' in options || 'up' in options) {
-    result.lookAt(0, options.eye, options.center, options.up)
-  }
-
-  return result
-}
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports) {
-
-module.exports = fromQuat;
-
-/**
- * Creates a matrix from a quaternion rotation.
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {quat4} q Rotation quaternion
- * @returns {mat4} out
- */
-function fromQuat(out, q) {
-    var x = q[0], y = q[1], z = q[2], w = q[3],
-        x2 = x + x,
-        y2 = y + y,
-        z2 = z + z,
-
-        xx = x * x2,
-        yx = y * x2,
-        yy = y * y2,
-        zx = z * x2,
-        zy = z * y2,
-        zz = z * z2,
-        wx = w * x2,
-        wy = w * y2,
-        wz = w * z2;
-
-    out[0] = 1 - yy - zz;
-    out[1] = yx + wz;
-    out[2] = zx - wy;
-    out[3] = 0;
-
-    out[4] = yx - wz;
-    out[5] = 1 - xx - zz;
-    out[6] = zy + wx;
-    out[7] = 0;
-
-    out[8] = zx + wy;
-    out[9] = zy - wx;
-    out[10] = 1 - xx - yy;
-    out[11] = 0;
-
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = 0;
-    out[15] = 1;
-
-    return out;
-};
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = quatFromFrame
-
-function quatFromFrame(
-  out,
-  rx, ry, rz,
-  ux, uy, uz,
-  fx, fy, fz) {
-  var tr = rx + uy + fz
-  if(l > 0) {
-    var l = Math.sqrt(tr + 1.0)
-    out[0] = 0.5 * (uz - fy) / l
-    out[1] = 0.5 * (fx - rz) / l
-    out[2] = 0.5 * (ry - uy) / l
-    out[3] = 0.5 * l
-  } else {
-    var tf = Math.max(rx, uy, fz)
-    var l = Math.sqrt(2 * tf - tr + 1.0)
-    if(rx >= tf) {
-      //x y z  order
-      out[0] = 0.5 * l
-      out[1] = 0.5 * (ux + ry) / l
-      out[2] = 0.5 * (fx + rz) / l
-      out[3] = 0.5 * (uz - fy) / l
-    } else if(uy >= tf) {
-      //y z x  order
-      out[0] = 0.5 * (ry + ux) / l
-      out[1] = 0.5 * l
-      out[2] = 0.5 * (fy + uz) / l
-      out[3] = 0.5 * (fx - rz) / l
-    } else {
-      //z x y  order
-      out[0] = 0.5 * (rz + fx) / l
-      out[1] = 0.5 * (uz + fy) / l
-      out[2] = 0.5 * l
-      out[3] = 0.5 * (ry - ux) / l
-    }
-  }
-  return out
-}
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var bsearch   = __webpack_require__(9)
-var m4interp  = __webpack_require__(43)
-var invert44  = __webpack_require__(3)
-var rotateX   = __webpack_require__(55)
-var rotateY   = __webpack_require__(56)
-var rotateZ   = __webpack_require__(57)
-var lookAt    = __webpack_require__(12)
-var translate = __webpack_require__(14)
-var scale     = __webpack_require__(16)
-var normalize = __webpack_require__(4)
-
-var DEFAULT_CENTER = [0,0,0]
-
-module.exports = createMatrixCameraController
-
-function MatrixCameraController(initialMatrix) {
-  this._components    = initialMatrix.slice()
-  this._time          = [0]
-  this.prevMatrix     = initialMatrix.slice()
-  this.nextMatrix     = initialMatrix.slice()
-  this.computedMatrix = initialMatrix.slice()
-  this.computedInverse = initialMatrix.slice()
-  this.computedEye    = [0,0,0]
-  this.computedUp     = [0,0,0]
-  this.computedCenter = [0,0,0]
-  this.computedRadius = [0]
-  this._limits        = [-Infinity, Infinity]
-}
-
-var proto = MatrixCameraController.prototype
-
-proto.recalcMatrix = function(t) {
-  var time = this._time
-  var tidx = bsearch.le(time, t)
-  var mat = this.computedMatrix
-  if(tidx < 0) {
-    return
-  }
-  var comps = this._components
-  if(tidx === time.length-1) {
-    var ptr = 16*tidx
-    for(var i=0; i<16; ++i) {
-      mat[i] = comps[ptr++]
-    }
-  } else {
-    var dt = (time[tidx+1] - time[tidx])
-    var ptr = 16*tidx
-    var prev = this.prevMatrix
-    var allEqual = true
-    for(var i=0; i<16; ++i) {
-      prev[i] = comps[ptr++]
-    }
-    var next = this.nextMatrix
-    for(var i=0; i<16; ++i) {
-      next[i] = comps[ptr++]
-      allEqual = allEqual && (prev[i] === next[i])
-    }
-    if(dt < 1e-6 || allEqual) {
-      for(var i=0; i<16; ++i) {
-        mat[i] = prev[i]
-      }
-    } else {
-      m4interp(mat, prev, next, (t - time[tidx])/dt)
-    }
-  }
-
-  var up = this.computedUp
-  up[0] = mat[1]
-  up[1] = mat[5]
-  up[2] = mat[9]
-  normalize(up, up)
-
-  var imat = this.computedInverse
-  invert44(imat, mat)
-  var eye = this.computedEye
-  var w = imat[15]
-  eye[0] = imat[12]/w
-  eye[1] = imat[13]/w
-  eye[2] = imat[14]/w
-
-  var center = this.computedCenter
-  var radius = Math.exp(this.computedRadius[0])
-  for(var i=0; i<3; ++i) {
-    center[i] = eye[i] - mat[2+4*i] * radius
-  }
-}
-
-proto.idle = function(t) {
-  if(t < this.lastT()) {
-    return
-  }
-  var mc = this._components
-  var ptr = mc.length-16
-  for(var i=0; i<16; ++i) {
-    mc.push(mc[ptr++])
-  }
-  this._time.push(t)
-}
-
-proto.flush = function(t) {
-  var idx = bsearch.gt(this._time, t) - 2
-  if(idx < 0) {
-    return
-  }
-  this._time.splice(0, idx)
-  this._components.splice(0, 16*idx)
-}
-
-proto.lastT = function() {
-  return this._time[this._time.length-1]
-}
-
-proto.lookAt = function(t, eye, center, up) {
-  this.recalcMatrix(t)
-  eye    = eye || this.computedEye
-  center = center || DEFAULT_CENTER
-  up     = up || this.computedUp
-  this.setMatrix(t, lookAt(this.computedMatrix, eye, center, up))
-  var d2 = 0.0
-  for(var i=0; i<3; ++i) {
-    d2 += Math.pow(center[i] - eye[i], 2)
-  }
-  d2 = Math.log(Math.sqrt(d2))
-  this.computedRadius[0] = d2
-}
-
-proto.rotate = function(t, yaw, pitch, roll) {
-  this.recalcMatrix(t)
-  var mat = this.computedInverse
-  if(yaw)   rotateY(mat, mat, yaw)
-  if(pitch) rotateX(mat, mat, pitch)
-  if(roll)  rotateZ(mat, mat, roll)
-  this.setMatrix(t, invert44(this.computedMatrix, mat))
-}
-
-var tvec = [0,0,0]
-
-proto.pan = function(t, dx, dy, dz) {
-  tvec[0] = -(dx || 0.0)
-  tvec[1] = -(dy || 0.0)
-  tvec[2] = -(dz || 0.0)
-  this.recalcMatrix(t)
-  var mat = this.computedInverse
-  translate(mat, mat, tvec)
-  this.setMatrix(t, invert44(mat, mat))
-}
-
-proto.translate = function(t, dx, dy, dz) {
-  tvec[0] = dx || 0.0
-  tvec[1] = dy || 0.0
-  tvec[2] = dz || 0.0
-  this.recalcMatrix(t)
-  var mat = this.computedMatrix
-  translate(mat, mat, tvec)
-  this.setMatrix(t, mat)
-}
-
-proto.setMatrix = function(t, mat) {
-  if(t < this.lastT()) {
-    return
-  }
-  this._time.push(t)
-  for(var i=0; i<16; ++i) {
-    this._components.push(mat[i])
-  }
-}
-
-proto.setDistance = function(t, d) {
-  this.computedRadius[0] = d
-}
-
-proto.setDistanceLimits = function(a,b) {
-  var lim = this._limits
-  lim[0] = a
-  lim[1] = b
-}
-
-proto.getDistanceLimits = function(out) {
-  var lim = this._limits
-  if(out) {
-    out[0] = lim[0]
-    out[1] = lim[1]
-    return out
-  }
-  return lim
-}
-
-function createMatrixCameraController(options) {
-  options = options || {}
-  var matrix = options.matrix || 
-              [1,0,0,0,
-               0,1,0,0,
-               0,0,1,0,
-               0,0,0,1]
-  return new MatrixCameraController(matrix)
-}
-
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var lerp = __webpack_require__(44)
-
-var recompose = __webpack_require__(45)
-var decompose = __webpack_require__(48)
-var determinant = __webpack_require__(17)
-var slerp = __webpack_require__(53)
-
-var state0 = state()
-var state1 = state()
-var tmp = state()
-
-module.exports = interpolate
-function interpolate(out, start, end, alpha) {
-    if (determinant(start) === 0 || determinant(end) === 0)
-        return false
-
-    //decompose the start and end matrices into individual components
-    var r0 = decompose(start, state0.translate, state0.scale, state0.skew, state0.perspective, state0.quaternion)
-    var r1 = decompose(end, state1.translate, state1.scale, state1.skew, state1.perspective, state1.quaternion)
-    if (!r0 || !r1)
-        return false    
-
-
-    //now lerp/slerp the start and end components into a temporary     lerp(tmptranslate, state0.translate, state1.translate, alpha)
-    lerp(tmp.translate, state0.translate, state1.translate, alpha)
-    lerp(tmp.skew, state0.skew, state1.skew, alpha)
-    lerp(tmp.scale, state0.scale, state1.scale, alpha)
-    lerp(tmp.perspective, state0.perspective, state1.perspective, alpha)
-    slerp(tmp.quaternion, state0.quaternion, state1.quaternion, alpha)
-
-    //and recompose into our 'out' matrix
-    recompose(out, tmp.translate, tmp.scale, tmp.skew, tmp.perspective, tmp.quaternion)
-    return true
-}
-
-function state() {
-    return {
-        translate: vec3(),
-        scale: vec3(1),
-        skew: vec3(),
-        perspective: vec4(),
-        quaternion: vec4()
-    }
-}
-
-function vec3(n) {
-    return [n||0,n||0,n||0]
-}
-
-function vec4() {
-    return [0,0,0,1]
-}
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports) {
-
-module.exports = lerp;
-
-/**
- * Performs a linear interpolation between two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @param {Number} t interpolation amount between the two inputs
- * @returns {vec3} out
- */
-function lerp(out, a, b, t) {
-    var ax = a[0],
-        ay = a[1],
-        az = a[2]
-    out[0] = ax + t * (b[0] - ax)
-    out[1] = ay + t * (b[1] - ay)
-    out[2] = az + t * (b[2] - az)
-    return out
-}
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-Input:  translation ; a 3 component vector
-        scale       ; a 3 component vector
-        skew        ; skew factors XY,XZ,YZ represented as a 3 component vector
-        perspective ; a 4 component vector
-        quaternion  ; a 4 component vector
-Output: matrix      ; a 4x4 matrix
-
-From: http://www.w3.org/TR/css3-transforms/#recomposing-to-a-3d-matrix
-*/
-
-var mat4 = {
-    identity: __webpack_require__(13),
-    translate: __webpack_require__(14),
-    multiply: __webpack_require__(46),
-    create: __webpack_require__(15),
-    scale: __webpack_require__(16),
-    fromRotationTranslation: __webpack_require__(47)
-}
-
-var rotationMatrix = mat4.create()
-var temp = mat4.create()
-
-module.exports = function recomposeMat4(matrix, translation, scale, skew, perspective, quaternion) {
-    mat4.identity(matrix)
-
-    //apply translation & rotation
-    mat4.fromRotationTranslation(matrix, quaternion, translation)
-
-    //apply perspective
-    matrix[3] = perspective[0]
-    matrix[7] = perspective[1]
-    matrix[11] = perspective[2]
-    matrix[15] = perspective[3]
-        
-    // apply skew
-    // temp is a identity 4x4 matrix initially
-    mat4.identity(temp)
-
-    if (skew[2] !== 0) {
-        temp[9] = skew[2]
-        mat4.multiply(matrix, matrix, temp)
-    }
-
-    if (skew[1] !== 0) {
-        temp[9] = 0
-        temp[8] = skew[1]
-        mat4.multiply(matrix, matrix, temp)
-    }
-
-    if (skew[0] !== 0) {
-        temp[8] = 0
-        temp[4] = skew[0]
-        mat4.multiply(matrix, matrix, temp)
-    }
-
-    //apply scale
-    mat4.scale(matrix, matrix, scale)
-    return matrix
-}
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports) {
-
-module.exports = multiply;
-
-/**
- * Multiplies two mat4's
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the first operand
- * @param {mat4} b the second operand
- * @returns {mat4} out
- */
-function multiply(out, a, b) {
-    var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
-        a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
-        a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
-        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
-
-    // Cache only the current line of the second matrix
-    var b0  = b[0], b1 = b[1], b2 = b[2], b3 = b[3];  
-    out[0] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-    out[1] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-    out[2] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-    out[3] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
-
-    b0 = b[4]; b1 = b[5]; b2 = b[6]; b3 = b[7];
-    out[4] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-    out[5] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-    out[6] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-    out[7] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
-
-    b0 = b[8]; b1 = b[9]; b2 = b[10]; b3 = b[11];
-    out[8] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-    out[9] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-    out[10] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-    out[11] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
-
-    b0 = b[12]; b1 = b[13]; b2 = b[14]; b3 = b[15];
-    out[12] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-    out[13] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-    out[14] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-    out[15] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
-    return out;
-};
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports) {
-
-module.exports = fromRotationTranslation;
-
-/**
- * Creates a matrix from a quaternion rotation and vector translation
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.translate(dest, vec);
- *     var quatMat = mat4.create();
- *     quat4.toMat4(quat, quatMat);
- *     mat4.multiply(dest, quatMat);
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {quat4} q Rotation quaternion
- * @param {vec3} v Translation vector
- * @returns {mat4} out
- */
-function fromRotationTranslation(out, q, v) {
-    // Quaternion math
-    var x = q[0], y = q[1], z = q[2], w = q[3],
-        x2 = x + x,
-        y2 = y + y,
-        z2 = z + z,
-
-        xx = x * x2,
-        xy = x * y2,
-        xz = x * z2,
-        yy = y * y2,
-        yz = y * z2,
-        zz = z * z2,
-        wx = w * x2,
-        wy = w * y2,
-        wz = w * z2;
-
-    out[0] = 1 - (yy + zz);
-    out[1] = xy + wz;
-    out[2] = xz - wy;
-    out[3] = 0;
-    out[4] = xy - wz;
-    out[5] = 1 - (xx + zz);
-    out[6] = yz + wx;
-    out[7] = 0;
-    out[8] = xz + wy;
-    out[9] = yz - wx;
-    out[10] = 1 - (xx + yy);
-    out[11] = 0;
-    out[12] = v[0];
-    out[13] = v[1];
-    out[14] = v[2];
-    out[15] = 1;
-    
-    return out;
-};
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*jshint unused:true*/
-/*
-Input:  matrix      ; a 4x4 matrix
-Output: translation ; a 3 component vector
-        scale       ; a 3 component vector
-        skew        ; skew factors XY,XZ,YZ represented as a 3 component vector
-        perspective ; a 4 component vector
-        quaternion  ; a 4 component vector
-Returns false if the matrix cannot be decomposed, true if it can
-
-
-References:
-https://github.com/kamicane/matrix3d/blob/master/lib/Matrix3d.js
-https://github.com/ChromiumWebApps/chromium/blob/master/ui/gfx/transform_util.cc
-http://www.w3.org/TR/css3-transforms/#decomposing-a-3d-matrix
-*/
-
-var normalize = __webpack_require__(49)
-
-var create = __webpack_require__(15)
-var clone = __webpack_require__(50)
-var determinant = __webpack_require__(17)
-var invert = __webpack_require__(3)
-var transpose = __webpack_require__(51)
-var vec3 = {
-    length: __webpack_require__(52),
-    normalize: __webpack_require__(4),
-    dot: __webpack_require__(11),
-    cross: __webpack_require__(10)
-}
-
-var tmp = create()
-var perspectiveMatrix = create()
-var tmpVec4 = [0, 0, 0, 0]
-var row = [ [0,0,0], [0,0,0], [0,0,0] ]
-var pdum3 = [0,0,0]
-
-module.exports = function decomposeMat4(matrix, translation, scale, skew, perspective, quaternion) {
-    if (!translation) translation = [0,0,0]
-    if (!scale) scale = [0,0,0]
-    if (!skew) skew = [0,0,0]
-    if (!perspective) perspective = [0,0,0,1]
-    if (!quaternion) quaternion = [0,0,0,1]
-
-    //normalize, if not possible then bail out early
-    if (!normalize(tmp, matrix))
-        return false
-
-    // perspectiveMatrix is used to solve for perspective, but it also provides
-    // an easy way to test for singularity of the upper 3x3 component.
-    clone(perspectiveMatrix, tmp)
-
-    perspectiveMatrix[3] = 0
-    perspectiveMatrix[7] = 0
-    perspectiveMatrix[11] = 0
-    perspectiveMatrix[15] = 1
-
-    // If the perspectiveMatrix is not invertible, we are also unable to
-    // decompose, so we'll bail early. Constant taken from SkMatrix44::invert.
-    if (Math.abs(determinant(perspectiveMatrix) < 1e-8))
-        return false
-
-    var a03 = tmp[3], a13 = tmp[7], a23 = tmp[11],
-            a30 = tmp[12], a31 = tmp[13], a32 = tmp[14], a33 = tmp[15]
-
-    // First, isolate perspective.
-    if (a03 !== 0 || a13 !== 0 || a23 !== 0) {
-        tmpVec4[0] = a03
-        tmpVec4[1] = a13
-        tmpVec4[2] = a23
-        tmpVec4[3] = a33
-
-        // Solve the equation by inverting perspectiveMatrix and multiplying
-        // rightHandSide by the inverse.
-        // resuing the perspectiveMatrix here since it's no longer needed
-        var ret = invert(perspectiveMatrix, perspectiveMatrix)
-        if (!ret) return false
-        transpose(perspectiveMatrix, perspectiveMatrix)
-
-        //multiply by transposed inverse perspective matrix, into perspective vec4
-        vec4multMat4(perspective, tmpVec4, perspectiveMatrix)
-    } else { 
-        //no perspective
-        perspective[0] = perspective[1] = perspective[2] = 0
-        perspective[3] = 1
-    }
-
-    // Next take care of translation
-    translation[0] = a30
-    translation[1] = a31
-    translation[2] = a32
-
-    // Now get scale and shear. 'row' is a 3 element array of 3 component vectors
-    mat3from4(row, tmp)
-
-    // Compute X scale factor and normalize first row.
-    scale[0] = vec3.length(row[0])
-    vec3.normalize(row[0], row[0])
-
-    // Compute XY shear factor and make 2nd row orthogonal to 1st.
-    skew[0] = vec3.dot(row[0], row[1])
-    combine(row[1], row[1], row[0], 1.0, -skew[0])
-
-    // Now, compute Y scale and normalize 2nd row.
-    scale[1] = vec3.length(row[1])
-    vec3.normalize(row[1], row[1])
-    skew[0] /= scale[1]
-
-    // Compute XZ and YZ shears, orthogonalize 3rd row
-    skew[1] = vec3.dot(row[0], row[2])
-    combine(row[2], row[2], row[0], 1.0, -skew[1])
-    skew[2] = vec3.dot(row[1], row[2])
-    combine(row[2], row[2], row[1], 1.0, -skew[2])
-
-    // Next, get Z scale and normalize 3rd row.
-    scale[2] = vec3.length(row[2])
-    vec3.normalize(row[2], row[2])
-    skew[1] /= scale[2]
-    skew[2] /= scale[2]
-
-
-    // At this point, the matrix (in rows) is orthonormal.
-    // Check for a coordinate system flip.  If the determinant
-    // is -1, then negate the matrix and the scaling factors.
-    vec3.cross(pdum3, row[1], row[2])
-    if (vec3.dot(row[0], pdum3) < 0) {
-        for (var i = 0; i < 3; i++) {
-            scale[i] *= -1;
-            row[i][0] *= -1
-            row[i][1] *= -1
-            row[i][2] *= -1
-        }
-    }
-
-    // Now, get the rotations out
-    quaternion[0] = 0.5 * Math.sqrt(Math.max(1 + row[0][0] - row[1][1] - row[2][2], 0))
-    quaternion[1] = 0.5 * Math.sqrt(Math.max(1 - row[0][0] + row[1][1] - row[2][2], 0))
-    quaternion[2] = 0.5 * Math.sqrt(Math.max(1 - row[0][0] - row[1][1] + row[2][2], 0))
-    quaternion[3] = 0.5 * Math.sqrt(Math.max(1 + row[0][0] + row[1][1] + row[2][2], 0))
-
-    if (row[2][1] > row[1][2])
-        quaternion[0] = -quaternion[0]
-    if (row[0][2] > row[2][0])
-        quaternion[1] = -quaternion[1]
-    if (row[1][0] > row[0][1])
-        quaternion[2] = -quaternion[2]
-    return true
-}
-
-//will be replaced by gl-vec4 eventually
-function vec4multMat4(out, a, m) {
-    var x = a[0], y = a[1], z = a[2], w = a[3];
-    out[0] = m[0] * x + m[4] * y + m[8] * z + m[12] * w;
-    out[1] = m[1] * x + m[5] * y + m[9] * z + m[13] * w;
-    out[2] = m[2] * x + m[6] * y + m[10] * z + m[14] * w;
-    out[3] = m[3] * x + m[7] * y + m[11] * z + m[15] * w;
-    return out;
-}
-
-//gets upper-left of a 4x4 matrix into a 3x3 of vectors
-function mat3from4(out, mat4x4) {
-    out[0][0] = mat4x4[0]
-    out[0][1] = mat4x4[1]
-    out[0][2] = mat4x4[2]
-    
-    out[1][0] = mat4x4[4]
-    out[1][1] = mat4x4[5]
-    out[1][2] = mat4x4[6]
-
-    out[2][0] = mat4x4[8]
-    out[2][1] = mat4x4[9]
-    out[2][2] = mat4x4[10]
-}
-
-function combine(out, a, b, scale1, scale2) {
-    out[0] = a[0] * scale1 + b[0] * scale2
-    out[1] = a[1] * scale1 + b[1] * scale2
-    out[2] = a[2] * scale1 + b[2] * scale2
-}
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports) {
-
-module.exports = function normalize(out, mat) {
-    var m44 = mat[15]
-    // Cannot normalize.
-    if (m44 === 0) 
-        return false
-    var scale = 1 / m44
-    for (var i=0; i<16; i++)
-        out[i] = mat[i] * scale
-    return true
-}
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports) {
-
-module.exports = clone;
-
-/**
- * Creates a new mat4 initialized with values from an existing matrix
- *
- * @param {mat4} a matrix to clone
- * @returns {mat4} a new 4x4 matrix
- */
-function clone(a) {
-    var out = new Float32Array(16);
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    out[4] = a[4];
-    out[5] = a[5];
-    out[6] = a[6];
-    out[7] = a[7];
-    out[8] = a[8];
-    out[9] = a[9];
-    out[10] = a[10];
-    out[11] = a[11];
-    out[12] = a[12];
-    out[13] = a[13];
-    out[14] = a[14];
-    out[15] = a[15];
-    return out;
-};
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports) {
-
-module.exports = transpose;
-
-/**
- * Transpose the values of a mat4
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the source matrix
- * @returns {mat4} out
- */
-function transpose(out, a) {
-    // If we are transposing ourselves we can skip a few steps but have to cache some values
-    if (out === a) {
-        var a01 = a[1], a02 = a[2], a03 = a[3],
-            a12 = a[6], a13 = a[7],
-            a23 = a[11];
-
-        out[1] = a[4];
-        out[2] = a[8];
-        out[3] = a[12];
-        out[4] = a01;
-        out[6] = a[9];
-        out[7] = a[13];
-        out[8] = a02;
-        out[9] = a12;
-        out[11] = a[14];
-        out[12] = a03;
-        out[13] = a13;
-        out[14] = a23;
-    } else {
-        out[0] = a[0];
-        out[1] = a[4];
-        out[2] = a[8];
-        out[3] = a[12];
-        out[4] = a[1];
-        out[5] = a[5];
-        out[6] = a[9];
-        out[7] = a[13];
-        out[8] = a[2];
-        out[9] = a[6];
-        out[10] = a[10];
-        out[11] = a[14];
-        out[12] = a[3];
-        out[13] = a[7];
-        out[14] = a[11];
-        out[15] = a[15];
-    }
-    
-    return out;
-};
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports) {
-
-module.exports = length;
-
-/**
- * Calculates the length of a vec3
- *
- * @param {vec3} a vector to calculate length of
- * @returns {Number} length of a
- */
-function length(a) {
-    var x = a[0],
-        y = a[1],
-        z = a[2]
-    return Math.sqrt(x*x + y*y + z*z)
-}
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(54)
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports) {
-
-module.exports = slerp
-
-/**
- * Performs a spherical linear interpolation between two quat
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @param {Number} t interpolation amount between the two inputs
- * @returns {quat} out
- */
-function slerp (out, a, b, t) {
-  // benchmarks:
-  //    http://jsperf.com/quaternion-slerp-implementations
-
-  var ax = a[0], ay = a[1], az = a[2], aw = a[3],
-    bx = b[0], by = b[1], bz = b[2], bw = b[3]
-
-  var omega, cosom, sinom, scale0, scale1
-
-  // calc cosine
-  cosom = ax * bx + ay * by + az * bz + aw * bw
-  // adjust signs (if necessary)
-  if (cosom < 0.0) {
-    cosom = -cosom
-    bx = -bx
-    by = -by
-    bz = -bz
-    bw = -bw
-  }
-  // calculate coefficients
-  if ((1.0 - cosom) > 0.000001) {
-    // standard case (slerp)
-    omega = Math.acos(cosom)
-    sinom = Math.sin(omega)
-    scale0 = Math.sin((1.0 - t) * omega) / sinom
-    scale1 = Math.sin(t * omega) / sinom
-  } else {
-    // "from" and "to" quaternions are very close
-    //  ... so we can do a linear interpolation
-    scale0 = 1.0 - t
-    scale1 = t
-  }
-  // calculate final values
-  out[0] = scale0 * ax + scale1 * bx
-  out[1] = scale0 * ay + scale1 * by
-  out[2] = scale0 * az + scale1 * bz
-  out[3] = scale0 * aw + scale1 * bw
-
-  return out
-}
-
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports) {
-
-module.exports = rotateX;
-
-/**
- * Rotates a matrix by the given angle around the X axis
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-function rotateX(out, a, rad) {
-    var s = Math.sin(rad),
-        c = Math.cos(rad),
-        a10 = a[4],
-        a11 = a[5],
-        a12 = a[6],
-        a13 = a[7],
-        a20 = a[8],
-        a21 = a[9],
-        a22 = a[10],
-        a23 = a[11];
-
-    if (a !== out) { // If the source and destination differ, copy the unchanged rows
-        out[0]  = a[0];
-        out[1]  = a[1];
-        out[2]  = a[2];
-        out[3]  = a[3];
-        out[12] = a[12];
-        out[13] = a[13];
-        out[14] = a[14];
-        out[15] = a[15];
-    }
-
-    // Perform axis-specific matrix multiplication
-    out[4] = a10 * c + a20 * s;
-    out[5] = a11 * c + a21 * s;
-    out[6] = a12 * c + a22 * s;
-    out[7] = a13 * c + a23 * s;
-    out[8] = a20 * c - a10 * s;
-    out[9] = a21 * c - a11 * s;
-    out[10] = a22 * c - a12 * s;
-    out[11] = a23 * c - a13 * s;
-    return out;
-};
-
-/***/ }),
-/* 56 */
-/***/ (function(module, exports) {
-
-module.exports = rotateY;
-
-/**
- * Rotates a matrix by the given angle around the Y axis
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-function rotateY(out, a, rad) {
-    var s = Math.sin(rad),
-        c = Math.cos(rad),
-        a00 = a[0],
-        a01 = a[1],
-        a02 = a[2],
-        a03 = a[3],
-        a20 = a[8],
-        a21 = a[9],
-        a22 = a[10],
-        a23 = a[11];
-
-    if (a !== out) { // If the source and destination differ, copy the unchanged rows
-        out[4]  = a[4];
-        out[5]  = a[5];
-        out[6]  = a[6];
-        out[7]  = a[7];
-        out[12] = a[12];
-        out[13] = a[13];
-        out[14] = a[14];
-        out[15] = a[15];
-    }
-
-    // Perform axis-specific matrix multiplication
-    out[0] = a00 * c - a20 * s;
-    out[1] = a01 * c - a21 * s;
-    out[2] = a02 * c - a22 * s;
-    out[3] = a03 * c - a23 * s;
-    out[8] = a00 * s + a20 * c;
-    out[9] = a01 * s + a21 * c;
-    out[10] = a02 * s + a22 * c;
-    out[11] = a03 * s + a23 * c;
-    return out;
-};
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports) {
-
-module.exports = rotateZ;
-
-/**
- * Rotates a matrix by the given angle around the Z axis
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-function rotateZ(out, a, rad) {
-    var s = Math.sin(rad),
-        c = Math.cos(rad),
-        a00 = a[0],
-        a01 = a[1],
-        a02 = a[2],
-        a03 = a[3],
-        a10 = a[4],
-        a11 = a[5],
-        a12 = a[6],
-        a13 = a[7];
-
-    if (a !== out) { // If the source and destination differ, copy the unchanged last row
-        out[8]  = a[8];
-        out[9]  = a[9];
-        out[10] = a[10];
-        out[11] = a[11];
-        out[12] = a[12];
-        out[13] = a[13];
-        out[14] = a[14];
-        out[15] = a[15];
-    }
-
-    // Perform axis-specific matrix multiplication
-    out[0] = a00 * c + a10 * s;
-    out[1] = a01 * c + a11 * s;
-    out[2] = a02 * c + a12 * s;
-    out[3] = a03 * c + a13 * s;
-    out[4] = a10 * c - a00 * s;
-    out[5] = a11 * c - a01 * s;
-    out[6] = a12 * c - a02 * s;
-    out[7] = a13 * c - a03 * s;
-    return out;
-};
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = mouseListen
-
-var mouse = __webpack_require__(59)
-
-function mouseListen (element, callback) {
-  if (!callback) {
-    callback = element
-    element = window
-  }
-
-  var buttonState = 0
-  var x = 0
-  var y = 0
-  var mods = {
-    shift: false,
-    alt: false,
-    control: false,
-    meta: false
-  }
-  var attached = false
-
-  function updateMods (ev) {
-    var changed = false
-    if ('altKey' in ev) {
-      changed = changed || ev.altKey !== mods.alt
-      mods.alt = !!ev.altKey
-    }
-    if ('shiftKey' in ev) {
-      changed = changed || ev.shiftKey !== mods.shift
-      mods.shift = !!ev.shiftKey
-    }
-    if ('ctrlKey' in ev) {
-      changed = changed || ev.ctrlKey !== mods.control
-      mods.control = !!ev.ctrlKey
-    }
-    if ('metaKey' in ev) {
-      changed = changed || ev.metaKey !== mods.meta
-      mods.meta = !!ev.metaKey
-    }
-    return changed
-  }
-
-  function handleEvent (nextButtons, ev) {
-    var nextX = mouse.x(ev)
-    var nextY = mouse.y(ev)
-    if ('buttons' in ev) {
-      nextButtons = ev.buttons | 0
-    }
-    if (nextButtons !== buttonState ||
-      nextX !== x ||
-      nextY !== y ||
-      updateMods(ev)) {
-      buttonState = nextButtons | 0
-      x = nextX || 0
-      y = nextY || 0
-      callback && callback(buttonState, x, y, mods)
-    }
-  }
-
-  function clearState (ev) {
-    handleEvent(0, ev)
-  }
-
-  function handleBlur () {
-    if (buttonState ||
-      x ||
-      y ||
-      mods.shift ||
-      mods.alt ||
-      mods.meta ||
-      mods.control) {
-      x = y = 0
-      buttonState = 0
-      mods.shift = mods.alt = mods.control = mods.meta = false
-      callback && callback(0, 0, 0, mods)
-    }
-  }
-
-  function handleMods (ev) {
-    if (updateMods(ev)) {
-      callback && callback(buttonState, x, y, mods)
-    }
-  }
-
-  function handleMouseMove (ev) {
-    if (mouse.buttons(ev) === 0) {
-      handleEvent(0, ev)
-    } else {
-      handleEvent(buttonState, ev)
-    }
-  }
-
-  function handleMouseDown (ev) {
-    handleEvent(buttonState | mouse.buttons(ev), ev)
-  }
-
-  function handleMouseUp (ev) {
-    handleEvent(buttonState & ~mouse.buttons(ev), ev)
-  }
-
-  function attachListeners () {
-    if (attached) {
-      return
-    }
-    attached = true
-
-    element.addEventListener('mousemove', handleMouseMove)
-
-    element.addEventListener('mousedown', handleMouseDown)
-
-    element.addEventListener('mouseup', handleMouseUp)
-
-    element.addEventListener('mouseleave', clearState)
-    element.addEventListener('mouseenter', clearState)
-    element.addEventListener('mouseout', clearState)
-    element.addEventListener('mouseover', clearState)
-
-    element.addEventListener('blur', handleBlur)
-
-    element.addEventListener('keyup', handleMods)
-    element.addEventListener('keydown', handleMods)
-    element.addEventListener('keypress', handleMods)
-
-    if (element !== window) {
-      window.addEventListener('blur', handleBlur)
-
-      window.addEventListener('keyup', handleMods)
-      window.addEventListener('keydown', handleMods)
-      window.addEventListener('keypress', handleMods)
-    }
-  }
-
-  function detachListeners () {
-    if (!attached) {
-      return
-    }
-    attached = false
-
-    element.removeEventListener('mousemove', handleMouseMove)
-
-    element.removeEventListener('mousedown', handleMouseDown)
-
-    element.removeEventListener('mouseup', handleMouseUp)
-
-    element.removeEventListener('mouseleave', clearState)
-    element.removeEventListener('mouseenter', clearState)
-    element.removeEventListener('mouseout', clearState)
-    element.removeEventListener('mouseover', clearState)
-
-    element.removeEventListener('blur', handleBlur)
-
-    element.removeEventListener('keyup', handleMods)
-    element.removeEventListener('keydown', handleMods)
-    element.removeEventListener('keypress', handleMods)
-
-    if (element !== window) {
-      window.removeEventListener('blur', handleBlur)
-
-      window.removeEventListener('keyup', handleMods)
-      window.removeEventListener('keydown', handleMods)
-      window.removeEventListener('keypress', handleMods)
-    }
-  }
-
-  // Attach listeners
-  attachListeners()
-
-  var result = {
-    element: element
-  }
-
-  Object.defineProperties(result, {
-    enabled: {
-      get: function () { return attached },
-      set: function (f) {
-        if (f) {
-          attachListeners()
-        } else {
-          detachListeners()
-        }
-      },
-      enumerable: true
-    },
-    buttons: {
-      get: function () { return buttonState },
-      enumerable: true
-    },
-    x: {
-      get: function () { return x },
-      enumerable: true
-    },
-    y: {
-      get: function () { return y },
-      enumerable: true
-    },
-    mods: {
-      get: function () { return mods },
-      enumerable: true
-    }
-  })
-
-  return result
-}
-
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function mouseButtons(ev) {
-  if(typeof ev === 'object') {
-    if('buttons' in ev) {
-      return ev.buttons
-    } else if('which' in ev) {
-      var b = ev.which
-      if(b === 2) {
-        return 4
-      } else if(b === 3) {
-        return 2
-      } else if(b > 0) {
-        return 1<<(b-1)
-      }
-    } else if('button' in ev) {
-      var b = ev.button
-      if(b === 1) {
-        return 4
-      } else if(b === 2) {
-        return 2
-      } else if(b >= 0) {
-        return 1<<b
-      }
-    }
-  }
-  return 0
-}
-exports.buttons = mouseButtons
-
-function mouseElement(ev) {
-  return ev.target || ev.srcElement || window
-}
-exports.element = mouseElement
-
-function mouseRelativeX(ev) {
-  if(typeof ev === 'object') {
-    if('offsetX' in ev) {
-      return ev.offsetX
-    }
-    var target = mouseElement(ev)
-    var bounds = target.getBoundingClientRect()
-    return ev.clientX - bounds.left
-  }
-  return 0
-}
-exports.x = mouseRelativeX
-
-function mouseRelativeY(ev) {
-  if(typeof ev === 'object') {
-    if('offsetY' in ev) {
-      return ev.offsetY
-    }
-    var target = mouseElement(ev)
-    var bounds = target.getBoundingClientRect()
-    return ev.clientY - bounds.top
-  }
-  return 0
-}
-exports.y = mouseRelativeY
-
-
-/***/ }),
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var toPX = __webpack_require__(61)
-
-module.exports = mouseWheelListen
-
-function mouseWheelListen(element, callback, noScroll) {
-  if(typeof element === 'function') {
-    noScroll = !!callback
-    callback = element
-    element = window
-  }
-  var lineHeight = toPX('ex', element)
-  var listener = function(ev) {
-    if(noScroll) {
-      ev.preventDefault()
-    }
-    var dx = ev.deltaX || 0
-    var dy = ev.deltaY || 0
-    var dz = ev.deltaZ || 0
-    var mode = ev.deltaMode
-    var scale = 1
-    switch(mode) {
-      case 1:
-        scale = lineHeight
-      break
-      case 2:
-        scale = window.innerHeight
-      break
-    }
-    dx *= scale
-    dy *= scale
-    dz *= scale
-    if(dx || dy || dz) {
-      return callback(dx, dy, dz, ev)
-    }
-  }
-  element.addEventListener('wheel', listener)
-  return listener
-}
-
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var parseUnit = __webpack_require__(62)
-
-module.exports = toPX
-
-var PIXELS_PER_INCH = 96
-
-function getPropertyInPX(element, prop) {
-  var parts = parseUnit(getComputedStyle(element).getPropertyValue(prop))
-  return parts[0] * toPX(parts[1], element)
-}
-
-//This brutal hack is needed
-function getSizeBrutal(unit, element) {
-  var testDIV = document.createElement('div')
-  testDIV.style['font-size'] = '128' + unit
-  element.appendChild(testDIV)
-  var size = getPropertyInPX(testDIV, 'font-size') / 128
-  element.removeChild(testDIV)
-  return size
-}
-
-function toPX(str, element) {
-  element = element || document.body
-  str = (str || 'px').trim().toLowerCase()
-  if(element === window || element === document) {
-    element = document.body 
-  }
-  switch(str) {
-    case '%':  //Ambiguous, not sure if we should use width or height
-      return element.clientHeight / 100.0
-    case 'ch':
-    case 'ex':
-      return getSizeBrutal(str, element)
-    case 'em':
-      return getPropertyInPX(element, 'font-size')
-    case 'rem':
-      return getPropertyInPX(document.body, 'font-size')
-    case 'vw':
-      return window.innerWidth/100
-    case 'vh':
-      return window.innerHeight/100
-    case 'vmin':
-      return Math.min(window.innerWidth, window.innerHeight) / 100
-    case 'vmax':
-      return Math.max(window.innerWidth, window.innerHeight) / 100
-    case 'in':
-      return PIXELS_PER_INCH
-    case 'cm':
-      return PIXELS_PER_INCH / 2.54
-    case 'mm':
-      return PIXELS_PER_INCH / 25.4
-    case 'pt':
-      return PIXELS_PER_INCH / 72
-    case 'pc':
-      return PIXELS_PER_INCH / 6
-  }
-  return 1
-}
-
-/***/ }),
-/* 62 */
-/***/ (function(module, exports) {
-
-module.exports = function parseUnit(str, out) {
-    if (!out)
-        out = [ 0, '' ]
-
-    str = String(str)
-    var num = parseFloat(str, 10)
-    out[0] = num
-    out[1] = str.match(/[\d.\-\+]*\s*(.*)/)[1] || ''
-    return out
-}
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports) {
-
-var rootPosition = { left: 0, top: 0 }
-
-module.exports = mouseEventOffset
-function mouseEventOffset (ev, target, out) {
-  target = target || ev.currentTarget || ev.srcElement
-  if (!Array.isArray(out)) {
-    out = [ 0, 0 ]
-  }
-  var cx = ev.clientX || 0
-  var cy = ev.clientY || 0
-  var rect = getBoundingClientOffset(target)
-  out[0] = cx - rect.left
-  out[1] = cy - rect.top
-  return out
-}
-
-function getBoundingClientOffset (element) {
-  if (element === window ||
-      element === document ||
-      element === document.body) {
-    return rootPosition
-  } else {
-    return element.getBoundingClientRect()
-  }
-}
-
-
-/***/ }),
-/* 64 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__globals__ = __webpack_require__(2);
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__globals__ = __webpack_require__(2);
 
 var activeProgram = null;
 class Shader {
     constructor(type, source) {
-        this.shader = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].createShader(type);
-        __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].shaderSource(this.shader, source);
-        __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].compileShader(this.shader);
-        if (!__WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getShaderParameter(this.shader, __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].COMPILE_STATUS)) {
-            throw __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getShaderInfoLog(this.shader);
+        this.shader = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].createShader(type);
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].shaderSource(this.shader, source);
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].compileShader(this.shader);
+        if (!__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getShaderParameter(this.shader, __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].COMPILE_STATUS)) {
+            throw __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getShaderInfoLog(this.shader);
         }
     }
 }
@@ -15201,68 +11321,86 @@ class Shader {
 ;
 class ShaderProgram {
     constructor(shaders) {
-        this.prog = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].createProgram();
+        this.prog = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].createProgram();
         for (let shader of shaders) {
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].attachShader(this.prog, shader.shader);
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].attachShader(this.prog, shader.shader);
         }
-        __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].linkProgram(this.prog);
-        if (!__WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getProgramParameter(this.prog, __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].LINK_STATUS)) {
-            throw __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getProgramInfoLog(this.prog);
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].linkProgram(this.prog);
+        if (!__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getProgramParameter(this.prog, __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].LINK_STATUS)) {
+            throw __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getProgramInfoLog(this.prog);
         }
-        this.attrPos = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getAttribLocation(this.prog, "vs_Pos");
-        this.attrNor = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getAttribLocation(this.prog, "vs_Nor");
-        this.attrCol = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getAttribLocation(this.prog, "vs_Col");
-        this.unifModel = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Model");
-        this.unifModelInvTr = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_ModelInvTr");
-        this.unifViewProj = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_ViewProj");
-        this.unifColor = __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Color");
+        this.attrPos = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getAttribLocation(this.prog, "vs_Pos");
+        this.unifScreen = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Screen");
+        this.unifBirdPos = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getUniformLocation(this.prog, "u_BirdPos");
+        // Terrain uniforms
+        this.unifColorScheme = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getUniformLocation(this.prog, "u_ColorScheme");
+        this.unifStripes = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getUniformLocation(this.prog, "u_StripeFactor");
+        this.unifSlice = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getUniformLocation(this.prog, "u_TextureSlice");
+        //sprite
+        this.unifTexture = __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].getUniformLocation(this.prog, "u_Texture");
     }
     use() {
         if (activeProgram !== this.prog) {
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].useProgram(this.prog);
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].useProgram(this.prog);
             activeProgram = this.prog;
         }
     }
-    setModelMatrix(model) {
+    setScreenDimensions(width, height) {
         this.use();
-        if (this.unifModel !== -1) {
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniformMatrix4fv(this.unifModel, false, model);
-        }
-        if (this.unifModelInvTr !== -1) {
-            let modelinvtr = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].create();
-            __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].transpose(modelinvtr, model);
-            __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* mat4 */].invert(modelinvtr, modelinvtr);
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniformMatrix4fv(this.unifModelInvTr, false, modelinvtr);
+        if (this.unifScreen != -1) {
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].uniform2f(this.unifScreen, width, height);
         }
     }
-    setViewProjMatrix(vp) {
+    setBirdPosition(birdPos) {
         this.use();
-        if (this.unifViewProj !== -1) {
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniformMatrix4fv(this.unifViewProj, false, vp);
+        if (this.unifBirdPos != -1) {
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].uniform2f(this.unifBirdPos, birdPos[0], birdPos[1]);
         }
     }
-    setGeometryColor(color) {
+    setTerrainParameters() {
         this.use();
-        if (this.unifColor !== -1) {
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].uniform4fv(this.unifColor, color);
+        if (this.unifColorScheme != -1) {
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].uniform2f(this.unifColorScheme, Math.random() - 0.5, Math.random() - 0.5);
         }
+        if (this.unifStripes != -1) {
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].uniform1f(this.unifStripes, (Math.random() - 0.5) * 20);
+        }
+        if (this.unifSlice != -1) {
+            let i = Math.random();
+            if (i > 0.95) {
+                i = 1;
+            }
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].uniform1f(this.unifSlice, i);
+        }
+    }
+    drawSprite(s) {
+        // Setup the attributes for the quad
+        this.use();
+        if (this.attrPos != -1 && s.bindPos()) {
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].enableVertexAttribArray(this.attrPos);
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].vertexAttribPointer(this.attrPos, 4, __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].FLOAT, false, 0, 0);
+        }
+        var textureUnit = 0;
+        // The the shader we're putting the texture on texture unit 0
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].uniform1i(this.unifTexture, textureUnit);
+        // Bind the texture to texture unit 0
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].activeTexture(__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].TEXTURE0 + textureUnit);
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].bindTexture(__WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].TEXTURE_2D, s.texture);
+        s.bindIdx();
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].drawElements(s.drawMode(), s.elemCount(), __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].UNSIGNED_INT, 0);
+        if (this.attrPos != -1)
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].disableVertexAttribArray(this.attrPos);
     }
     draw(d) {
         this.use();
         if (this.attrPos != -1 && d.bindPos()) {
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].enableVertexAttribArray(this.attrPos);
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].vertexAttribPointer(this.attrPos, 4, __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].FLOAT, false, 0, 0);
-        }
-        if (this.attrNor != -1 && d.bindNor()) {
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].enableVertexAttribArray(this.attrNor);
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].vertexAttribPointer(this.attrNor, 4, __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].FLOAT, false, 0, 0);
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].enableVertexAttribArray(this.attrPos);
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].vertexAttribPointer(this.attrPos, 4, __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].FLOAT, false, 0, 0);
         }
         d.bindIdx();
-        __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].drawElements(d.drawMode(), d.elemCount(), __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].UNSIGNED_INT, 0);
+        __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].drawElements(d.drawMode(), d.elemCount(), __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].UNSIGNED_INT, 0);
         if (this.attrPos != -1)
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].disableVertexAttribArray(this.attrPos);
-        if (this.attrNor != -1)
-            __WEBPACK_IMPORTED_MODULE_1__globals__["a" /* gl */].disableVertexAttribArray(this.attrNor);
+            __WEBPACK_IMPORTED_MODULE_0__globals__["a" /* gl */].disableVertexAttribArray(this.attrPos);
     }
 }
 ;
@@ -15270,16 +11408,268 @@ class ShaderProgram {
 
 
 /***/ }),
-/* 65 */
-/***/ (function(module, exports) {
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "#version 300 es\n\n//This is a vertex shader. While it is called a \"shader\" due to outdated conventions, this file\n//is used to apply matrix transformations to the arrays of vertex data passed to it.\n//Since this code is run on your GPU, each vertex is transformed simultaneously.\n//If it were run on your CPU, each vertex would have to be processed in a FOR loop, one at a time.\n//This simultaneous transformation allows your program to run much faster, especially when rendering\n//geometry with millions of vertices.\n\nuniform mat4 u_Model;       // The matrix that defines the transformation of the\n                            // object we're rendering. In this assignment,\n                            // this will be the result of traversing your scene graph.\n\nuniform mat4 u_ModelInvTr;  // The inverse transpose of the model matrix.\n                            // This allows us to transform the object's normals properly\n                            // if the object has been non-uniformly scaled.\n\nuniform mat4 u_ViewProj;    // The matrix that defines the camera's transformation.\n                            // We've written a static matrix for you to use for HW2,\n                            // but in HW3 you'll have to generate one yourself\n\nin vec4 vs_Pos;             // The array of vertex positions passed to the shader\n\nin vec4 vs_Nor;             // The array of vertex normals passed to the shader\n\nin vec4 vs_Col;             // The array of vertex colors passed to the shader.\n\nout vec4 fs_Nor;            // The array of normals that has been transformed by u_ModelInvTr. This is implicitly passed to the fragment shader.\nout vec4 fs_LightVec;       // The direction in which our virtual light lies, relative to each vertex. This is implicitly passed to the fragment shader.\nout vec4 fs_Col;            // The color of each vertex. This is implicitly passed to the fragment shader.\n\nconst vec4 lightPos = vec4(5, 5, 3, 1); //The position of our virtual light, which is used to compute the shading of\n                                        //the geometry in the fragment shader.\n\nvoid main()\n{\n    fs_Col = vs_Col;                         // Pass the vertex colors to the fragment shader for interpolation\n\n    mat3 invTranspose = mat3(u_ModelInvTr);\n    fs_Nor = vec4(invTranspose * vec3(vs_Nor), 0);          // Pass the vertex normals to the fragment shader for interpolation.\n                                                            // Transform the geometry's normals by the inverse transpose of the\n                                                            // model matrix. This is necessary to ensure the normals remain\n                                                            // perpendicular to the surface after the surface is transformed by\n                                                            // the model matrix.\n\n\n    vec4 modelposition = u_Model * vs_Pos;   // Temporarily store the transformed vertex positions for use below\n\n    fs_LightVec = lightPos - modelposition;  // Compute the direction in which the light source lies\n\n    gl_Position = u_ViewProj * modelposition;// gl_Position is a built-in variable of OpenGL which is\n                                             // used to render the final positions of the geometry's vertices\n}\n"
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Player__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__terrain__ = __webpack_require__(22);
+
+
+
+//This class keeps track of the game state, including:
+//*Player
+//*Terrain
+//*Score
+//*Time
+//It also controls the physics of the player and handles any intersections
+//between the player and the terrain
+//This information is passed into the renderer inside main
+class GameManager {
+    constructor() {
+        this.player = new __WEBPACK_IMPORTED_MODULE_1__Player__["a" /* default */]();
+        this.terrain = new __WEBPACK_IMPORTED_MODULE_2__terrain__["a" /* default */]();
+    }
+    intersectPlayer(a, b, c, x, y, radius) {
+        //based on perpendicular distance between line and point
+        var dist = (Math.abs(a * x + b * y + c)) / Math.sqrt(a * a + b * b);
+        return dist < radius;
+    }
+    keyUp() {
+        this.player.buttonReleased();
+    }
+    keyDown() {
+        this.player.buttonPressed();
+    }
+    quit() {
+        this.player.playing = false;
+        this.player.acc = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].create();
+        this.player.vel = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].create();
+        this.player.falling = false;
+    }
+    restart() {
+        this.player.restart();
+    }
+    checkIntersection() {
+        var terrainHeight = this.terrain.getHeight(this.player.pos[0]);
+        var dir = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(this.player.vel[0], this.player.vel[1]);
+        __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].normalize(dir, dir);
+        var newPos = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].create();
+        __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].scale(dir, dir, 0.06);
+        __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].add(newPos, this.player.pos, dir);
+        var birdDirHeight = this.terrain.getHeight(this.player.pos[0] + 0.03); //newPos[0]);
+        var birdDirHeight2 = this.terrain.getHeight(this.player.pos[0] - 0.03);
+        if (Math.abs(this.player.pos[1] - terrainHeight) < 0.055) {
+            if (this.player.acc[0] > 0.0 && this.player.vel[0] > 0.0 && this.player.acc[1] > 0.0) {
+                // this.player.pos[1] = terrainHeight + 0.1;
+                this.player.falling = true;
+                // this.player.falling = true;
+            }
+            else {
+                this.player.pos[1] = terrainHeight + 0.03;
+                this.player.falling = false;
+            }
+            // this.player.pos[1] = terrainHeight + 0.03;
+            //   this.player.falling = false;
+        }
+        else if (Math.abs(this.player.pos[1] - birdDirHeight) < 0.02) {
+            this.player.pos[1] = birdDirHeight + 0.04;
+            this.player.falling = true;
+        }
+        else if (Math.abs(this.player.pos[1] - birdDirHeight2) < 0.02) {
+            this.player.pos[1] = birdDirHeight2 + 0.04;
+            this.player.falling = true;
+            // this.player.pos[1] = birdDirHeight2 + 0.03;
+            // this.player.falling = false;
+        }
+        else {
+            this.player.falling = true;
+        }
+        // var slope = this.terrain.getSlope(this.player.pos[0]);
+        // var height = this.terrain.getHeight(this.player.pos[0]);
+        //ax + by + c = 0, standard form
+        //y - y1 = m(x - x1);
+        //y - height = slope(x - this.player.pos[0]);
+        //y - slope(x) = height - slope*this.player.pos[0];
+        //slope(x) - 1(y) =  slope*this.player.pos[0] - height;
+        //slope(x) - 1(y) + (slope*this.player.pos[0] - height) = 0;
+        //a = m, b = -1, c = (slope*this.player.pos[0] - height), x, y = bird position
+        // if (this.intersectPlayer(slope, -1.0, (-slope*this.player.pos[0] + height), this.player.pos[0], this.player.pos[1], 0.03)) {
+        //   this.player.falling = false;
+        // } else {
+        //   this.player.falling = true;
+        // }
+    }
+    updateState() {
+        //see if terrain and bird are intersecting
+        // this.checkIntersection();
+        //update player force
+        var terrainNormal = this.terrain.getNormal(this.player.pos[0]);
+        var friction = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(this.terrain.getSlope(this.player.pos[0]), 2.0);
+        this.player.calculateForce(terrainNormal, friction);
+        //see if terrain and bird are intersecting
+        this.checkIntersection();
+        //update player state
+        this.player.updateState(0.1);
+    }
+}
+/* harmony default export */ __webpack_exports__["a"] = (GameManager);
+
 
 /***/ }),
-/* 66 */
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(1);
+
+//This class keeps track of the player's state including:
+//*Position
+//*Velocity
+//*Acceleration
+//It also controls the physics of the player
+//This information is passed into the GameManager
+//to check for intersections
+class Player {
+    constructor() {
+        this.vel = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].create();
+        this.pos = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].create();
+        this.force = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].create();
+        this.acc = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].create();
+        this.mass = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].create();
+        this.force = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(0.0, -9.8);
+        this.falling = true;
+        this.vel = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(1.0, 0.0);
+        this.pos = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(-0.7, 0.5);
+        this.minVelocityX = 0.2;
+        this.maxVelocityX = 3.0;
+        this.maxVelocityY = 50.0;
+        this.mass = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(1.0, 1.0);
+        this.buttonDown = false;
+        this.playing = true;
+    }
+    buttonPressed() {
+        this.buttonDown = true;
+    }
+    buttonReleased() {
+        this.buttonDown = false;
+    }
+    restart() {
+        this.playing = true;
+        this.force = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(0.0, -9.8);
+        this.vel = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(1.0, 0.0);
+        this.pos = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(-0.7, 0.5);
+        this.falling = true;
+    }
+    calculateForce(normal, friction) {
+        if (this.playing) {
+            var gravity = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(0.0, -9.8 * 0.15);
+            var force = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].create();
+            if (this.buttonDown) {
+                if (normal[0] > 0.0) {
+                    __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].divide(normal, normal, normal);
+                    __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].divide(normal, normal, normal);
+                    normal[1] = -normal[1] * 5.0;
+                    normal[0] = normal[0] * 5.0;
+                }
+                else {
+                    __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].scale(normal, normal, 4.0);
+                    normal[0] = 2.0 * normal[0];
+                }
+                if (friction[0] < 0.0) {
+                    __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].scale(friction, friction, -2.5);
+                    friction[0] = friction[0] * 2.0;
+                }
+                __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].add(force, force, __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(0.0, -40.0));
+            }
+            else {
+                __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].scale(normal, normal, 3.0);
+            }
+            if (this.falling) {
+                __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].add(force, force, gravity);
+                this.acc = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(force[0], force[1]);
+            }
+            else {
+                __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].add(force, normal, force);
+                __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].add(force, force, gravity);
+                __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].add(force, force, friction);
+                this.acc = __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(force[0], force[1]);
+            }
+        }
+    }
+    updateState(deltaT) {
+        //this.computeDynamics(deltaT);
+        //euler integration
+        //update velocity
+        if (this.playing) {
+            this.vel[0] = this.vel[0] + (this.acc[0]) * 0.01;
+            this.vel[1] = this.vel[1] + (this.acc[1]) * 0.01;
+            if (this.vel[0] < this.minVelocityX) {
+                this.vel[0] = this.minVelocityX;
+            }
+            if (this.vel[0] > this.maxVelocityX) {
+                this.vel[0] = this.maxVelocityX;
+            }
+            if (this.vel[1] < 0.0 && !this.falling) {
+                this.vel[1] = 0.0;
+            }
+            //update position
+            this.pos[0] = this.pos[0] + this.vel[0] * 0.01;
+            this.pos[1] = this.pos[1] + this.vel[1] * 0.01;
+        }
+    }
+}
+/* harmony default export */ __webpack_exports__["a"] = (Player);
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gl_matrix__ = __webpack_require__(1);
+
+class Terrain {
+    constructor() {
+    }
+    getHeight(distance) {
+        // Height function offset a little bit
+        let sinPart = Math.sin(distance * 3.0) * 0.2 +
+            Math.sin(distance * 6.17 + 4740.14) * 0.1 +
+            Math.sin(distance * 10.987 + 19.19) * 0.05;
+        return (-sinPart - 0.1);
+    }
+    getNormal(distance) {
+        // Negation of the derivative of the height
+        let normal = 0.6 * Math.cos(3 * distance) +
+            0.617 * Math.cos(4740.14 + 6.17 * distance) +
+            0.54935 * Math.cos(19.19 + 10.987 * distance);
+        return __WEBPACK_IMPORTED_MODULE_0_gl_matrix__["a" /* vec2 */].fromValues(normal, 1);
+    }
+    getSlope(distance) {
+        // Derivative of the height
+        let slope = (0.6 * Math.cos(3 * distance) +
+            0.617 * Math.cos(4740.14 + 6.17 * distance) +
+            0.54935 * Math.cos(19.19 + 10.987 * distance));
+        return -slope;
+    }
+}
+;
+/* harmony default export */ __webpack_exports__["a"] = (Terrain);
+
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "#version 300 es\n\n// This is a fragment shader. If you've opened this file first, please\n// open and read lambert.vert.glsl before reading on.\n// Unlike the vertex shader, the fragment shader actually does compute\n// the shading of geometry. For every pixel in your program's output\n// screen, the fragment shader is run for every bit of geometry that\n// particular pixel overlaps. By implicitly interpolating the position\n// data passed into the fragment shader by the vertex shader, the fragment shader\n// can compute what color to apply to its pixel based on things like vertex\n// position, light position, and vertex color.\nprecision highp float;\n\nuniform vec4 u_Color; // The color with which to render this instance of geometry.\n\n// These are the interpolated values out of the rasterizer, so you can't know\n// their specific values without knowing the vertices that contributed to them\nin vec4 fs_Nor;\nin vec4 fs_LightVec;\nin vec4 fs_Col;\n\nout vec4 out_Col; // This is the final output color that you will see on your\n                  // screen for the pixel that is currently being processed.\n\nvoid main()\n{\n    // Material base color (before shading)\n        vec4 diffuseColor = u_Color;\n\n        // Calculate the diffuse term for Lambert shading\n        float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));\n        // Avoid negative lighting values\n        // diffuseTerm = clamp(diffuseTerm, 0, 1);\n\n        float ambientTerm = 0.2;\n\n        float lightIntensity = diffuseTerm + ambientTerm;   //Add a small float value to the color multiplier\n                                                            //to simulate ambient lighting. This ensures that faces that are not\n                                                            //lit by our point light are not completely black.\n\n        // Compute final shaded color\n        out_Col = vec4(diffuseColor.rgb * lightIntensity, diffuseColor.a);\n}\n"
+module.exports = "#version 300 es\n\nprecision highp float;\n\nin vec4 vs_Pos;\nout vec4 fs_Pos;\n\n//*SPRITE STUFF*//\n// in vec2 vs_TexCoord;\n// in vec2 fs_TexCoord;\n\nvoid main() {\n\t//*SPRITE CODE*//\n\t// fs_TexCoord = vs_TexCoord;\n    \n    //*TERRAIN CODE*//\n\t// TODO: Pass relevant info to fragment\n\tgl_Position = vs_Pos;\n\tfs_Pos = vs_Pos;\n}"
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports) {
+
+module.exports = "#version 300 es\n\n//*TERRAIN STUFF*//\nprecision highp float;\n\nuniform vec2 u_Screen;\nuniform vec2 u_BirdPos;\nuniform vec2 u_ColorScheme;\n\n// controls the thickness and orientation of the stripes\nuniform float u_StripeFactor; // range[-10, 10]\n// controls number of stripes\nuniform float u_TextureSlice; // range [0..1]\n\nin vec4 fs_Pos;\nout vec4 out_Col;\n\nconst float radius = 0.03;\nconst float pi = 3.14159265358979;\n\n// parameters\n// Referencing 2D Procedural terrain texturing from shadertoy\n// https://www.shadertoy.com/view/lscGzB\n\n// angle of the stripes, whether or not they overlap\nconst float gradientAngle = 100.0; // degrees\n// intensity of noise texture on hills\nconst float NoiseFactor = 0.14; // range [0..1]\n// fading of the stripes\nconst float SmoothStepBase = 0.2; // range[0..0.25]\nconst float GroundSaturation = 3.0; // range [0..1]\n\n// Converts HSV to RGB so we can properly shade the colors using their RGB values\nvec3 hsv2rgb (in vec3 hsv) \n{\n    return hsv.z *  (1.0 + 0.5 * hsv.y * (cos (6.2832 * (hsv.x + vec3 (0.0, 0.6667, 0.3333))) - 1.0));\n}\n\n// Transforms RGB values to HSV so we can tune the texture by HSV\nvec3 rgb2hsv(vec3 c)\n{\n    vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);\n    vec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));\n    vec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzx), step(p.x, c.r));\n\n    float d = q.x - min(q.w, q.y);\n    float e = 1.0e-10;\n    return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);\n}\n\n// Gets a color based on a 2D vector\nvec3 baseColor(vec2 uv)\n{\n\tvec3 col = vec3(max(uv.y,0.0) + max(uv.x,0.0),\n                    max(-uv.y,0.0) + max(uv.x,0.0),\n                    max(-uv.x,0.0));\n    return col;\n} \n\n// Used to rotate a screenspace position by an angle. see hueSelection in main()\nvec2 rotate(vec2 xy, float angle)\n{\n    float sn = sin(angle);\n    float cs = cos(angle);\n    return vec2(xy.x * cs - xy.y * sn, xy.y * cs + xy.x * sn);\n}\n\n// Converts degrees to radians\nfloat degToRad(float angle)\n{\n    return angle * pi * (1.0/180.0);\n}\n\n// Used for perlin noise function\nvec2 hash22(vec2 p)\n{\n    p = vec2( dot(p,vec2(127.1,311.7)),\n\t\t\t  dot(p,vec2(269.5,183.3)));\n    \n    return -1.0 + 2.0 * fract(sin(p)*43758.5453123);\n}\n\n// Also used for perlin noise function\nfloat hash21(vec2 p)\n{\n\tfloat h = dot(p,vec2(127.1,311.7));\n\t\n    return -1.0 + 2.0 * fract(sin(h)*43758.5453123);\n}\n\nfloat perlinNoise(vec2 p)\n{\n    vec2 pi = floor(p);\n    vec2 pf = p - pi;\n    \n    vec2 w = pf * pf * (3.0 - 2.0 * pf);\n    \n    return mix(mix(dot(hash22(pi + vec2(0.0, 0.0)), pf - vec2(0.0, 0.0)), \n                   dot(hash22(pi + vec2(1.0, 0.0)), pf - vec2(1.0, 0.0)), w.x), \n               mix(dot(hash22(pi + vec2(0.0, 1.0)), pf - vec2(0.0, 1.0)), \n                   dot(hash22(pi + vec2(1.0, 1.0)), pf - vec2(1.0, 1.0)), w.x),\n               w.y);\n}\n\nfloat getTex(float u)\n{\n    u = mod(u,1.0);\n    float v = u - mod(u, (u_TextureSlice + abs(sin(u * 6.15159)) * 0.01));\n    return v-mod(v, 0.1);\n}\n\nfloat getTex2(float u)\n{\n    float res = 0.0;\n    \n    for (int t = 0;t<6;t++)\n        res += getTex(u+float(t)*0.0011);\n    return res/6.0;\n}\n\n// A funkier hill height\nfloat getGroundHeight(float x)\n{\n    return sin(x*3.0) * 0.2 + sin(x * 6.17+4740.14) * 0.1 + sin(x * 10.987+19.19) * 0.05 + 0.3;\n}\n\n// A tamer hill height\nfloat getGroundHeight2(float x) \n{\n    return 0.2 * cos(3.0 * x) +  0.1 * cos(6.0 * x);\n}\n\n// Gets color of uv coordinate\nvec3 getWorldColor(vec2 uv)\n{\n    vec2 hueSelection = normalize(u_ColorScheme);\n    // hueSelection = normalize(vec2(6.0,4.0));\n\n    float c = getTex2(uv.x * 4.0 + uv.y * u_StripeFactor) + 0.2; \n    \n\n    vec3 colPalette=vec3(0.0);\n    \n    float angles[4];\n    angles[0] = 0.0;\n\tangles[1] = gradientAngle;\n    angles[2] = 180.0;\n    angles[3] = 180.0 + gradientAngle;\n    \n    for (int i = 0; i < 4; i++)\n    {\n        vec2 dir = rotate(hueSelection, degToRad(angles[i]));\n\t\tfloat ifl = float(i);\n        vec3 baseColorHSV = rgb2hsv(baseColor(dir));\n        colPalette = mix(colPalette, hsv2rgb(vec3(baseColorHSV.r, 0.3,0.6)), smoothstep(SmoothStepBase*ifl, 0.25*ifl, c));\n        \n    }\n    // Adds a bit of saturation\n    colPalette = mix(colPalette, vec3(dot(colPalette, vec3(0.299, 0.587, 0.114))), 1.0-GroundSaturation);\n\n    uv.y = 1.0 - uv.y;\n    vec2 noisePos = uv;\n    float noise = perlinNoise(noisePos * 10.0) + \n                    perlinNoise(noisePos * 20.0) * 0.8 + \n                    perlinNoise(noisePos * 40.0) * 0.6 + \n                    perlinNoise(noisePos * 80.0) * 0.4;\n    \n    // intensity of noise contribution \n    float intens = max(pow(0.5, (uv.y-0.10) * 9.0), 0.4);\n    \n    float unoise = noise * NoiseFactor + (1.0 - NoiseFactor);\n    \n    vec3 recompBase = colPalette * intens * unoise;\n    \n    // darkness of noise contribution\n    vec3 recomp = mix(recompBase, vec3(1.0), max(intens * 0.9 - 1.0, 0.0));\n\n    return recomp;\n}\n\n////////////////////////////////////////////////////////\nfloat getHeight(float dist) {\n    return 0.2 * sin(10.0 * dist);\n}\n\nbool inBird(float x, float y){\n    float xdif = abs(-0.5 - x); // Screen position of bird is always -0.5 in the x-direction\n    float ydif = abs(u_BirdPos.y - y);\n    return xdif * xdif + ydif * ydif < radius * radius;\n}\n\nbool inEye(float x, float y){\n    float xdif = abs(-0.5 + 0.01 - x); // Screen position of bird is always -0.5 in the x-direction\n    float ydif = abs(u_BirdPos.y + 0.01  - y);\n    return xdif * xdif + ydif * ydif < 0.01 * 0.01;\n}\n\nbool inPupil(float x, float y){\n    float xdif = abs(-0.5 + 0.015 - x); // Screen position of bird is always -0.5 in the x-direction\n    float ydif = abs(u_BirdPos.y + 0.01  - y);\n    return xdif * xdif + ydif * ydif < 0.004 * 0.004;\n}\n\nbool inWing(float x, float y){\n    float xdif = abs(-0.5 - 0.015 - x); // Screen position of bird is always -0.5 in the x-direction\n    float ydif = abs(u_BirdPos.y - 0.01  - y);\n    return xdif * xdif + ydif * ydif < 0.015 * 0.015;\n}\n\nbool inBeak(float x, float y){\n    float xdif = abs(-0.5 + 0.03 - x); // Screen position of bird is always -0.5 in the x-direction\n    float ydif = abs(u_BirdPos.y  - y);\n    return xdif * xdif + ydif * ydif < 0.01 * 0.01;\n}\n\nvoid main()\n{\n    //*TERRAIN CODE*//\n    float aspect = u_Screen.x / u_Screen.y;\n    float sx = fs_Pos.x * max(u_BirdPos.y * 2.0, 1.2);\n\tfloat sy = fs_Pos.y / aspect * max(u_BirdPos.y * 2.0, 1.2);\n    \n    float fancyHt = getGroundHeight(sx + u_BirdPos.x + 0.5) - 0.3; \n    vec2 hueSelection = normalize(u_ColorScheme);\n\n    vec2 uv = vec2(sx, sy);\n\n    // Rotates baseColor\n    vec3 colSkyHSV = rgb2hsv(baseColor(rotate(hueSelection, degToRad(-gradientAngle*1.5))));\n    vec3 colSky = hsv2rgb(vec3(colSkyHSV.r, 0.2, 0.65)); // scales down saturation and value of the sky\n    \n    float iTime = u_BirdPos.x;\n    \n    float pos1 = uv.x + iTime + 0.5; // foreground, moves according to bird\n    float pos2 = uv.x + iTime * 0.3; // background, moves slower for parallax\n    \n    // camHeight controls the up and down motion of the hills\n    float camHeight = u_BirdPos.y;\n\n    float height1 = uv.y + getGroundHeight(pos1) + 0.8; // Height for foreground\n    float height2 = uv.y + getGroundHeight(pos2)  + 0.2 + camHeight * 0.03; // Height for background\n    \n    vec3 foregroundCol = getWorldColor(vec2(pos1, height1)); // foreground color \n    vec3 backgroundCol = mix(colSky, getWorldColor(vec2(pos2, height2)), 0.4); // background color\n\n    float pixelSize =  2.0 / u_Screen.y;\n\n    // Smoothstep for the border of the hill\n    // background\n\tvec3 layer1 = mix(colSky, mix(vec3(0.55), backgroundCol, smoothstep(0.0, pixelSize * 2.0, 1.0 - height2)), smoothstep(-pixelSize, 0.0, 1.0-height2));\n\t// foreground\n    vec3 layer2 = mix(vec3(0.2), foregroundCol, smoothstep(0.0, pixelSize * 3.0, 1.0 - height1));\n\n    out_Col = vec4(mix(layer1, layer2, smoothstep(-pixelSize, 0.0, 1.0 - height1)), 1.0);\n\n    if(inBeak(sx,sy)){\n        out_Col = vec4(1.0,0.8,0.0,1.0);\n    }\n\n    //*SPRITE CODE*// \n    if(inBird(sx,sy)){\n        if(inEye(sx,sy)){\n            if(inPupil(sx,sy)){\n                out_Col = vec4(0.0,0.0,0.0,1.0);\n            } else {\n                out_Col = vec4(1.0,1.0,1.0,1.0);\n            }\n                \n        } else {\n            out_Col = vec4(1.0,0.3,0.0,1.0);\n        }\n    }\n\n    if (inWing(sx,sy)){\n         out_Col = vec4(0.0,0.5,0.5,1.0);\n    }\n    \n}\n"
 
 /***/ })
 /******/ ]);
