@@ -8,9 +8,12 @@ Isabela Rovira and Wenli Zhao, April 2018
 Introduction
 ======================
 
+
 Over the course of the semester, we have been able to explore a variety of procedural techniques for generating computer graphics. For our final project, we wanted to apply the techniques we learned towards making a cohesive, engaging, and interactive experience. What better way to do that than a game?
 
 We want to explore 2D graphics by recreating Tiny Wings for WebGL. We will be implementing all core elements of the gameplay along with the procedural techniques for level generation.
+
+- [demo](https://irovira.github.io/TinyWings/)
 
 
 Inspiration
