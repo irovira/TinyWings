@@ -37,6 +37,9 @@ References and Inspiration
 --------------
 
 [ShaderToy TinyWings Inspired Landscape](https://www.shadertoy.com/view/lscGzB)
+
 [Parallax Scrolling](https://gamedevelopment.tutsplus.com/tutorials/parallax-scrolling-a-simple-effective-way-to-add-depth-to-a-2d-game--cms-21510)
+
 [Framework Reference](https://github.com/haqu/tiny-wings)
+
 [Texture Generation Tutorial](https://www.raywenderlich.com/33266/how-to-create-dynamic-textures-with-ccrendertexture-in-cocos2d-2-x)
