@@ -35,6 +35,18 @@ class GameManager {
       console.log('key down called');
       this.player.buttonPressed();
     }
+
+    quit(){
+      this.player.playing = false;
+      this.player.acc = vec2.create();
+      this.player.vel = vec2.create();
+      this.player.falling = false;
+      
+    }
+
+    restart(){
+      this.player.restart();
+    }
     
     checkIntersection() {
       var terrainHeight = this.terrain.getHeight(this.player.pos[0]);

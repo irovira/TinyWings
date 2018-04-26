@@ -214,15 +214,15 @@ bool inEye(float x, float y){
 }
 
 bool inPupil(float x, float y){
-    float xdif = abs(-0.5 + 0.01 - x); // Screen position of bird is always -0.5 in the x-direction
+    float xdif = abs(-0.5 + 0.015 - x); // Screen position of bird is always -0.5 in the x-direction
     float ydif = abs(u_BirdPos.y + 0.01  - y);
-    return xdif * xdif + ydif * ydif < 0.005 * 0.005;
+    return xdif * xdif + ydif * ydif < 0.004 * 0.004;
 }
 
 bool inWing(float x, float y){
-    float xdif = abs(-0.5 - 0.01 - x); // Screen position of bird is always -0.5 in the x-direction
+    float xdif = abs(-0.5 - 0.015 - x); // Screen position of bird is always -0.5 in the x-direction
     float ydif = abs(u_BirdPos.y - 0.01  - y);
-    return xdif * xdif + ydif * ydif < 0.02 * 0.02;
+    return xdif * xdif + ydif * ydif < 0.015 * 0.015;
 }
 
 bool inBeak(float x, float y){
@@ -276,7 +276,7 @@ void main()
     out_Col = vec4(mix(layer1, layer2, smoothstep(-pixelSize, 0.0, 1.0 - height1)), 1.0);
 
     if(inBeak(sx,sy)){
-        out_Col = vec4(1.0,0.5,0.0,1.0);
+        out_Col = vec4(1.0,0.8,0.0,1.0);
     }
 
     if(inBird(sx,sy)){
@@ -289,22 +289,19 @@ void main()
             }
                 
         } else {
-            out_Col = vec4(1.0,0.0,0.0,1.0);
+            out_Col = vec4(1.0,0.3,0.0,1.0);
         }
         // out_Col = texture(texture, fs_TexCoord);
         
     }
 
-<<<<<<< HEAD
-=======
+
     if (inWing(sx,sy)){
-         out_Col = vec4(1.0,0.3,0.0,1.0);
+         out_Col = vec4(0.0,0.5,0.5,1.0);
     }
 
     
 
     
     ////////////////////////////////////////////////////////////////
-
->>>>>>> isabela
 }

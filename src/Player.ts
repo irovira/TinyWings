@@ -14,6 +14,7 @@ class Player {
     force: vec2 = vec2.create();
     acc: vec2 = vec2.create();
     mass: vec2 = vec2.create();
+    playing: boolean;
     minVelocityX:number;
     maxVelocityX:number;
     minVelocityY:number;
@@ -30,6 +31,7 @@ class Player {
         this.maxVelocityY = 50.0;
         this.mass = vec2.fromValues(1.0,1.0);
         this.buttonDown = false;
+        this.playing = true;
     }
 
     buttonPressed(){
@@ -40,8 +42,18 @@ class Player {
         this.buttonDown = false;
     }
 
+    restart(){
+        this.playing = true;
+        this.force = vec2.fromValues(0.0,-9.8);
+        this.vel = vec2.fromValues(1.0, 0.0);
+        this.pos = vec2.fromValues(-0.7, 0.5);
+        this.falling = true;
+        debugger;
+    }
+
     calculateForce(normal:vec2, friction:vec2) {
-        var gravity = vec2.fromValues(0.0,-9.8 * 0.15);
+        if(this.playing){
+            var gravity = vec2.fromValues(0.0,-9.8 * 0.15);
         var force = vec2.create();
         // vec2.scale(normal, normal, 3.0);
 
@@ -82,6 +94,8 @@ class Player {
 
             this.acc = vec2.fromValues(force[0], force[1]);
         }
+        }
+        
 
         // if(this.buttonDown){
         //     console.log('button is DOWN');
@@ -99,13 +113,13 @@ class Player {
         //euler integration
         //vec3.add(force, force, this.addedForce);
         //update velocity
-        
-        this.vel[0] = this.vel[0] + (this.acc[0]) * 0.01;
+        if(this.playing){
+            this.vel[0] = this.vel[0] + (this.acc[0]) * 0.01;
         this.vel[1] = this.vel[1] + (this.acc[1]) * 0.01;
 
-        // if(this.vel[0] < this.minVelocityX){
-        //     this.vel[0] = this.minVelocityX;
-        // }
+        if(this.vel[0] < this.minVelocityX){
+            this.vel[0] = this.minVelocityX;
+        }
         if(this.vel[0] > this.maxVelocityX){
             this.vel[0] = this.maxVelocityX;
         }
@@ -119,6 +133,9 @@ class Player {
         //update position
         this.pos[0] = this.pos[0] + this.vel[0] * 0.01;
         this.pos[1] = this.pos[1] + this.vel[1] * 0.01;
+        }
+        
+        
       }
 }
 

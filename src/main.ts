@@ -11,14 +11,17 @@ import Sprite from './geometry/Sprite';
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
-const controls = {
-};
+
 
 let screenQuad: Square;
 let bird: Sprite;
 let count: number;
 let gameManager: GameManager = new GameManager();
-
+const controls = {
+  timer: 45.0,
+  distance: 0.0,
+  'Restart': restart,
+};
 function handleKeyDown(){
 
 }
@@ -26,6 +29,10 @@ function handleKeyDown(){
 function handleKeyUp(){
 
 }
+
+
+
+
 function main() {
   // Initial display for framerate
   const stats = Stats();
@@ -38,6 +45,9 @@ function main() {
 
   // Add controls to the gui
   const gui = new DAT.GUI();
+  gui.add(controls, 'timer').listen();
+  gui.add(controls, 'distance').listen();
+  gui.add(controls, 'Restart');
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -67,6 +77,13 @@ function main() {
   // This function will be called every frame
   function tick() {
     count++;
+    controls.distance = gameManager.player.pos[0];
+    controls.timer -= 0.01;
+    if(controls.timer <= 0.0){
+      //debugger;
+      gameManager.quit();
+      controls.timer = 0.0;
+    }
     stats.begin();
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
     gameShader.setBirdPosition(gameManager.player.pos);//vec2.fromValues(count / 500.0, Math.sin(count / 100)));
@@ -96,6 +113,7 @@ function main() {
       if(event.key == " "){
         gameManager.keyDown();
       }
+
       // Handle the event with KeyboardEvent.key and set handled true.
       handled = true;
     } else if (event.keyCode !== undefined) {
@@ -130,12 +148,21 @@ function main() {
     }
   }, true);
 
+ 
+
   renderer.setSize(window.innerWidth, window.innerHeight);
   gameShader.setScreenDimensions(canvas.width, canvas.height);
 
 
   // Start the render loop
   tick();
+}
+
+function restart(){
+  debugger;
+  controls.timer = 30.0;
+  gameManager.restart();
+  
 }
 
 main();
