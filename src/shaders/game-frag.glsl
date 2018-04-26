@@ -188,7 +188,7 @@ vec3 getWorldColor(vec2 uv)
     vec3 recompBase = colPalette * intens * unoise;
     
     // darkness of noise contribution
-    vec3 recomp = mix(recompBase, vec3(1.0), max(intens * 0.9 - 1.0, 0.00));
+    vec3 recomp = mix(recompBase, vec3(1.0), max(intens * 0.9 - 1.0, 0.0));
 
     return recomp;
 }
@@ -232,8 +232,8 @@ void main()
 {
     //*TERRAIN CODE*//
     float aspect = u_Screen.x / u_Screen.y;
-    float sx = fs_Pos.x;
-	float sy = fs_Pos.y / aspect;
+    float sx = fs_Pos.x * max(u_BirdPos.y * 2.0, 1.2);
+	float sy = fs_Pos.y / aspect * max(u_BirdPos.y * 2.0, 1.2);
     
     float fancyHt = getGroundHeight(sx + u_BirdPos.x + 0.5) - 0.3; 
     vec2 hueSelection = normalize(u_ColorScheme);
@@ -254,10 +254,11 @@ void main()
     
     // camHeight controls the up and down motion of the hills
     // float camHeight = (getGroundHeight(iTime + 0.5) + getGroundHeight(iTime + 0.1) + getGroundHeight(iTime + 0.9)) / 3.0 - 0.5;
-        
-    // float height1 = uv.y + getGroundHeight(pos1) + 0.6;// - camHeight;
+    float camHeight = u_BirdPos.y;
+
+    // float height1 = uv.y + getGroundHeight(pos1) + 0.8 - camHeight;
     float height1 = uv.y + getGroundHeight(pos1) + 0.8;
-    float height2 = uv.y + getGroundHeight(pos2)  + 0.2; //- camHeight * 0.5;
+    float height2 = uv.y + getGroundHeight(pos2)  + 0.2 + camHeight * 0.03; //- camHeight * 0.5;
     
     vec3 foregroundCol = getWorldColor(vec2(pos1, height1)); // foreground color 
     vec3 backgroundCol = mix(colSky, getWorldColor(vec2(pos2, height2)), 0.4); // background color
@@ -295,8 +296,6 @@ void main()
     if (inWing(sx,sy)){
          out_Col = vec4(1.0,0.3,0.0,1.0);
     }
-    
-
     
     ////////////////////////////////////////////////////////////////
 
