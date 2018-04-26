@@ -1,17 +1,40 @@
 # TinyWings
 
-Midpoint Progress (4/17/18)
+Isabela Rovira and Wenli Zhao, April 2018
+-------------------------
+
+Introduction
 ======================
 
-Isabela Rovira
+Over the course of the semester, we have been able to explore a variety of procedural techniques for generating computer graphics. For our final project, we wanted to apply the techniques we learned towards making a cohesive, engaging, and interactive experience. What better way to do that than a game?
+
+We want to explore 2D graphics by recreating Tiny Wings for WebGL. We will be implementing all core elements of the gameplay along with the procedural techniques for level generation.
+
+
+Inspiration
 ------------
-My goals for this milestone were to implement the game framework classes, including Player.ts and GameManager.ts.
-Instead of working on terrain generation, I decided to handle game physics. Most of my time was spent figuring out player/terrain intersections.
+Tiny Wings
 
-![](isabela_intersection.png)
+Techniques
+------------
+* 2D Rendering System: Terrain (Wenli), Bird (Isabela) 
+* Perlin noise for texturing the background and sky (Wenli)
+* Randomization of color palette (Wenli)
+* Parallax and Camera Movement (Wenli)
+* Game Physics (Isabela)
+* Game Logic and Interaction (Isabela) 
 
-Wenli Zhao
-----------
-My goals for this milestone were to create the side scrolling camera and rendering framework as well as working on procedural texture generation. I ended up working on procedural terrain height generation as well just because it made more sense for me to do both parts related to the terrain. I wrote most of the terrain.ts class. I also wrote a shader that will render continuously scrolling terrain based on the position of the player. (game-frag.glsl) The height generation is a composition of sinusoidal functions. The wavy texture is created from rotating the height and mapping different colors to different stripes along with a gradient and perlin noise to add texture. I'm still in the process of making it look better.
+Classes 
+--------------
+* GameManager (GameManager.ts)
+* Player (Player.ts)
+* Game Vertex Shader (game-vert.glsl)
+* Game Frag Shader (game-frag.glsl)
 
-![](TinyWingsTexture.png)
+References and Inspiration
+--------------
+
+[ShaderToy TinyWings Inspired Landscape](https://www.shadertoy.com/view/lscGzB)
+[Parallax Scrolling](https://gamedevelopment.tutsplus.com/tutorials/parallax-scrolling-a-simple-effective-way-to-add-depth-to-a-2d-game--cms-21510)
+[Framework Reference](https://github.com/haqu/tiny-wings)
+[Texture Generation Tutorial](https://www.raywenderlich.com/33266/how-to-create-dynamic-textures-with-ccrendertexture-in-cocos2d-2-x)
