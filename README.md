@@ -3,6 +3,8 @@
 Isabela Rovira and Wenli Zhao, April 2018
 -------------------------
 
+![](images/tinywing2.png)
+
 Introduction
 ======================
 
